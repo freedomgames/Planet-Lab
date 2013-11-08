@@ -27,7 +27,7 @@ Quick Start for Development
 * source venv/bin/activate
 * pip install -r requirements.txt
 * pip install -r test-requirements.txt
-* PYTHONPATH=src python backend/src/backend/create\_db.py
+* PYTHONPATH=backend/src DATABASE\_URL=sqlite:///test.db python backend/src/backend/create\_db.py
 * foreman start -e .env\_dev
 
 The REST service is now available at [http://localhost:5000](http://localhost:5000)
@@ -37,7 +37,8 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
 * source venv/bin/activate (if your shell has not already sourced this file)
 * pip install --upgrade -r requirements.txt 
   (if requirements.txt has changed and you need to install new requirements)
-* rm -f src/backend/test.db; PYTHONPATH=src python src/backend/create\_db.py
+
+* rm -f backend/src/backend/test.db; PYTHONPATH=backend/src DATABASE\_URL=sqlite:///test.db python backend/src/backend/create\_db.py
   (if the db schema has changed and you need to recreate the database but don't feel like doing a migration)
 * foreman start -e .env\_dev
 
