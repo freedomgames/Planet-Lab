@@ -17,6 +17,7 @@ Quick Start for Development
   (already included if you do a brew install python / sudo apt-get install python-pip)
 * sqlite 3: http://www.sqlite.org
   (brew install sqlite / sudo apt-get install sqlite3)
+* foreman: https://github.com/ddollar/foreman
 
 ###First Run:
 * pip install virtualenv
