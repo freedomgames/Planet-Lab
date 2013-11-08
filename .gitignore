@@ -1,5 +1,6 @@
 test.db
 venv
+.DS_Store
 *.py[cod]
 
 # C extensions
