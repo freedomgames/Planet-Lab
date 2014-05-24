@@ -10,7 +10,6 @@ Quick Start for Development
 ###Requirements:
 * (Optional) homebrew: http://brew.sh - if you are working on a Mac, this will make it easy to install the other requirements.  
   If you're on Linux, you already have a package manager so use that.
-  If you're on Windows, I don't have any clue how you would run this package.
 * Python 2.7: http://www.python.org 
   (brew install python / sudo apt-get install python)
 * pip: https://pypi.python.org/pypi/pip 
