@@ -1,0 +1,2 @@
+PYTHONPATH=backend/src:backend/tests
+DATABASE_URL=sqlite:///memory
