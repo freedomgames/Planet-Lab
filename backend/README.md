@@ -31,7 +31,7 @@ I would recomend using postgresql for real backend development, as that's what w
 * If you are using sqlite, change the DATABASE\_URL line in the .env file in this directory to read: "DATABASE\_URL=sqlite:///test.db"
 * If you are using postgresql, then issue the command: "createdb parklab"
 * foreman start create\_db -e .dev\_env
-* foreman start web -e .dev\_env
+* foreman start dev\_server -e .dev\_env
 
 The REST service is now available at [http://localhost:5000](http://localhost:5000)
 
@@ -44,7 +44,7 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
   (if requirements.txt has changed and you need to install new requirements)
 * rm -f backend/src/backend/test.db; foreman start create\_db -e .dev\_env
   (if the db schema has changed and you need to flush and recreate your sqlite database)
-* foreman start web -e .dev\_env
+* foreman start dev\_server -e .dev\_env
 
 ###Other Utilities:
 * "foreman run tests -e .test\_env"
