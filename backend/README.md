@@ -1,7 +1,6 @@
-Park-o-Sphere Backend
-=====================
-This is the REST service to support the front-end for the Park-o-Sphere
-web site.
+The Backend
+===========
+This is the REST service which supports the front-end application.
 
 
 Quick Start for Development
@@ -14,9 +13,12 @@ Quick Start for Development
   (brew install python / sudo apt-get install python)
 * pip: https://pypi.python.org/pypi/pip 
   (already included if you do a brew install python / sudo apt-get install python-pip)
-* sqlite 3: http://www.sqlite.org
-  (brew install sqlite / sudo apt-get install sqlite3)
 * foreman: https://github.com/ddollar/foreman
+  (gem install foreman -- if you have Ruby installed)
+
+You'll also need an database.
+For light development or front-end work, sqlite is fine (http://www.sqlite.org brew install sqlite / sudo apt-get install sqlite3)
+I would recomend using postgresql for real backend development, as that's what we'll be running in production and sqlite doesn't support things like migrations.
 
 ###First Run:
 * pip install virtualenv
@@ -24,23 +26,32 @@ Quick Start for Development
 * cd parklab
 * virtualenv venv
 * source venv/bin/activate
-* pip install -r requirements.txt
-* pip install -r test-requirements.txt
-* PYTHONPATH=backend/src DATABASE\_URL=sqlite:///test.db python backend/src/backend/create\_db.py
-* foreman start -e .env\_dev
+* pip install -r backend/requirements.txt
+* pip install -r backend/test-requirements.txt
+* If you are using sqlite, change the DATABASE\_URL line in the .env file in this directory to read:
+```DATABASE_URL=sqlite:///test.db```
+* If you are using postgresql, then issue the command: ```createdb parklab```
+* foreman start create_db
+* foreman start web
 
 The REST service is now available at [http://localhost:5000](http://localhost:5000)
 
 ###Subsequent Runs:
-* cd parklab (if you aren't there already)
-* source venv/bin/activate (if your shell has not already sourced this file)
+* cd parklab
+  (if you aren't there already)
+* source venv/bin/activate
+  (if your shell has not already sourced this file)
 * pip install --upgrade -r requirements.txt 
   (if requirements.txt has changed and you need to install new requirements)
+* rm -f backend/src/backend/test.db; foreman start create_db
+  (if the db schema has changed and you need to flush and recreate your sqlite database)
+* foreman start web
 
-* rm -f backend/src/backend/test.db; PYTHONPATH=backend/src DATABASE\_URL=sqlite:///test.db python backend/src/backend/create\_db.py
-  (if the db schema has changed and you need to recreate the database but don't feel like doing a migration)
-* foreman start -e .env\_dev
-
+###Other Utilities:
+* foreman run tests -e .test_env
+  runs the unit tests and outputs coverage information (the -e .test_env bit is important!)
+* foreman run bash
+  gives you a shell session with your environment set up to run the REST service
 
 Resources
 =========
