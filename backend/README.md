@@ -28,9 +28,8 @@ I would recomend using postgresql for real backend development, as that's what w
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
-* If you are using sqlite, change the DATABASE\_URL line in the .env file in this directory to read:
-```DATABASE_URL=sqlite:///test.db```
-* If you are using postgresql, then issue the command: ```createdb parklab```
+* If you are using sqlite, change the DATABASE\_URL line in the .env file in this directory to read: "DATABASE_URL=sqlite:///test.db"
+* If you are using postgresql, then issue the command: "createdb parklab"
 * foreman start create_db
 * foreman start web
 
