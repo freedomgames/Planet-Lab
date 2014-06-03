@@ -1,92 +1,87 @@
 """Views for supporting quest resources."""
 
 
-import json
 import flask
-import sqlalchemy
+import flask.ext.restful as restful
 
 import backend
-import backend.common.accepts as accepts
-import backend.quests.models as models
-
-MESSAGE_FOR_400 = 'Invalid field given, must be one of %s'
-MESSAGE_FOR_404 = 'No quest with unit id %s and quest id %s found.'
-
-quests_bp = flask.Blueprint(
-        'quests', __name__, url_prefix='/units/<int:unit_id>/quests')
+import backend.quests.models as quest_models
+import backend.common.resource as resource
 
 
-@quests_bp.route('/', methods=('POST',))
-def new_quest(unit_id):
-    """Add a new quest to the given unit."""
-    data = {field: flask.request.json.get(field) for
-            field in models.Quest.create_fields}
-    data['unit_id'] = unit_id
+class QuestBase(restful.Resource):
+    """Define a parser for other resources to use."""
+    create_parser = resource.ProvidedParser()
+    create_parser.add_argument('name', type=str, required=True)
+    create_parser.add_argument('description', type=str, required=True)
+    create_parser.add_argument('points', type=int, required=True)
 
-    quest = models.Quest(**data)
-    backend.db.session.add(quest)
-    backend.db.session.commit()
+    edit_parser = resource.ProvidedParser()
+    edit_parser.add_argument('name', type=str)
+    edit_parser.add_argument('description', type=str)
+    edit_parser.add_argument('points', type=int)
 
-    response = flask.jsonify(quest.as_dict())
-    response.status_code = 201
-    response.headers['Location'] = quest.url
-    return response
+    view_fields = ['id', 'name', 'description', 'points', 'user_id']
 
-
-@quests_bp.route('/', methods=('GET',))
-def get_quests(unit_id):
-    """Get all of the quests attached to the given unit."""
-    quests = models.Quest.query.filter_by(unit_id=unit_id).all()
-
-    if accepts.wants_json():
-        return flask.Response(
-                json.dumps([quest.as_dict() for quest in quests]),
-                mimetype='application/json')
-    else:
-        return flask.render_template('quest_list.html', quests=quests)
+    def as_dict(self, quest):
+        """Return a serializable dictionary representing the given quest."""
+        return {field: getattr(quest, field) for field in self.view_fields}
 
 
-@quests_bp.route('/<int:quest_id>/', methods=('GET',))
-def get_quest(unit_id, quest_id):
-    """Get the quest with the given id."""
-    quest = models.Quest.query.options(
-            sqlalchemy.orm.joinedload('questions')).filter_by(
-                unit_id=unit_id, id_=quest_id).first()
-    if quest is None:
-        return flask.make_response(MESSAGE_FOR_404 % (unit_id, quest_id), 404)
-    elif accepts.wants_json():
-        return flask.jsonify(quest.as_dict(with_questions=True))
-    else:
-        return flask.render_template('quest.html', quest=quest)
+class Quest(QuestBase):
+    """Resource for working with a single quest."""
 
+    @staticmethod
+    def query(user_id, quest_id):
+        """Return the query to select the quest with the given ids."""
+        return quest_models.Quest.query.filter_by(
+                user_id=user_id, id=quest_id)
 
-@quests_bp.route('/<int:quest_id>/', methods=('PUT',))
-def update_quest(unit_id, quest_id):
-    """Update the quest with the given id."""
-    update = flask.request.json
-
-    if any(field not in models.Quest.editable_fields for
-            field in update.iterkeys()):
-        msg = MESSAGE_FOR_400 % ', '.join(models.Quest.editable_fields)
-        return flask.make_response(msg, 400)
-    else:
-        rows_updated = models.Quest.query.filter_by(
-                unit_id=unit_id, id_=quest_id).update(update)
-        backend.db.session.commit()
-        if not rows_updated:
-            return flask.make_response(
-                    MESSAGE_FOR_404 % (unit_id, quest_id), 404)
+    def get(self, user_id, quest_id):
+        """Return the quest with matching user and quest ids."""
+        quest = self.query(user_id, quest_id).first()
+        if quest is None:
+            return flask.Response('', 404)
         else:
-            return flask.make_response('OK', 200)
+            return self.as_dict(quest)
+
+    def put(self, user_id, quest_id):
+        """Update a quest."""
+        args = self.edit_parser.parse_args()
+        rows_updated = self.query(user_id, quest_id).update(args)
+        backend.db.session.commit()
+
+        if not rows_updated:
+            return flask.Response('', 404)
+        else:
+            return args
+
+    def delete(self, user_id, quest_id):
+        """Delete a quest."""
+        rows_deleted = self.query(user_id, quest_id).delete()
+        backend.db.session.commit()
+
+        if not rows_deleted:
+            return flask.Response('', 404)
 
 
-@quests_bp.route('/<int:quest_id>/', methods=('DELETE',))
-def delete_quest(unit_id, quest_id):
-    """Delete the quest with the given id."""
-    rows_deleted = models.Quest.query.filter_by(
-            unit_id=unit_id, id_=quest_id).delete()
-    backend.db.session.commit()
-    if not rows_deleted:
-        return flask.make_response(MESSAGE_FOR_404 % (unit_id, quest_id), 404)
-    else:
-        return flask.make_response('OK', 200)
+class QuestList(QuestBase):
+    """Resource for working with collections of quests."""
+
+    def post(self, user_id):
+        """Create a new quest and link it to its creator."""
+        args = self.create_parser.parse_args()
+        args['user_id'] = user_id
+        quest = quest_models.Quest(**args)
+
+        backend.db.session.add(quest)
+        backend.db.session.commit()
+
+        args['id'] = quest.id
+
+        return args
+
+    def get(self, user_id):
+        """Return a list of quests linked to the given user_id."""
+        quests = quest_models.Quest.query.filter_by(user_id=user_id).all()
+        return {'quests': [self.as_dict(quest) for quest in quests]}
