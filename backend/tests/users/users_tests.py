@@ -17,7 +17,7 @@ class UsersTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         # create a user
-        resp = self.post_json("api/users", {"name": "snakes"})
+        resp = self.post_json("api/users/", {"name": "snakes"})
         self.assertEqual(json.loads(resp.data), {
             'organization': None,
             'avatar_url': None,
@@ -33,7 +33,7 @@ class UsersTest(harness.TestHarness):
             'name': 'snakes'})
 
         # missing required fields for a 400
-        resp = self.post_json("api/users", {})
+        resp = self.post_json("api/users/", {})
         self.assertEqual(resp.status_code, 400)
 
         # edit the user
