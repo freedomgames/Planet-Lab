@@ -1,7 +1,11 @@
 """Common tools for building restful resources."""
 
 
+import flask
+import flask.ext.restful as restful
 import flask.ext.restful.reqparse as reqparse
+
+import backend
 
 
 NOTHING = object()
@@ -46,3 +50,53 @@ class ProvidedParser(reqparse.RequestParser):
         args = super(ProvidedParser, self).parse_args()
         return {key: value for key, value in args.iteritems() if
                 value is not NOTHING}
+
+
+class SimpleResource(restful.Resource):
+    """Base class defining the simplest common set of CRUD endpoints
+    for working with single resources.
+    """
+    # Child classes need to define a reqparse.RequestParser instance
+    # for the parser attribute to be used when parsing PUT requests.
+    parser = None
+
+    def query(*args, **kwargs):
+        """Needs to be implemented by child classes.  Should return
+        a query to select the row being operated upon by the GET,
+        PUT and DELETE verbs.
+        """
+        raise NotImplementedError
+
+    def as_dict(*args, **kwargs):
+        """Needs to be implemented by child classes.  Given an object,
+        returns a serializable dictionary representing that object to
+        be returned on GET's.
+        """
+        raise NotImplementedError
+
+    def get(self, *args, **kwargs):
+        """Return a serialization of the resource or a 404."""
+        resource = self.query(*args, **kwargs).first()
+        if resource is None:
+            return flask.Response('', 404)
+        else:
+            return self.as_dict(resource)
+
+    def put(self, *args, **kwargs):
+        """Update a resource."""
+        update = self.parser.parse_args()
+        rows_updated = self.query(*args, **kwargs).update(update)
+        backend.db.session.commit()
+
+        if not rows_updated:
+            return flask.Response('', 404)
+        else:
+            return args
+
+    def delete(self, *args, **kwargs):
+        """Delete a quest."""
+        rows_deleted = self.query(*args, **kwargs).delete()
+        backend.db.session.commit()
+
+        if not rows_deleted:
+            return flask.Response('', 404)
