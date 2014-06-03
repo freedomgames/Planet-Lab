@@ -1,4 +1,4 @@
-"""SQLAlchemy models for quests."""
+"""SQLAlchemy models for missions."""
 
 
 import flask
@@ -7,13 +7,12 @@ import backend
 db = backend.db
 
 
-class Quest(db.Model):
-    """Quests are groups of missions.  Mentors chose how to group
-    quests into missions and learners complete quests mission by
-    mission.
+class Mission(db.Model):
+    """Missions are groups of quests.  Mentors chose how to group
+    quests into missions and learners complete missions quest by quest.
     """
 
-    __tablename__ = 'quests'
+    __tablename__ = 'missions'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
