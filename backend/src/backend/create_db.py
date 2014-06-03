@@ -1,5 +1,0 @@
-#! /usr/bin/env python
-
-import backend
-
-backend.db.create_all()
