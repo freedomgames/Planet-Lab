@@ -20,13 +20,15 @@ class UserBase(restful.Resource):
 class User(UserBase):
     """Views for a single user resource."""
 
+    view_fields = ['id', 'name', 'organization', 'avatar_url']
+
     def get(self, id_):
         """Return a single user by id."""
         user = user_models.User.query.get(id_)
         if user is None:
             return flask.Response('', 404)
         else:
-            return user.as_dict()
+            return {field: getattr(user, field) for field in self.view_fields}
 
     def put(self, id_):
         """Update a user."""

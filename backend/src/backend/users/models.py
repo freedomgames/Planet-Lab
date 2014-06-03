@@ -14,9 +14,3 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     organization = db.Column(db.String, nullable=True)
     avatar_url = db.Column(db.String, nullable=True)
-
-    view_fields = ['id', 'name', 'organization', 'avatar_url']
-
-    def as_dict(self):
-        """Return a serializable dictionary representation of the user."""
-        return {field: getattr(self, field) for field in self.view_fields}
