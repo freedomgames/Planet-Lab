@@ -25,7 +25,10 @@ class QuestBase(restful.Resource):
 
     def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
-        return {field: getattr(quest, field) for field in self.view_fields}
+        resp = {field: getattr(quest, field) for field in self.view_fields}
+        resp['url'] = backend.api.url_for(
+                Quest, user_id=quest.user_id, quest_id=quest.id)
+        return resp
 
 
 class Quest(QuestBase):

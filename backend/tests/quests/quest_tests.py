@@ -34,6 +34,7 @@ class QuestTest(harness.TestHarness):
             'user_id': 1,
             'description': 'ladders',
             'name': 'snakes',
+            'url': '/api/users/1/quests/1',
             'id': 1})
 
         # edit
@@ -48,15 +49,16 @@ class QuestTest(harness.TestHarness):
             'user_id': 1,
             'description': 'hat',
             'name': 'cat',
+            'url': '/api/users/1/quests/1',
             'id': 1})
 
         # list them
         resp = self.app.get("api/users/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {'points': 3, 'user_id': 1, 'description': 'hat',
-                'name': 'cat', 'id': 1},
+                'name': 'cat', 'id': 1, 'url': '/api/users/1/quests/1'},
             {'points': 1, 'user_id': 1, 'description': 'socks',
-                'name': 'happy', 'id': 2}])
+                'name': 'happy', 'id': 2, 'url': '/api/users/1/quests/2'}])
 
         # delete
         resp = self.app.delete("api/users/1/quests/1")
