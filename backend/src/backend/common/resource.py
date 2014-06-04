@@ -85,17 +85,22 @@ class SimpleResource(restful.Resource):
     def put(self, *args, **kwargs):
         """Update a resource."""
         update = self.parser.parse_args()
-        rows_updated = self.query(*args, **kwargs).update(update)
-        backend.db.session.commit()
-
-        if not rows_updated:
-            return flask.Response('', 404)
+        if not update:
+            return flask.Response('', 400)
         else:
-            return args
+            rows_updated = self.query(*args, **kwargs).update(
+                    update, synchronize_session=False)
+            backend.db.session.commit()
+
+            if not rows_updated:
+                return flask.Response('', 404)
+            else:
+                return args
 
     def delete(self, *args, **kwargs):
         """Delete a quest."""
-        rows_deleted = self.query(*args, **kwargs).delete()
+        rows_deleted = self.query(*args, **kwargs).delete(
+                synchronize_session=False)
         backend.db.session.commit()
 
         if not rows_deleted:
