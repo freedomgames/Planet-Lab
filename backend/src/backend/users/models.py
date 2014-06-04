@@ -16,3 +16,4 @@ class User(db.Model):
     avatar_url = db.Column(db.String, nullable=True)
 
     missions = db.relationship("Mission", backref="user")
+    quests = db.relationship("Quest", backref="user")

@@ -7,19 +7,19 @@ import backend
 db = backend.db
 
 
-class Mission(db.Model):
-    """Missions are groups of quests.  Mentors chose how to group
-    quests into missions and learners complete missions quest by quest.
+class Quest(db.Model):
+    """Quests are activities within a mission.  Mentors create quests
+    and link them to missions.  Learners complete quests.
     """
 
-    __tablename__ = 'missions'
+    __tablename__ = 'quests'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    points = db.Column(db.Integer, nullable=False)
+    icon_url = db.Column(db.String, nullable=True)
 
     user_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-
-    quests = db.relationship("Quest", backref="mission")
+    mission_id = db.Column(
+            db.Integer, db.ForeignKey('missions.id'), nullable=False, index=True)

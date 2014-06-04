@@ -60,3 +60,12 @@ api.add_resource(
 api.add_resource(
         backend.missions.views.MissionList,
         '/api/users/<int:user_id>/missions/')
+
+import backend.quests.views
+api.add_resource(
+        backend.quests.views.Quest,
+        '/api/users/<int:user_id>/missions/<int:mission_id>'
+        '/quests/<int:quest_id>')
+api.add_resource(
+        backend.quests.views.QuestList,
+        '/api/users/<int:user_id>/missions/<int:mission_id>/quests/')
