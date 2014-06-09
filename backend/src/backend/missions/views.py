@@ -13,11 +13,11 @@ class MissionBase(object):
 
     view_fields = ['id', 'name', 'description', 'points', 'user_id']
 
-    def as_dict(self, mission):
+    def as_dict(self, mission, user_id, mission_id):
         """Return a serializable dictionary representing the given mission."""
         resp = {field: getattr(mission, field) for field in self.view_fields}
         resp['url'] = backend.api.url_for(
-                Mission, user_id=mission.user_id, mission_id=mission.id)
+                Mission, user_id=user_id, mission_id=mission_id)
         return resp
 
 
@@ -60,4 +60,5 @@ class MissionList(MissionBase, restful.Resource):
     def get(self, user_id):
         """Return a list of missions linked to the given user_id."""
         missions = mission_models.Mission.query.filter_by(user_id=user_id).all()
-        return {'missions': [self.as_dict(mission) for mission in missions]}
+        return {'missions': [self.as_dict(mission, user_id, mission.id) for
+            mission in missions]}

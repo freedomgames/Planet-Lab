@@ -20,7 +20,7 @@ class User(resource.SimpleResource):
 
     view_fields = ['id', 'name', 'organization', 'avatar_url']
 
-    def as_dict(self, user):
+    def as_dict(self, user, user_id):
         """Return a serializable dictionary representing the given user."""
         return {field: getattr(user, field) for field in self.view_fields}
 

@@ -46,6 +46,7 @@ class QuestTest(harness.TestHarness):
             'icon_url': None,
             'mission_id': 1,
             'id': 1,
+            'url': '/api/users/1/missions/1/quests/1',
             'name': 'mouse'})
 
         # edit
@@ -61,14 +62,17 @@ class QuestTest(harness.TestHarness):
             'icon_url': 'rubber',
             'mission_id': 1,
             'id': 1,
+            'url': '/api/users/1/missions/1/quests/1',
             'name': 'mouse'})
 
         # list them
         resp = self.app.get("api/users/1/missions/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {'user_id': 1, 'description': 'nip', 'icon_url': 'rubber',
+                'url': '/api/users/1/missions/1/quests/1',
                 'mission_id': 1, 'id': 1, 'name': 'mouse'},
             {'user_id': 1, 'description': 'blip', 'icon_url': None,
+                'url': '/api/users/1/missions/1/quests/2',
                 'mission_id': 1, 'id': 2, 'name': 'blouse'}])
 
         # delete

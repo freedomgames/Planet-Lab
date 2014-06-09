@@ -18,9 +18,11 @@ class QuestBase(object):
     view_fields = (
             'id', 'name', 'description', 'icon_url', 'user_id', 'mission_id')
 
-    def as_dict(self, quest):
+    def as_dict(self, quest, user_id, mission_id, quest_id):
         """Return a serializable dictionary representing the given quest."""
         resp = {field: getattr(quest, field) for field in self.view_fields}
+        resp['url'] = backend.api.url_for(
+                Quest, user_id=user_id, mission_id=mission_id, quest_id=quest_id)
         return resp
 
 
@@ -84,4 +86,5 @@ class QuestList(QuestBase, restful.Resource):
                 mission_models.Mission.id == mission_id)
         quests = query.all()
 
-        return {'quests': [self.as_dict(quest) for quest in quests]}
+        return {'quests': [self.as_dict(quest, user_id, mission_id, quest.id) for
+            quest in quests]}

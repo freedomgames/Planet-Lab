@@ -80,7 +80,7 @@ class SimpleResource(restful.Resource):
         if resource is None:
             return flask.Response('', 404)
         else:
-            return self.as_dict(resource)
+            return self.as_dict(resource, *args, **kwargs)
 
     def put(self, *args, **kwargs):
         """Update a resource."""
