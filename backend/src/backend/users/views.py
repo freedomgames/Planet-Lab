@@ -9,14 +9,8 @@ import backend.common.resource as resource
 import backend.users.models as user_models
 
 
-
-class User(resource.SimpleResource):
-    """Views for a single user resource."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('organization', type=str)
-    parser.add_argument('avatar_url', type=str)
+class UserBase(object):
+    """Provide a shared as_dict method."""
 
     view_fields = ['id', 'name', 'organization', 'avatar_url']
 
@@ -26,16 +20,25 @@ class User(resource.SimpleResource):
         resp['url'] = backend.api.url_for(User, user_id=user_id)
         return resp
 
+
+class User(UserBase, resource.SimpleResource):
+    """Views for a single user resource."""
+
+    parser = resource.ProvidedParser()
+    parser.add_argument('name', type=str)
+    parser.add_argument('organization', type=str)
+    parser.add_argument('avatar_url', type=str)
+
     @staticmethod
     def query(user_id):
         """Return the query to select the user with the given id."""
         return user_models.User.query.filter_by(id=user_id)
 
 
-class UserList(restful.Resource):
+class UserList(UserBase, restful.Resource):
     """Views for user creation."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.ProvidedParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('organization', type=str)
     parser.add_argument('avatar_url', type=str)
@@ -48,6 +51,4 @@ class UserList(restful.Resource):
         backend.db.session.add(user)
         backend.db.session.commit()
 
-        args['id'] = user.id
-
-        return args
+        return self.as_dict(user, user.id)
