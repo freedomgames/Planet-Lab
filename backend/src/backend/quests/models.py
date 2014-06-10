@@ -11,7 +11,7 @@ join_table = db.Table('mission_quests', db.Model.metadata,
     db.Column('quest_id', db.Integer, db.ForeignKey('quests.id'), index=True),
     db.UniqueConstraint('mission_id', 'quest_id')
 )
-db.Index('idx_id_combo', join_table.c.mission_id, join_table.c.quest_id)
+db.Index('ix_id_combo', join_table.c.mission_id, join_table.c.quest_id)
 
 
 class Quest(db.Model):
