@@ -12,7 +12,7 @@ import backend.users.models as user_models
 class UserBase(object):
     """Provide a shared as_dict method."""
 
-    view_fields = ['id', 'name', 'organization', 'avatar_url']
+    view_fields = ('id', 'name', 'organization', 'avatar_url')
 
     def as_dict(self, user, user_id):
         """Return a serializable dictionary representing the given user."""
