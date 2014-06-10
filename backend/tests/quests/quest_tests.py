@@ -136,6 +136,10 @@ class QuestTest(harness.TestHarness):
                 'url': '/api/users/1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
+        # still nothing linked to this mission
+        resp = self.app.get("/api/users/1/missions/2/quests/")
+        self.assertEqual(json.loads(resp.data)['quests'], [])
+
         # check for idempotency
         resp = self.app.put("/api/users/1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
@@ -164,6 +168,19 @@ class QuestTest(harness.TestHarness):
 
         resp = self.app.get("/api/users/1/missions/1/quests/")
         self.assertEqual(json.loads(resp.data)['quests'], [])
+
+        # 404 on non-existent resources
+        resp = self.app.delete("/api/users/2/missions/1/quests/2")
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.delete("/api/users/1/missions/3/quests/2")
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.get("/api/users/2/missions/1/quests/")
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.get("/api/users/1/missions/3/quests/")
+        self.assertEqual(resp.status_code, 404)
 
 
 if __name__ == '__main__':
