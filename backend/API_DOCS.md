@@ -12,20 +12,20 @@ A user account for either a learner or a mentor
 Accepts an object in the form:
 ```json
 {
-  'name': 'Walt',
-  'organization': 'Freedom Games',
-  'avatar_url': '/static/happy-cat.png'
+  "name": "Walt",
+  "organization": "Freedom Games",
+  "avatar_url": "/static/happy-cat.png"
 }
 ```
 
 Returns an object in the form:
 ```json
 {
-  'id': 5,
-  'url': '/api/users/5',
-  'name': 'Walt',
-  'organization': 'Freedom Games',
-  'avatar_url': '/static/happy-cat.png'
+  "id": 5,
+  "url": "/api/users/5",
+  "name": "Walt",
+  "organization": "Freedom Games",
+  "avatar_url": "/static/happy-cat.png"
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -36,11 +36,11 @@ for manipulating it.
 Returns an object in the form:
 ```json
 {
-  'id': 5,
-  'url': '/api/users/5',
-  'name': 'Walt',
-  'organization': 'Freedom Games',
-  'avatar_url': '/static/happy-cat.png'
+  "id": 5,
+  "url": "/api/users/5",
+  "name": "Walt",
+  "organization": "Freedom Games",
+  "avatar_url": "/static/happy-cat.png"
 }
 ```
 
@@ -49,9 +49,9 @@ Returns an object in the form:
 Accepts an object in the form:
 ```json
 {
-  'name': 'Neo Walt',
-  'organization': 'Mecha-Freedom Games',
-  'avatar_url': '/static/super-happy-cat.png'
+  "name": "Neo Walt",
+  "organization": "Mecha-Freedom Games",
+  "avatar_url": "/static/super-happy-cat.png"
 }
 ```
 
@@ -70,21 +70,21 @@ missions quest by quest.
 Accepts an object in the form:
 ```json
 {
-  'name': 'Garden Expert',
-  'description': 'Learn how to be a gardener!',
-  'points': 5
+  "name": "Garden Expert",
+  "description": "Learn how to be a gardener!",
+  "points": 5
 }
 ```
 
 Returns an object in the form:
 ```json
 {
-  'id': 2,
-  'user_id': 5,
-  'url': '/api/users/5/missions/2',
-  'name': 'Garden Expert',
-  'description': 'Learn how to be a gardener!',
-  'points': 5
+  "id": 2,
+  "user_id": 5,
+  "url": "/api/users/5/missions/2",
+  "name": "Garden Expert",
+  "description": "Learn how to be a gardener!",
+  "points": 5
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -95,22 +95,22 @@ for manipulating it.
 Returns an object in the form:
 ```json
 {
-  'missions': [
+  "missions": [
     {
-      'id': 2,
-      'user_id': 5,
-      'url': '/api/users/5/missions/2',
-      'name': 'Garden Expert',
-      'description': 'Learn how to be a gardener!',
-      'points': 5
+      "id": 2,
+      "user_id": 5,
+      "url": "/api/users/5/missions/2",
+      "name": "Garden Expert",
+      "description": "Learn how to be a gardener!",
+      "points": 5
     },
     {
-      'id': 4,
-      'user_id': 5,
-      'url': '/api/users/5/missions/4',
-      'name': 'Music Man',
-      'description': 'Learn about sound and music!',
-      'points': 2
+      "id": 4,
+      "user_id": 5,
+      "url": "/api/users/5/missions/4",
+      "name": "Music Man",
+      "description": "Learn about sound and music!",
+      "points": 2
     }
   ]
 }
@@ -121,12 +121,12 @@ Returns an object in the form:
 Returns an object in the form:
 ```json
 {
-  'id': 2,
-  'user_id': 5,
-  'url': '/api/users/5/missions/2',
-  'name': 'Garden Expert',
-  'description': 'Learn how to be a gardener!',
-  'points': 5
+  "id": 2,
+  "user_id": 5,
+  "url": "/api/users/5/missions/2",
+  "name": "Garden Expert",
+  "description": "Learn how to be a gardener!",
+  "points": 5
 }
 ```
 
@@ -135,9 +135,9 @@ Returns an object in the form:
 Accepts an object in the form:
 ```json
 {
-  'name': 'Garden Expert',
-  'description': 'Learn how to be a gardener!',
-  'points': 5
+  "name": "Garden Expert",
+  "description": "Learn how to be a gardener!",
+  "points": 5
 }
 ```
 
@@ -156,21 +156,21 @@ Learners complete quests.
 Accepts an object in the form:
 ```json
 {
-  'name': 'Flower Planting',
-  'description': 'Plant lots of flowers!',
-  'icon_url': '/static/flower.png'
+  "name": "Flower Planting",
+  "description": "Plant lots of flowers!",
+  "icon_url": "/static/flower.png"
 }
 ```
 
 Returns an object in the form:
 ```json
 {
-  'id': 2,
-  'user_id': 5,
-  'url': '/api/users/5/quests/2',
-  'name': 'Flower Planting',
-  'description': 'Plant lots of flowers!',
-  'icon_url': '/static/flower.png'
+  "id": 2,
+  "user_id": 5,
+  "url": "/api/users/5/quests/2",
+  "name": "Flower Planting",
+  "description": "Plant lots of flowers!",
+  "icon_url": "/static/flower.png"
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -181,22 +181,22 @@ for manipulating it.
 Returns an object in the form:
 ```json
 {
-  'quests': [
+  "quests": [
     {
-      'id': 2,
-      'user_id': 5,
-      'url': '/api/users/5/quests/2',
-      'name': 'Flower Planting',
-      'description': 'Plant lots of flowers!',
-      'icon_url': '/static/flower.png'
+      "id": 2,
+      "user_id": 5,
+      "url": "/api/users/5/quests/2",
+      "name": "Flower Planting",
+      "description": "Plant lots of flowers!",
+      "icon_url": "/static/flower.png"
     },
     {
-      'id': 4,
-      'user_id': 5,
-      'url': '/api/users/5/quests/4',
-      'name': 'Tree Planting',
-      'description': 'Plant lots of trees!',
-      'icon_url': '/static/tree.png'
+      "id": 4,
+      "user_id": 5,
+      "url": "/api/users/5/quests/4",
+      "name": "Tree Planting",
+      "description": "Plant lots of trees!",
+      "icon_url": "/static/tree.png"
     }
   ]
 }
@@ -207,12 +207,12 @@ Returns an object in the form:
 Returns an object in the form:
 ```json
 {
-  'id': 2,
-  'user_id': 5,
-  'url': '/api/users/5/quests/2',
-  'name': 'Flower Planting',
-  'description': 'Plant lots of flowers!',
-  'icon_url': '/static/flower.png'
+  "id": 2,
+  "user_id": 5,
+  "url": "/api/users/5/quests/2",
+  "name": "Flower Planting",
+  "description": "Plant lots of flowers!",
+  "icon_url": "/static/flower.png"
 }
 ```
 
@@ -221,9 +221,9 @@ Returns an object in the form:
 Accepts an object in the form:
 ```json
 {
-  'name': 'Flower Planting',
-  'description': 'Plant lots of flowers!',
-  'icon_url': '/static/flower.png'
+  "name": "Flower Planting",
+  "description": "Plant lots of flowers!",
+  "icon_url": "/static/flower.png"
 }
 ```
 
@@ -246,22 +246,22 @@ The many-to-many links used to group quests into missions.
 Returns an object in the form:
 ```json
 {
-  'quests': [
+  "quests": [
     {
-      'id': 2,
-      'user_id': 5,
-      'url': '/api/users/5/quests/2',
-      'name': 'Flower Planting',
-      'description': 'Plant lots of flowers!',
-      'icon_url': '/static/flower.png'
+      "id": 2,
+      "user_id": 5,
+      "url": "/api/users/5/quests/2",
+      "name": "Flower Planting",
+      "description": "Plant lots of flowers!",
+      "icon_url": "/static/flower.png"
     },
     {
-      'id': 4,
-      'user_id': 5,
-      'url': '/api/users/5/quests/4',
-      'name': 'Tree Planting',
-      'description': 'Plant lots of trees!',
-      'icon_url': '/static/tree.png'
+      "id": 4,
+      "user_id": 5,
+      "url": "/api/users/5/quests/4",
+      "name": "Tree Planting",
+      "description": "Plant lots of trees!",
+      "icon_url": "/static/tree.png"
     }
   ]
 }
