@@ -30,6 +30,7 @@ class UsersTest(harness.TestHarness):
             'organization': None,
             'avatar_url': None,
             'id': 1,
+            'url': '/api/users/1',
             'name': 'snakes'})
 
         # missing required fields for a 400
@@ -47,6 +48,7 @@ class UsersTest(harness.TestHarness):
             'organization': 'hat hotel',
             'avatar_url': None,
             'id': 1,
+            'url': '/api/users/1',
             'name': 'ladders'})
 
         # delete the user

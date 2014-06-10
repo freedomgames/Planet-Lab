@@ -53,9 +53,7 @@ class MissionList(MissionBase, restful.Resource):
         backend.db.session.add(mission)
         backend.db.session.commit()
 
-        args['id'] = mission.id
-
-        return args
+        return self.as_dict(mission, user_id, mission.id)
 
     def get(self, user_id):
         """Return a list of missions linked to the given user_id."""
