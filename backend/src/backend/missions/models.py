@@ -1,8 +1,6 @@
 """SQLAlchemy models for missions."""
 
 
-import flask
-
 import backend
 db = backend.db
 
@@ -21,5 +19,3 @@ class Mission(db.Model):
 
     user_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-
-    quests = db.relationship("Quest", backref="mission")

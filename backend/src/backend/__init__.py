@@ -64,8 +64,15 @@ api.add_resource(
 import backend.quests.views
 api.add_resource(
         backend.quests.views.Quest,
-        '/api/users/<int:user_id>/missions/<int:mission_id>'
-        '/quests/<int:quest_id>')
+        '/api/users/<int:user_id>/quests/<int:quest_id>')
 api.add_resource(
         backend.quests.views.QuestList,
+        '/api/users/<int:user_id>/quests/')
+
+api.add_resource(
+        backend.quests.views.QuestMissionLink,
+        '/api/users/<int:user_id>/missions/<int:mission_id>/'
+        'quests/<int:quest_id>')
+api.add_resource(
+        backend.quests.views.QuestMissionLinkList,
         '/api/users/<int:user_id>/missions/<int:mission_id>/quests/')

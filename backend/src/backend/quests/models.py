@@ -1,10 +1,17 @@
 """SQLAlchemy models for missions."""
 
 
-import flask
-
 import backend
 db = backend.db
+
+
+join_table = db.Table('mission_quests', db.Model.metadata,
+    db.Column(
+        'mission_id', db.Integer, db.ForeignKey('missions.id'), index=True),
+    db.Column('quest_id', db.Integer, db.ForeignKey('quests.id'), index=True),
+    db.UniqueConstraint('mission_id', 'quest_id')
+)
+db.Index('idx_id_combo', join_table.c.mission_id, join_table.c.quest_id)
 
 
 class Quest(db.Model):
@@ -21,5 +28,5 @@ class Quest(db.Model):
 
     user_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-    mission_id = db.Column(
-            db.Integer, db.ForeignKey('missions.id'), nullable=False, index=True)
+    missions = db.relationship(
+            "Mission", secondary=join_table, backref="quests")
