@@ -15,6 +15,13 @@ app.config.from_object('backend.config')
 api = flask_restful.Api(app)
 db = flask_sqlalchemy.SQLAlchemy(app)
 
+if not app.debug:
+    # debug mode defaults to sending errors to stdout/stderr
+    # outside debug mode, we still want to print to stdout/stderr
+    # because heroku will capture and log that output
+    app.logger.addHandler(logging.StreamHandler())
+    app.logger.setLevel(logging.INFO)
+
 
 @app.route('/')
 def index():
@@ -24,7 +31,7 @@ def index():
 
 def error_handler(error, status_code=500, payload=None, debug=config.DEBUG):
     """Generic handler to return an exception as a json response."""
-    logging.exception(error)
+    app.logger.exception(error)
 
     if debug:
         response = {'message': error.message,
