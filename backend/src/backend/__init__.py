@@ -29,7 +29,7 @@ def index():
     return "Hello"
 
 
-def error_handler(error, status_code=500, payload=None, debug=config.DEBUG):
+def error_handler(error, status_code=500, payload=None, debug=app.debug):
     """Generic handler to return an exception as a json response."""
     app.logger.exception(error)
 
