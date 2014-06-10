@@ -6,18 +6,23 @@ import flask.ext.restful as restful
 import backend
 import backend.missions.models as mission_models
 import backend.common.resource as resource
+import sqlalchemy.orm as orm
 
 
 class MissionBase(object):
     """Provide a common as_dict method."""
 
-    view_fields = ['id', 'name', 'description', 'points', 'user_id']
+    view_fields = ('id', 'name', 'description', 'points', 'user_id')
+    quest_fields = (
+            'id', 'name', 'description', 'icon_url', 'user_id')
 
     def as_dict(self, mission, user_id, mission_id):
         """Return a serializable dictionary representing the given mission."""
         resp = {field: getattr(mission, field) for field in self.view_fields}
         resp['url'] = backend.api.url_for(
                 Mission, user_id=user_id, mission_id=mission_id)
+        resp['quests'] = [{field: getattr(quest, field) for
+            field in self.quest_fields} for quest in mission.quests]
         return resp
 
 
@@ -33,7 +38,8 @@ class Mission(MissionBase, resource.SimpleResource):
     def query(user_id, mission_id):
         """Return the query to select the mission with the given ids."""
         return mission_models.Mission.query.filter_by(
-                user_id=user_id, id=mission_id)
+                user_id=user_id, id=mission_id).options(
+                        orm.joinedload('quests'))
 
 
 class MissionList(MissionBase, restful.Resource):

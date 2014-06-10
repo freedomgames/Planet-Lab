@@ -31,6 +31,7 @@ class MissionTest(harness.TestHarness):
             "name": "happy",
             "points": 1,
             "url": "/api/users/1/missions/2",
+            "quests": [],
             "user_id": 1})
         self.assertEqual(resp.status_code, 200)
 
@@ -42,6 +43,7 @@ class MissionTest(harness.TestHarness):
             'description': 'ladders',
             'name': 'snakes',
             'url': '/api/users/1/missions/1',
+            "quests": [],
             'id': 1})
 
         # edit
@@ -57,14 +59,15 @@ class MissionTest(harness.TestHarness):
             'description': 'hat',
             'name': 'cat',
             'url': '/api/users/1/missions/1',
+            "quests": [],
             'id': 1})
 
         # list them
         resp = self.app.get("api/users/1/missions/")
         self.assertItemsEqual(json.loads(resp.data)['missions'], [
-            {'points': 3, 'user_id': 1, 'description': 'hat',
+            {'points': 3, 'user_id': 1, 'description': 'hat', 'quests': [],
                 'name': 'cat', 'id': 1, 'url': '/api/users/1/missions/1'},
-            {'points': 1, 'user_id': 1, 'description': 'socks',
+            {'points': 1, 'user_id': 1, 'description': 'socks', 'quests': [],
                 'name': 'happy', 'id': 2, 'url': '/api/users/1/missions/2'}])
 
         # delete
@@ -80,6 +83,60 @@ class MissionTest(harness.TestHarness):
 
         resp = self.app.delete("/api/users/1/missions/1")
         self.assertEqual(resp.status_code, 404)
+
+    def test_links(self):
+        """Test links between quests and missions."""
+
+        # create the resources
+        resp = self.post_json("api/users/", {"name": "snakes"})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                "api/users/1/quests/",
+                {"name": "mouse", "description": "nip"})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                "api/users/1/quests/",
+                {"name": "blouse", "description": "blip"})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                "api/users/1/missions/",
+                {"name": "hat", "description": "snap", "points": 2})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                "api/users/1/missions/",
+                {"name": "cat", "description": "map", "points": 1})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.put("/api/users/1/missions/1/quests/1")
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.put("/api/users/1/missions/1/quests/2")
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.put("/api/users/1/missions/2/quests/1")
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.get("/api/users/1/missions/1")
+        self.assertEqual(json.loads(resp.data), {
+            "description": "snap", "id": 1, "name": "hat", "points": 2,
+            "url": "/api/users/1/missions/1", "user_id": 1,
+            "quests": [
+                {"description": "nip", "icon_url": None, "id": 1,
+                    "name": "mouse", "user_id": 1},
+                {"description": "blip", "icon_url": None, "id": 2,
+                    "name": "blouse", "user_id": 1}]})
+
+        resp = self.app.get("/api/users/1/missions/2")
+        self.assertEqual(json.loads(resp.data), {
+            "name": "cat", "description": "map", "points": 1, "id": 2,
+            "url": "/api/users/1/missions/2", "user_id": 1,
+            "quests": [
+                {"description": "nip", "icon_url": None, "id": 1,
+                    "name": "mouse", "user_id": 1}]})
 
 
 if __name__ == '__main__':
