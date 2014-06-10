@@ -5,7 +5,7 @@ Description of the resources and verbs provided by the REST service.
 
 Users
 -----
-A user account for either a learner or a mentor
+A user account for either a learner or a mentor.
 
 ####POST /api/users/
 #####Create a new user
@@ -29,10 +29,10 @@ Returns an object in the form:
 }
 ```
 most notably containing the id for the newly created resource and the url
-for manipulating it.
+for manipulating it
 
 ####GET /api/users/<id>
-#####Retrieve the user with the given id.
+#####Retrieve the user with the given id
 Returns an object in the form:
 ```json
 {
@@ -45,7 +45,7 @@ Returns an object in the form:
 ```
 
 ####PUT /api/users/<id>
-#####Update the user with the given id.
+#####Update the user with the given id
 Accepts an object in the form:
 ```json
 {
@@ -56,7 +56,7 @@ Accepts an object in the form:
 ```
 
 ####DELETE /api/users/<id>
-#####Delete the user with the given id.
+#####Delete the user with the given id
 
 
 Missions
@@ -88,7 +88,7 @@ Returns an object in the form:
 }
 ```
 most notably containing the id for the newly created resource and the url
-for manipulating it.
+for manipulating it
 
 ####GET /api/users/<id>/missions/
 #####Return missions created by the user with the given id
@@ -117,7 +117,7 @@ Returns an object in the form:
 ```
 
 ####GET /api/users/<id>/missions/<id>
-#####Retrieve the mission with the given id.
+#####Retrieve the mission with the given id
 Returns an object in the form:
 ```json
 {
@@ -131,7 +131,7 @@ Returns an object in the form:
 ```
 
 ####PUT /api/users/<id>/missions/<id>
-#####Update the mission with the given id.
+#####Update the mission with the given id
 Accepts an object in the form:
 ```json
 {
@@ -142,7 +142,7 @@ Accepts an object in the form:
 ```
 
 ####DELETE /api/users/<id>/missions/<id>
-#####Delete the mission with the given id.
+#####Delete the mission with the given id
 
 
 Quests
@@ -174,7 +174,7 @@ Returns an object in the form:
 }
 ```
 most notably containing the id for the newly created resource and the url
-for manipulating it.
+for manipulating it
 
 ####GET /api/users/<id>/quests/
 #####Return quests created by the user with the given id
@@ -203,7 +203,7 @@ Returns an object in the form:
 ```
 
 ####GET /api/users/<id>/quests/<id>
-#####Retrieve the quest with the given id.
+#####Retrieve the quest with the given id
 Returns an object in the form:
 ```json
 {
@@ -217,7 +217,7 @@ Returns an object in the form:
 ```
 
 ####PUT /api/users/<id>/quests/<id>
-#####Update the quest with the given id.
+#####Update the quest with the given id
 Accepts an object in the form:
 ```json
 {
@@ -228,7 +228,7 @@ Accepts an object in the form:
 ```
 
 ####DELETE /api/users/<id>/quests/<id>
-#####Delete the quest with the given id.
+#####Delete the quest with the given id
 
 
 Quest-Mission Links
