@@ -56,30 +56,24 @@ def other_error(error):
     return error_handler(error, payload={'type': 'general error'})
 
 
-import backend.users.views
-api.add_resource(backend.users.views.User, '/api/users/<int:user_id>')
-api.add_resource(backend.users.views.UserList, '/api/users/')
+import backend.users.views as user_views
+import backend.missions.views as mission_views
+import backend.quests.views as quest_views
 
-import backend.missions.views
-api.add_resource(
-        backend.missions.views.Mission,
-        '/api/users/<int:user_id>/missions/<int:mission_id>')
-api.add_resource(
-        backend.missions.views.MissionList,
-        '/api/users/<int:user_id>/missions/')
+api.add_resource(user_views.User, '/v1/users/<int:user_id>')
+api.add_resource(user_views.UserList, '/v1/users/')
 
-import backend.quests.views
-api.add_resource(
-        backend.quests.views.Quest,
-        '/api/users/<int:user_id>/quests/<int:quest_id>')
-api.add_resource(
-        backend.quests.views.QuestList,
-        '/api/users/<int:user_id>/quests/')
+api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
+api.add_resource(mission_views.MissionList, '/v1/missions/')
+api.add_resource(mission_views.MissionUserList, '/v1/users/<int:user_id>/missions/')
+
+api.add_resource(quest_views.Quest, '/v1/quests/<int:quest_id>')
+api.add_resource(quest_views.QuestList, '/v1/quests/')
+api.add_resource(quest_views.QuestUserList, '/v1/users/<int:user_id>/quests/')
 
 api.add_resource(
-        backend.quests.views.QuestMissionLink,
-        '/api/users/<int:user_id>/missions/<int:mission_id>/'
-        'quests/<int:quest_id>')
+        quest_views.QuestMissionLink,
+        '/v1/missions/<int:mission_id>/quests/<int:quest_id>')
 api.add_resource(
-        backend.quests.views.QuestMissionLinkList,
-        '/api/users/<int:user_id>/missions/<int:mission_id>/quests/')
+        quest_views.QuestMissionLinkList,
+        '/v1/missions/<int:mission_id>/quests/')

@@ -13,173 +13,167 @@ class QuestTest(harness.TestHarness):
     def test_crud(self):
         """Basic CRUD tests."""
         # no quest yet, so 404
-        resp = self.app.get("/api/users/1/quest/1")
+        resp = self.app.get("/v1/quest/1")
         self.assertEqual(resp.status_code, 404)
 
         # create a user, some missions, and some quests
-        self.post_json("api/users/", {"name": "snakes"})
-        self.post_json("api/users/", {"name": "rakes"})
+        self.post_json("/v1/users/", {"name": "snakes"})
+        self.post_json("/v1/users/", {"name": "rakes"})
 
         resp = self.post_json(
-                "api/users/1/quests/",
+                "/v1/quests/",
                 {"name": "mouse", "description": "nip"})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "api/users/1/quests/",
+                "/v1/quests/",
                 {"name": "blouse", "description": "blip"})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "api/users/2/quests/",
+                "/v1/quests/",
                 {"name": "house", "description": "snip", "icon_url": "blue"})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back
-        resp = self.app.get("/api/users/1/quests/1")
+        resp = self.app.get("/v1/quests/1")
         self.assertEqual(json.loads(resp.data), {
             'user_id': 1,
             'description': 'nip',
             'icon_url': None,
             'id': 1,
-            'url': '/api/users/1/quests/1',
+            'url': '/v1/quests/1',
             'name': 'mouse'})
 
         # edit
-        resp = self.put_json('api/users/1/quests/1', {
+        resp = self.put_json('/v1/quests/1', {
             'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back
-        resp = self.app.get("api/users/1/quests/1")
+        resp = self.app.get("/v1/quests/1")
         self.assertEqual(json.loads(resp.data), {
             'user_id': 1,
             'description': 'nip',
             'icon_url': 'rubber',
             'id': 1,
-            'url': '/api/users/1/quests/1',
+            'url': '/v1/quests/1',
             'name': 'mouse'})
 
         # list them
-        resp = self.app.get("api/users/1/quests/")
+        resp = self.app.get("/v1/users/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {'user_id': 1, 'description': 'nip', 'icon_url': 'rubber',
-                'url': '/api/users/1/quests/1',
-                'id': 1, 'name': 'mouse'},
+                'url': '/v1/quests/1', 'id': 1, 'name': 'mouse'},
             {'user_id': 1, 'description': 'blip', 'icon_url': None,
-                'url': '/api/users/1/quests/2',
-                'id': 2, 'name': 'blouse'}])
+                'url': '/v1/quests/2', 'id': 2, 'name': 'blouse'},
+            {"description": "snip", "icon_url": "blue", "id": 3,
+                "name": "house", "url": "/v1/quests/3", "user_id": 1}])
 
         # delete
-        resp = self.app.delete("api/users/1/quests/1")
+        resp = self.app.delete("/v1/quests/1")
         self.assertEqual(resp.status_code, 200)
 
         # and it's gone
-        resp = self.app.get("/api/users/1/quests/1")
+        resp = self.app.get("/v1/quests/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.put_json('api/users/1/quests/1', {'name': 'no!'})
+        resp = self.put_json('/v1/quests/1', {'name': 'no!'})
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.app.delete("/api/users/1/quests/1")
+        resp = self.app.delete("/v1/quests/1")
         self.assertEqual(resp.status_code, 404)
 
     def test_links(self):
         """Test linking quests and missions together."""
 
         # create the resources
-        resp = self.post_json("api/users/", {"name": "snakes"})
+        resp = self.post_json("/v1/users/", {"name": "snakes"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "api/users/1/quests/",
+                "/v1/quests/",
                 {"name": "mouse", "description": "nip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "api/users/1/quests/",
+                "/v1/quests/",
                 {"name": "blouse", "description": "blip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "api/users/1/missions/",
+                "/v1/missions/",
                 {"name": "hat", "description": "snap", "points": 2})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "api/users/1/missions/",
+                "/v1/missions/",
                 {"name": "cat", "description": "map", "points": 1})
         self.assertEqual(resp.status_code, 200)
 
         # no links yet
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
         # create some links
-        resp = self.app.put("/api/users/1/missions/1/quests/1")
+        resp = self.app.put("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
-                "name": "mouse", "url": "/api/users/1/quests/1",
+                "name": "mouse", "url": "/v1/quests/1",
                 "user_id": 1}])
 
-        resp = self.app.put("/api/users/1/missions/1/quests/2")
+        resp = self.app.put("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
-                "name": "mouse", "url": "/api/users/1/quests/1",
+                "name": "mouse", "url": "/v1/quests/1",
                 "user_id": 1},
             {'user_id': 1, 'description': 'blip',
-                'url': '/api/users/1/quests/2', 'icon_url': None,
+                'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
         # still nothing linked to this mission
-        resp = self.app.get("/api/users/1/missions/2/quests/")
+        resp = self.app.get("/v1/missions/2/quests/")
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
         # check for idempotency
-        resp = self.app.put("/api/users/1/missions/1/quests/2")
+        resp = self.app.put("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
-                "name": "mouse", "url": "/api/users/1/quests/1",
+                "name": "mouse", "url": "/v1/quests/1",
                 "user_id": 1},
             {'user_id': 1, 'description': 'blip',
-                'url': '/api/users/1/quests/2', 'icon_url': None,
+                'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
         # delete links
-        resp = self.app.delete("/api/users/1/missions/1/quests/2")
+        resp = self.app.delete("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
-                "name": "mouse", "url": "/api/users/1/quests/1",
+                "name": "mouse", "url": "/v1/quests/1",
                 "user_id": 1}])
 
-        resp = self.app.delete("/api/users/1/missions/1/quests/1")
+        resp = self.app.delete("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/api/users/1/missions/1/quests/")
+        resp = self.app.get("/v1/missions/1/quests/")
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
         # 404 on non-existent resources
-        resp = self.app.delete("/api/users/2/missions/1/quests/2")
+        resp = self.app.delete("/v1/missions/1/quests/20")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.app.delete("/api/users/1/missions/3/quests/2")
-        self.assertEqual(resp.status_code, 404)
-
-        resp = self.app.get("/api/users/2/missions/1/quests/")
-        self.assertEqual(resp.status_code, 404)
-
-        resp = self.app.get("/api/users/1/missions/3/quests/")
+        resp = self.app.delete("/v1/missions/30/quests/1")
         self.assertEqual(resp.status_code, 404)
 
 
