@@ -10,6 +10,7 @@ import harness
 class QuestTest(harness.TestHarness):
     """Tests for quest endpoints."""
 
+    @harness.with_sess(user_id=1)
     def test_crud(self):
         """Basic CRUD tests."""
         # no quest yet, so 404
@@ -28,10 +29,14 @@ class QuestTest(harness.TestHarness):
                 "/v1/quests/",
                 {"name": "blouse", "description": "blip"})
         self.assertEqual(resp.status_code, 200)
+
+        # create this one as a different user
+        self.update_session(user_id=2)
         resp = self.post_json(
                 "/v1/quests/",
                 {"name": "house", "description": "snip", "icon_url": "blue"})
         self.assertEqual(resp.status_code, 200)
+        self.update_session(user_id=1)
 
         # and get it back
         resp = self.app.get("/v1/quests/1")
@@ -64,9 +69,7 @@ class QuestTest(harness.TestHarness):
             {'user_id': 1, 'description': 'nip', 'icon_url': 'rubber',
                 'url': '/v1/quests/1', 'id': 1, 'name': 'mouse'},
             {'user_id': 1, 'description': 'blip', 'icon_url': None,
-                'url': '/v1/quests/2', 'id': 2, 'name': 'blouse'},
-            {"description": "snip", "icon_url": "blue", "id": 3,
-                "name": "house", "url": "/v1/quests/3", "user_id": 1}])
+                'url': '/v1/quests/2', 'id': 2, 'name': 'blouse'}])
 
         # delete
         resp = self.app.delete("/v1/quests/1")
@@ -82,6 +85,7 @@ class QuestTest(harness.TestHarness):
         resp = self.app.delete("/v1/quests/1")
         self.assertEqual(resp.status_code, 404)
 
+    @harness.with_sess(user_id=1)
     def test_links(self):
         """Test linking quests and missions together."""
 

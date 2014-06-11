@@ -10,6 +10,7 @@ import harness
 class MissionTest(harness.TestHarness):
     """Tests for mission endpoints."""
 
+    @harness.with_sess(user_id=1)
     def test_crud(self):
         """Basic CRUD tests."""
         # no mission yet, so 404
@@ -83,6 +84,7 @@ class MissionTest(harness.TestHarness):
         resp = self.app.delete("/v1/missions/1")
         self.assertEqual(resp.status_code, 404)
 
+    @harness.with_sess(user_id=1)
     def test_links(self):
         """Test links between quests and missions."""
 

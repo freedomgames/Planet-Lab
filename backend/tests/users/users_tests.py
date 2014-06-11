@@ -10,6 +10,7 @@ import harness
 class UsersTest(harness.TestHarness):
     """Tests for user endpoints."""
 
+    @harness.with_sess(user_id=1)
     def test_crud(self):
         """Basic CRUD tests."""
         # no users yet, so 404
