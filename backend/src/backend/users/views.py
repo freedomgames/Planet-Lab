@@ -12,12 +12,15 @@ import backend.users.models as user_models
 class UserBase(object):
     """Provide a shared as_dict method."""
 
-    view_fields = ('id', 'name', 'organization', 'avatar_url')
+    view_fields = ('id', 'name', 'avatar_url', 'url')
+    organization_fields = ('id', 'url', 'name', 'icon_url')
 
     def as_dict(self, user, user_id):
         """Return a serializable dictionary representing the given user."""
         resp = {field: getattr(user, field) for field in self.view_fields}
-        resp['url'] = backend.api.url_for(User, user_id=user_id)
+        resp['organizations'] = [{field: getattr(organization, field) for
+            field in self.organization_fields} for
+            organization in user.organizations]
         return resp
 
 
@@ -26,7 +29,6 @@ class User(UserBase, resource.SimpleResource):
 
     parser = resource.ProvidedParser()
     parser.add_argument('name', type=str)
-    parser.add_argument('organization', type=str)
     parser.add_argument('avatar_url', type=str)
 
     @staticmethod
@@ -40,7 +42,6 @@ class UserList(UserBase, restful.Resource):
 
     parser = resource.ProvidedParser()
     parser.add_argument('name', type=str, required=True)
-    parser.add_argument('organization', type=str)
     parser.add_argument('avatar_url', type=str)
 
     def post(self):

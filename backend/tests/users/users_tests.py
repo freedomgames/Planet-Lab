@@ -20,18 +20,18 @@ class UsersTest(harness.TestHarness):
         # create a user
         resp = self.post_json("/v1/users/", {"name": "snakes"})
         self.assertEqual(json.loads(resp.data), {
-            'organization': None,
             'avatar_url': None,
             'id': 1,
+            'organizations': [],
             'url': '/v1/users/1',
             'name': 'snakes'})
 
         # and get it back
         resp = self.app.get("/v1/users/1")
         self.assertEqual(json.loads(resp.data), {
-            'organization': None,
             'avatar_url': None,
             'id': 1,
+            'organizations': [],
             'url': '/v1/users/1',
             'name': 'snakes'})
 
@@ -41,17 +41,17 @@ class UsersTest(harness.TestHarness):
 
         # edit the user
         resp = self.put_json('/v1/users/1', {
-            'organization': 'hat hotel'})
+            'name': 'hat hotel'})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back
         resp = self.app.get("/v1/users/1")
         self.assertEqual(json.loads(resp.data), {
-            'organization': 'hat hotel',
+            'name': 'hat hotel',
             'avatar_url': None,
+            'organizations': [],
             'id': 1,
-            'url': '/v1/users/1',
-            'name': 'snakes'})
+            'url': '/v1/users/1'})
 
         # delete the user
         resp = self.app.delete("/v1/users/1")
