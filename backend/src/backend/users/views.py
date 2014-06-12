@@ -2,7 +2,6 @@
 
 
 import flask.ext.restful as restful
-import flask.ext.restful.reqparse as reqparse
 
 import backend
 import backend.common.resource as resource

@@ -1,7 +1,6 @@
 """Views for supporting organization resources."""
 
 
-import flask
 import flask.ext.restful as restful
 import sqlalchemy.orm as orm
 
