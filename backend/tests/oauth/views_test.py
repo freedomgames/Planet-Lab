@@ -3,7 +3,6 @@
 import mock
 import unittest
 
-import backend
 import backend.oauth.views as views
 import backend.users.models as user_models
 import harness
@@ -28,6 +27,9 @@ class OAuthTest(harness.TestHarness):
         # idempotency check again
         self.assertEqual(2, views.get_or_create_google_user('token', {
             'id': '7d', 'email': 'email', 'name': 'name'}))
+
+        # make double-sure we only have two rows
+        self.assertEqual(2, user_models.User.query.count())
 
     def test_google_access_token(self):
         """Test the google_access_token function."""
