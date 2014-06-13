@@ -3,7 +3,7 @@
 
 import flask
 import flask_restful
-import flask.ext.restful.reqparse as reqparse
+import flask_restful.reqparse as reqparse
 import sqlalchemy
 
 import backend
