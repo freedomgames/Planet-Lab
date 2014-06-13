@@ -2,7 +2,7 @@
 
 
 import flask
-import flask.ext.restful as restful
+import flask_restful
 import flask.ext.restful.reqparse as reqparse
 import sqlalchemy
 
@@ -53,7 +53,7 @@ class ProvidedParser(reqparse.RequestParser):
                 value is not NOTHING}
 
 
-class SimpleResource(restful.Resource):
+class SimpleResource(flask_restful.Resource):
     """Base class defining the simplest common set of CRUD endpoints
     for working with single resources.
     """
@@ -110,7 +110,7 @@ class SimpleResource(restful.Resource):
             return flask.Response('', 404)
 
 
-class ManyToManyLink(restful.Resource):
+class ManyToManyLink(flask_restful.Resource):
     """Resource dealing with many-to-many links between collections."""
 
     left_id_name = None

@@ -2,7 +2,7 @@
 
 
 import flask
-import flask.ext.restful as restful
+import flask_restful
 import sqlalchemy.orm as orm
 
 import backend
@@ -40,7 +40,7 @@ class Quest(QuestBase, resource.SimpleResource):
         return quest_models.Quest.query.filter_by(id=quest_id)
 
 
-class QuestList(QuestBase, restful.Resource):
+class QuestList(QuestBase, flask_restful.Resource):
     """Resource for working with collections of quests."""
 
     parser = resource.ProvidedParser()
@@ -62,7 +62,7 @@ class QuestList(QuestBase, restful.Resource):
         return args
 
 
-class QuestUserList(QuestBase, restful.Resource):
+class QuestUserList(QuestBase, flask_restful.Resource):
     """Resource for working with collections of quests linked to users."""
 
     def get(self, user_id):
@@ -80,7 +80,7 @@ class QuestMissionLink(resource.ManyToManyLink):
     join_table = quest_models.join_table
 
 
-class QuestMissionLinkList(QuestBase, restful.Resource):
+class QuestMissionLinkList(QuestBase, flask_restful.Resource):
     """List quests linked to a given mission."""
 
     def get(self, mission_id):

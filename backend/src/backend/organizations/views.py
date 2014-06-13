@@ -1,7 +1,7 @@
 """Views for supporting organization resources."""
 
 
-import flask.ext.restful as restful
+import flask_restful
 import sqlalchemy.orm as orm
 
 import backend
@@ -41,7 +41,7 @@ class Organization(OrganizationBase, resource.SimpleResource):
                 id=organization_id).options(orm.joinedload('members'))
 
 
-class OrganizationList(OrganizationBase, restful.Resource):
+class OrganizationList(OrganizationBase, flask_restful.Resource):
     """Resource for working with collections of organizations."""
 
     parser = resource.ProvidedParser()

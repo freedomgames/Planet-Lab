@@ -2,8 +2,8 @@
 
 
 import flask
-import flask.ext.restful as flask_restful
-import flask.ext.sqlalchemy as flask_sqlalchemy
+import flask_restful
+import flask_sqlalchemy
 import logging
 import traceback
 
