@@ -1,7 +1,9 @@
 The Backend
 ===========
 This is the REST service which supports the front-end application.
+
 The full API spec is [available here.](API_DOCS.md)
+
 Information on contributing is [available here.](CONTRIBUTING.md)
 
 
