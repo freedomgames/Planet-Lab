@@ -27,6 +27,8 @@ class User(db.Model):
     quests = db.relationship("Quest", backref="user")
     organizations_created = db.relationship("Organization", backref="user")
 
+    __table_args__ = (db.UniqueConstraint('oauth_id', 'oauth_type'),)
+
     @property
     def url(self):
         """URL for the resource."""
