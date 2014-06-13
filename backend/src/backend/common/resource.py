@@ -124,7 +124,7 @@ class ManyToManyLink(flask_restful.Resource):
         select = sqlalchemy.select([
             sqlalchemy.literal(left_id),
             sqlalchemy.literal(right_id)]).where(~ sqlalchemy.exists(
-                [self.left_id_name]).where(
+                [sqlalchemy.literal(1)]).where(
                     sqlalchemy.and_(
                         self.left_id_name == left_id,
                         self.right_id_name == right_id)))
