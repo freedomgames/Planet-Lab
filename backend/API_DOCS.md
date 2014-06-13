@@ -112,7 +112,7 @@ Returns an object in the form:
       "quests": [
         {
           "id": 1,
-          "user_id": 1
+          "user_id": 1,
           "name": "Tree Science",
           "description": "Learn all about trees!",
           "icon_url": "/static/tree.png",
@@ -125,7 +125,7 @@ Returns an object in the form:
       "url": "/api/users/5/missions/4",
       "name": "Music Man",
       "description": "Learn about sound and music!",
-      "points": 2
+      "points": 2,
       "quests": []
     }
   ]
@@ -142,11 +142,11 @@ Returns an object in the form:
   "url": "/v1/missions/2",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
-  "points": 5
+  "points": 5,
   "quests": [
     {
       "id": 1,
-      "user_id": 1
+      "user_id": 1,
       "name": "Tree Science",
       "description": "Learn all about trees!",
       "icon_url": "/static/tree.png",
@@ -314,7 +314,7 @@ Returns an object in the form:
   "url": "/v1/organizations/2",
   "name": "Planeteers",
   "description": "Saving our planet is the thing to do!",
-  "icon_url": "/static/happy-earth.png"
+  "icon_url": "/static/happy-earth.png",
   "members": [],
   "user_id": 1
 }
@@ -337,7 +337,7 @@ Returns an object in the form:
       "id": 1,
       "url": "/v1/users/1",
       "name": "Captain Planet",
-      "avatar_url": "/static/cpt-planet.png"}
+      "avatar_url": "/static/cpt-planet.png"
     }
   ],
   "user_id": 1
