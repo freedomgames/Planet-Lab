@@ -28,6 +28,8 @@ class User(UserBase, resource.SimpleResource):
 
     parser = resource.ProvidedParser()
     parser.add_argument('name', type=str)
+    parser.add_argument('email', type=str)
+    parser.add_argument('description', type=str)
     parser.add_argument('avatar_url', type=str)
 
     @staticmethod
@@ -41,6 +43,8 @@ class UserList(UserBase, flask_restful.Resource):
 
     parser = resource.ProvidedParser()
     parser.add_argument('name', type=str, required=True)
+    parser.add_argument('email', type=str)
+    parser.add_argument('description', type=str)
     parser.add_argument('avatar_url', type=str)
 
     def post(self):
