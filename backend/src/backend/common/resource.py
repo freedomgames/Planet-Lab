@@ -61,6 +61,7 @@ class SimpleResource(restful.Resource):
     # for the parser attribute to be used when parsing PUT requests.
     parser = None
 
+    @staticmethod
     def query(*args, **kwargs):
         """Needs to be implemented by child classes.  Should return
         a query to select the row being operated upon by the GET,
@@ -68,6 +69,7 @@ class SimpleResource(restful.Resource):
         """
         raise NotImplementedError
 
+    @staticmethod
     def as_dict(*args, **kwargs):
         """Needs to be implemented by child classes.  Given an object,
         returns a serializable dictionary representing that object to
