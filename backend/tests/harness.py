@@ -48,6 +48,3 @@ def with_sess(**session_update):
             return res
         return decorated_func
     return decorator
-
-
-
