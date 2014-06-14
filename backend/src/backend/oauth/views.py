@@ -3,6 +3,7 @@
 import flask
 import flask_oauth
 import requests
+import sqlalchemy
 
 import backend
 import backend.users.models as user_models
@@ -86,29 +87,27 @@ def get_or_create_google_user(access_token, user_info):
     # unioned with "select id from existing-user"
     # Unfortunately, SQLAlchemy does not support writable CTE's, so we are
     # foreced to maintain raw SQL here.
-    query = """WITH
+    query = sqlalchemy.text("""
+WITH
 existing_user AS (
 SELECT id
 FROM users
-WHERE oauth_id='%(oauth_id)s' AND oauth_type='%(oauth_type)s'),
+WHERE oauth_id=:oauth_id AND oauth_type=:oauth_type),
 
 new_user AS (
 INSERT INTO users (oauth_id, email, name, oauth_type, oauth_token)
-SELECT '%(oauth_id)s', '%(email)s', '%(name)s',
-       '%(oauth_type)s', '%(access_token)s'
+SELECT :oauth_id, :email, :name,
+       :oauth_type, :access_token
 WHERE NOT EXISTS (SELECT id FROM existing_user)
 RETURNING id)
 
 SELECT id FROM new_user
 UNION
-SELECT id FROM existing_user;""" % {
-        'oauth_id': oauth_id,
-        'oauth_type': oauth_type,
-        'email': email,
-        'name': name,
-        'access_token': access_token}
+SELECT id FROM existing_user""")
 
-    res = backend.db.session.execute(query)
+    res = backend.db.session.execute(query, {
+        'oauth_id': oauth_id, 'oauth_type': oauth_type,
+        'email': email, 'name': name, 'access_token': access_token})
     backend.db.session.commit()
     inserted_id = res.first()[0]
     return inserted_id
