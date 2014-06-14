@@ -19,11 +19,9 @@ Quick Start for Development
   (already included if you do a brew install python / sudo apt-get install python-pip)
 * foreman: https://github.com/ddollar/foreman
   (gem install foreman -- if you have Ruby installed)
+* PostgreSQL 9.3: http://www.postgresql.org
+  (brew install postgresql / sudo apt-get install postgresql-9.3)
 * A google developer account for OAuth (https://code.google.com/apis/console)
-
-You'll also need an database.
-For light development or front-end work, sqlite is fine (http://www.sqlite.org brew install sqlite / sudo apt-get install sqlite3)
-I would recomend using postgresql for real backend development, as that's what we'll be running in production and sqlite doesn't support things like migrations.
 
 ###First Run:
 * pip install virtualenv
@@ -35,8 +33,7 @@ match your id and secret from https://code.google.com/apis/console
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
-* If you are using sqlite, change the DATABASE\_URL line in the .dev\_env file in this directory to read: "DATABASE\_URL=sqlite:///test.db"
-* If you are using postgresql, then issue the command: "createdb parklab"
+* createdb parklab
 * foreman start create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
 
