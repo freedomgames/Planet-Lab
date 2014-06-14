@@ -3,11 +3,11 @@ API Docs
 Description of the REST service and the API it provides.
 
 Authorization
-=============
-User authorization is performed via OAuth.
-New user accounts are automatically created for un-met OAuth accounts
-after login.
-Authorization information is stored in a cookie-backed session.
+-------------
+Authorization is currently very fake.
+Perform a PUT to /login/\<id\> to set that id as the current user.
+The id must the id of a real user, or else you will get
+key constraint errors from the database.
 
 Resources
 =========
