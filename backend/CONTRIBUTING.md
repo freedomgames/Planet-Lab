@@ -19,6 +19,14 @@ Code Style
 remember that this is a project with a shifting group of contributors
 who would love to be able to quickly get up to speed thanks to your
 excellent documentation.
+* avoid 'from import' statements.  Do
+```python
+import foo.bar as bar
+```
+rather than
+```python
+from foo import bar
+```
 
 Code Quality
 ------------
