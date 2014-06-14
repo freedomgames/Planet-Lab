@@ -4,6 +4,7 @@
 import flask
 import flask.ext.restful as restful
 import flask.ext.restful.reqparse as reqparse
+import sqlalchemy
 
 import backend
 
@@ -104,4 +105,41 @@ class SimpleResource(restful.Resource):
         backend.db.session.commit()
 
         if not rows_deleted:
+            return flask.Response('', 404)
+
+
+class ManyToManyLink(restful.Resource):
+    """Resource dealing with many-to-many links between collections."""
+
+    left_id_name = None
+    right_id_name = None
+    join_table = None
+
+    def put(self, left_id, right_id):
+        """Create a link between the two given ids in the join table."""
+        # We want to do an 'insert into ... where not exists' so we
+        # can atomically do an insert-if-not-exists thing.
+        select = sqlalchemy.select([
+            sqlalchemy.literal(left_id),
+            sqlalchemy.literal(right_id)]).where(~ sqlalchemy.exists(
+                [self.left_id_name]).where(
+                    sqlalchemy.and_(
+                        self.left_id_name == left_id,
+                        self.right_id_name == right_id)))
+
+        insert = self.join_table.insert().from_select(
+                [self.left_id_name, self.right_id_name], select)
+
+        backend.db.session.execute(insert)
+        backend.db.session.commit()
+
+    def delete(self, left_id, right_id):
+        """Delete a link between the two given ids in the join table."""
+        delete = self.join_table.delete().where(sqlalchemy.and_(
+            self.left_id_name == left_id, self.right_id_name == right_id))
+
+        res = backend.db.session.execute(delete)
+        backend.db.session.commit()
+
+        if not res.rowcount:
             return flask.Response('', 404)

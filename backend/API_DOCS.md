@@ -13,7 +13,6 @@ Accepts an object in the form:
 ```json
 {
   "name": "Walt",
-  "organization": "Freedom Games",
   "avatar_url": "/static/happy-cat.png"
 }
 ```
@@ -24,7 +23,7 @@ Returns an object in the form:
   "id": 5,
   "url": "/v1/users/5",
   "name": "Walt",
-  "organization": "Freedom Games",
+  "organizations": [],
   "avatar_url": "/static/happy-cat.png"
 }
 ```
@@ -39,7 +38,14 @@ Returns an object in the form:
   "id": 5,
   "url": "/v1/users/5",
   "name": "Walt",
-  "organization": "Freedom Games",
+  "organizations": [
+    {
+      "id": 3,
+      "url": "/v1/organizations/3",
+      "name": "Freedom Games",
+      "icon_url": "/static/freedom.png"
+    }
+  ],
   "avatar_url": "/static/happy-cat.png"
 }
 ```
@@ -50,7 +56,6 @@ Accepts an object in the form:
 ```json
 {
   "name": "Neo Walt",
-  "organization": "Mecha-Freedom Games",
   "avatar_url": "/static/super-happy-cat.png"
 }
 ```
@@ -286,3 +291,80 @@ Returns an object in the form:
   ]
 }
 ```
+
+Organizations
+-------------
+An organization is a collection of users.
+
+####POST /v1/organizations/
+#####Create a new organization
+Accepts an object in the form:
+```json
+{
+  "name": "Planeteers",
+  "description": "Saving our planet is the thing to do!",
+  "icon_url": "/static/happy-earth.png"
+}
+```
+
+Returns an object in the form:
+```json
+{
+  "id": 2,
+  "url": "/v1/organizations/2",
+  "name": "Planeteers",
+  "description": "Saving our planet is the thing to do!",
+  "icon_url": "/static/happy-earth.png"
+  "members": [],
+  "user_id": 1
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it
+
+####GET /v1/organizations/\<id\>
+#####Retrieve the organization with the given id
+Returns an object in the form:
+```json
+{
+  "id": 2,
+  "url": "/v1/organizations/2",
+  "name": "Planeteers",
+  "description": "Saving our planet is the thing to do!",
+  "icon_url": "/static/happy-earth.png",
+  "members": [
+    {
+      "id": 1,
+      "url": "/v1/users/1",
+      "name": "Captain Planet",
+      "avatar_url": "/static/cpt-planet.png"}
+    }
+  ],
+  "user_id": 1
+}
+```
+
+####PUT /v1/organizations/\<id\>
+#####Update the organization with the given id
+Accepts an object in the form:
+```json
+{
+  "name": "Planeteers",
+  "description": "Saving our planet is the thing to do!",
+  "icon_url": "/static/happy-earth.png"
+}
+```
+
+####DELETE /v1/organizations/\<id\>
+#####Delete the organization with the given id
+
+
+User-Organization Links
+-----------------------
+The many-to-many links used to group users into organizations.
+
+####PUT /v1/organizations/\<id\>/users/\<id\>
+#####Link the user to the organization with the given ids
+
+####DELETE /v1/organizations/\<id\>/users/\<id\>
+#####Un-link the user from the organization with the given ids

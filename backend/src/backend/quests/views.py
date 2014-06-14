@@ -3,7 +3,6 @@
 
 import flask
 import flask.ext.restful as restful
-import sqlalchemy
 import sqlalchemy.orm as orm
 
 import backend
@@ -73,37 +72,12 @@ class QuestUserList(QuestBase, restful.Resource):
 
         return {'quests': [self.as_dict(quest, quest.id) for quest in quests]}
 
-class QuestMissionLink(restful.Resource):
+class QuestMissionLink(resource.ManyToManyLink):
     """Many-to-many links between quests and missions."""
 
-    def put(self, mission_id, quest_id):
-        """Create a link between the mission and quest."""
-        # We want to do an 'insert into ... where not exists' so we
-        # can atomically do an insert-if-not-exists thing.
-        select = sqlalchemy.select([
-            sqlalchemy.literal(mission_id),
-            sqlalchemy.literal(quest_id)]).where(~ sqlalchemy.exists(
-                [quest_models.join_table.c.mission_id]).where(
-                    sqlalchemy.and_(
-                        quest_models.join_table.c.mission_id == mission_id,
-                        quest_models.join_table.c.quest_id == quest_id)))
-        insert = quest_models.join_table.insert().from_select(
-                ["mission_id", "quest_id"], select)
-        backend.db.session.execute(insert)
-        backend.db.session.commit()
-
-
-    def delete(self, mission_id, quest_id):
-        """Delete the link between mission and quest."""
-        delete = quest_models.join_table.delete().where(sqlalchemy.and_(
-            quest_models.join_table.c.mission_id == mission_id,
-            quest_models.join_table.c.quest_id == quest_id))
-
-        res = backend.db.session.execute(delete)
-        backend.db.session.commit()
-
-        if not res.rowcount:
-            return flask.Response('', 404)
+    left_id_name = quest_models.join_table.c.mission_id
+    right_id_name = quest_models.join_table.c.quest_id
+    join_table = quest_models.join_table
 
 
 class QuestMissionLinkList(QuestBase, restful.Resource):

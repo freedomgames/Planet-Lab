@@ -58,6 +58,7 @@ def other_error(error):
 
 import backend.users.views as user_views
 import backend.missions.views as mission_views
+import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
@@ -70,10 +71,15 @@ api.add_resource(mission_views.MissionUserList, '/v1/users/<int:user_id>/mission
 api.add_resource(quest_views.Quest, '/v1/quests/<int:quest_id>')
 api.add_resource(quest_views.QuestList, '/v1/quests/')
 api.add_resource(quest_views.QuestUserList, '/v1/users/<int:user_id>/quests/')
-
 api.add_resource(
         quest_views.QuestMissionLink,
-        '/v1/missions/<int:mission_id>/quests/<int:quest_id>')
+        '/v1/missions/<int:left_id>/quests/<int:right_id>')
 api.add_resource(
         quest_views.QuestMissionLinkList,
         '/v1/missions/<int:mission_id>/quests/')
+
+api.add_resource(organization_views.Organization, '/v1/organizations/<int:organization_id>')
+api.add_resource(organization_views.OrganizationList, '/v1/organizations/')
+api.add_resource(
+        organization_views.OrganizationUserLink,
+        '/v1/organizations/<int:left_id>/users/<int:right_id>')
