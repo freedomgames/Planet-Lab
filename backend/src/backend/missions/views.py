@@ -2,11 +2,12 @@
 
 
 import flask.ext.restful as restful
+import sqlalchemy.orm as orm
 
 import backend
-import backend.missions.models as mission_models
+import backend.common.auth as auth
 import backend.common.resource as resource
-import sqlalchemy.orm as orm
+import backend.missions.models as mission_models
 
 
 class MissionBase(object):
@@ -16,11 +17,11 @@ class MissionBase(object):
     quest_fields = (
             'id', 'name', 'description', 'icon_url', 'user_id')
 
-    def as_dict(self, mission, user_id, mission_id):
+    def as_dict(self, mission, mission_id):
         """Return a serializable dictionary representing the given mission."""
         resp = {field: getattr(mission, field) for field in self.view_fields}
         resp['url'] = backend.api.url_for(
-                Mission, user_id=user_id, mission_id=mission_id)
+                Mission, mission_id=mission_id)
         resp['quests'] = [{field: getattr(quest, field) for
             field in self.quest_fields} for quest in mission.quests]
         return resp
@@ -35,10 +36,10 @@ class Mission(MissionBase, resource.SimpleResource):
     parser.add_argument('points', type=int)
 
     @staticmethod
-    def query(user_id, mission_id):
+    def query(mission_id):
         """Return the query to select the mission with the given ids."""
         return mission_models.Mission.query.filter_by(
-                user_id=user_id, id=mission_id).options(
+                id=mission_id).options(
                         orm.joinedload('quests'))
 
 
@@ -50,19 +51,22 @@ class MissionList(MissionBase, restful.Resource):
     parser.add_argument('description', type=str, required=True)
     parser.add_argument('points', type=int, required=True)
 
-    def post(self, user_id):
+    def post(self):
         """Create a new mission and link it to its creator."""
         args = self.parser.parse_args()
-        args['user_id'] = user_id
+        args['user_id'] = auth.current_user_id()
         mission = mission_models.Mission(**args)
 
         backend.db.session.add(mission)
         backend.db.session.commit()
 
-        return self.as_dict(mission, user_id, mission.id)
+        return self.as_dict(mission, mission.id)
 
+
+class MissionUserList(MissionBase, restful.Resource):
+    """List missions linked to a user."""
     def get(self, user_id):
         """Return a list of missions linked to the given user_id."""
         missions = mission_models.Mission.query.filter_by(user_id=user_id).all()
-        return {'missions': [self.as_dict(mission, user_id, mission.id) for
+        return {'missions': [self.as_dict(mission, mission.id) for
             mission in missions]}

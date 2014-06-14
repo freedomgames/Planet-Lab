@@ -7,7 +7,7 @@ Users
 -----
 A user account for either a learner or a mentor.
 
-####POST /api/users/
+####POST /v1/users/
 #####Create a new user
 Accepts an object in the form:
 ```json
@@ -22,7 +22,7 @@ Returns an object in the form:
 ```json
 {
   "id": 5,
-  "url": "/api/users/5",
+  "url": "/v1/users/5",
   "name": "Walt",
   "organization": "Freedom Games",
   "avatar_url": "/static/happy-cat.png"
@@ -31,20 +31,20 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it
 
-####GET /api/users/\<id\>
+####GET /v1/users/\<id\>
 #####Retrieve the user with the given id
 Returns an object in the form:
 ```json
 {
   "id": 5,
-  "url": "/api/users/5",
+  "url": "/v1/users/5",
   "name": "Walt",
   "organization": "Freedom Games",
   "avatar_url": "/static/happy-cat.png"
 }
 ```
 
-####PUT /api/users/\<id\>
+####PUT /v1/users/\<id\>
 #####Update the user with the given id
 Accepts an object in the form:
 ```json
@@ -55,7 +55,7 @@ Accepts an object in the form:
 }
 ```
 
-####DELETE /api/users/\<id\>
+####DELETE /v1/users/\<id\>
 #####Delete the user with the given id
 
 
@@ -65,7 +65,7 @@ Missions are groups of quests.
 Mentors chose how to group quests into missions and learners complete
 missions quest by quest.
 
-####POST /api/users/\<id\>/missions/
+####POST /v1/missions/
 #####Create a new mission
 Accepts an object in the form:
 ```json
@@ -81,7 +81,7 @@ Returns an object in the form:
 {
   "id": 2,
   "user_id": 5,
-  "url": "/api/users/5/missions/2",
+  "url": "/v1/missions/2",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5,
@@ -127,14 +127,14 @@ Returns an object in the form:
 }
 ```
 
-####GET /api/users/\<id\>/missions/\<id\>
+####GET /v1/missions/\<id\>
 #####Retrieve the mission with the given id
 Returns an object in the form:
 ```json
 {
   "id": 2,
   "user_id": 5,
-  "url": "/api/users/5/missions/2",
+  "url": "/v1/missions/2",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5
@@ -150,7 +150,7 @@ Returns an object in the form:
 }
 ```
 
-####PUT /api/users/\<id\>/missions/\<id\>
+####PUT /v1/missions/\<id\>
 #####Update the mission with the given id
 Accepts an object in the form:
 ```json
@@ -161,7 +161,7 @@ Accepts an object in the form:
 }
 ```
 
-####DELETE /api/users/\<id\>/missions/\<id\>
+####DELETE /v1/missions/\<id\>
 #####Delete the mission with the given id
 
 
@@ -171,7 +171,7 @@ Quests are activities within a mission.
 Mentors create quests and link them to missions.
 Learners complete quests.
 
-####POST /api/users/\<id\>/quests/
+####POST /v1/quests/
 #####Create a new quest
 Accepts an object in the form:
 ```json
@@ -187,7 +187,7 @@ Returns an object in the form:
 {
   "id": 2,
   "user_id": 5,
-  "url": "/api/users/5/quests/2",
+  "url": "/v1/quests/2",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
@@ -222,21 +222,21 @@ Returns an object in the form:
 }
 ```
 
-####GET /api/users/\<id\>/quests/\<id\>
+####GET /v1/quests/\<id\>
 #####Retrieve the quest with the given id
 Returns an object in the form:
 ```json
 {
   "id": 2,
   "user_id": 5,
-  "url": "/api/users/5/quests/2",
+  "url": "/v1/quests/2",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
 }
 ```
 
-####PUT /api/users/\<id\>/quests/\<id\>
+####PUT /v1/quests/\<id\>
 #####Update the quest with the given id
 Accepts an object in the form:
 ```json
@@ -247,7 +247,7 @@ Accepts an object in the form:
 }
 ```
 
-####DELETE /api/users/\<id\>/quests/\<id\>
+####DELETE /v1/quests/\<id\>
 #####Delete the quest with the given id
 
 
@@ -255,13 +255,13 @@ Quest-Mission Links
 -------------------
 The many-to-many links used to group quests into missions.
 
-####PUT /api/users/\<id\>/missions/\<id\>/quests/\<id\>
+####PUT /v1/missions/\<id\>/quests/\<id\>
 #####Link the quest to the mission with the given ids
 
-####DELETE /api/users/\<id\>/missions/\<id\>/quests/\<id\>
+####DELETE /v1/missions/\<id\>/quests/\<id\>
 #####Un-link the quest from the mission with the given ids
 
-####GET /api/users/\<id\>/missions/\<id\>/quests/
+####GET /v1/missions/\<id\>/quests/
 #####List the quests linked to a mission with the given id
 Returns an object in the form:
 ```json
@@ -270,7 +270,7 @@ Returns an object in the form:
     {
       "id": 2,
       "user_id": 5,
-      "url": "/api/users/5/quests/2",
+      "url": "/v1/quests/2",
       "name": "Flower Planting",
       "description": "Plant lots of flowers!",
       "icon_url": "/static/flower.png"
@@ -278,7 +278,7 @@ Returns an object in the form:
     {
       "id": 4,
       "user_id": 5,
-      "url": "/api/users/5/quests/4",
+      "url": "/v1/quests/4",
       "name": "Tree Planting",
       "description": "Plant lots of trees!",
       "icon_url": "/static/tree.png"
