@@ -21,14 +21,12 @@ Quick Start for Development
   (gem install foreman -- if you have Ruby installed)
 * PostgreSQL 9.3: http://www.postgresql.org
   (brew install postgresql / sudo apt-get install postgresql-9.3)
-* A google developer account for OAuth (https://code.google.com/apis/console)
+* Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3)
 
 ###First Run:
 * pip install virtualenv
 * git clone [git@github.com:freedomgamees/parklab.git](git@github.com:freedomgamees/parklab.git])
 * cd parklab
-* edit the GOOGLE\_CLIENT\_ID and GOOGLE\_CLIENT\_SECRET lines in the .dev\_env file to
-match your id and secret from https://code.google.com/apis/console
 * virtualenv venv
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
