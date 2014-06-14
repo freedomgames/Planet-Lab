@@ -1,57 +1,42 @@
 """Views for users."""
 
 
-import flask
 import flask.ext.restful as restful
 import flask.ext.restful.reqparse as reqparse
 
 import backend
+import backend.common.resource as resource
 import backend.users.models as user_models
 
 
-class UserBase(restful.Resource):
-    """Define a parser for other resources to use."""
+
+class User(resource.SimpleResource):
+    """Views for a single user resource."""
+
     parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('organization', type=str)
     parser.add_argument('avatar_url', type=str)
 
-
-class User(UserBase):
-    """Views for a single user resource."""
-
     view_fields = ['id', 'name', 'organization', 'avatar_url']
 
-    def get(self, id_):
-        """Return a single user by id."""
-        user = user_models.User.query.get(id_)
-        if user is None:
-            return flask.Response('', 404)
-        else:
-            return {field: getattr(user, field) for field in self.view_fields}
+    def as_dict(self, user, user_id):
+        """Return a serializable dictionary representing the given user."""
+        return {field: getattr(user, field) for field in self.view_fields}
 
-    def put(self, id_):
-        """Update a user."""
-        args = self.parser.parse_args()
-        rows_updated = user_models.User.query.filter_by(id=id_).update(args)
-        backend.db.session.commit()
-
-        if not rows_updated:
-            return flask.Response('', 404)
-        else:
-            return args
-
-    def delete(self, id_):
-        """Delete a user."""
-        rows_deleted = user_models.User.query.filter_by(id=id_).delete()
-        backend.db.session.commit()
-
-        if not rows_deleted:
-            return flask.Response('', 404)
+    @staticmethod
+    def query(user_id):
+        """Return the query to select the user with the given id."""
+        return user_models.User.query.filter_by(id=user_id)
 
 
-class UserList(UserBase):
+class UserList(restful.Resource):
     """Views for user creation."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('organization', type=str)
+    parser.add_argument('avatar_url', type=str)
 
     def post(self):
         """Create a new user and return its id."""

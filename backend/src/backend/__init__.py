@@ -50,5 +50,22 @@ def other_error(error):
 
 
 import backend.users.views
-api.add_resource(backend.users.views.User, '/api/users/<int:id_>')
+api.add_resource(backend.users.views.User, '/api/users/<int:user_id>')
 api.add_resource(backend.users.views.UserList, '/api/users/')
+
+import backend.missions.views
+api.add_resource(
+        backend.missions.views.Mission,
+        '/api/users/<int:user_id>/missions/<int:mission_id>')
+api.add_resource(
+        backend.missions.views.MissionList,
+        '/api/users/<int:user_id>/missions/')
+
+import backend.quests.views
+api.add_resource(
+        backend.quests.views.Quest,
+        '/api/users/<int:user_id>/missions/<int:mission_id>'
+        '/quests/<int:quest_id>')
+api.add_resource(
+        backend.quests.views.QuestList,
+        '/api/users/<int:user_id>/missions/<int:mission_id>/quests/')
