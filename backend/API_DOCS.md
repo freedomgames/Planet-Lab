@@ -84,7 +84,8 @@ Returns an object in the form:
   "url": "/api/users/5/missions/2",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
-  "points": 5
+  "points": 5,
+  "quests": []
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -103,6 +104,15 @@ Returns an object in the form:
       "name": "Garden Expert",
       "description": "Learn how to be a gardener!",
       "points": 5
+      "quests": [
+        {
+          "id": 1,
+          "user_id": 1
+          "name": "Tree Science",
+          "description": "Learn all about trees!",
+          "icon_url": "/static/tree.png",
+        }
+      ]
     },
     {
       "id": 4,
@@ -111,6 +121,7 @@ Returns an object in the form:
       "name": "Music Man",
       "description": "Learn about sound and music!",
       "points": 2
+      "quests": []
     }
   ]
 }
@@ -127,6 +138,15 @@ Returns an object in the form:
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5
+  "quests": [
+    {
+      "id": 1,
+      "user_id": 1
+      "name": "Tree Science",
+      "description": "Learn all about trees!",
+      "icon_url": "/static/tree.png",
+    }
+  ]
 }
 ```
 

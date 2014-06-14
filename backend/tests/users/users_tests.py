@@ -22,6 +22,7 @@ class UsersTest(harness.TestHarness):
             'organization': None,
             'avatar_url': None,
             'id': 1,
+            'url': '/api/users/1',
             'name': 'snakes'})
 
         # and get it back
@@ -39,7 +40,7 @@ class UsersTest(harness.TestHarness):
 
         # edit the user
         resp = self.put_json('api/users/1', {
-            'name': 'ladders', 'organization': 'hat hotel'})
+            'organization': 'hat hotel'})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back
@@ -49,7 +50,7 @@ class UsersTest(harness.TestHarness):
             'avatar_url': None,
             'id': 1,
             'url': '/api/users/1',
-            'name': 'ladders'})
+            'name': 'snakes'})
 
         # delete the user
         resp = self.app.delete("api/users/1")
