@@ -1,7 +1,7 @@
 """Views for supporting mission resources."""
 
 
-import flask.ext.restful as restful
+import flask_restful
 import sqlalchemy.orm as orm
 
 import backend
@@ -43,7 +43,7 @@ class Mission(MissionBase, resource.SimpleResource):
                         orm.joinedload('quests'))
 
 
-class MissionList(MissionBase, restful.Resource):
+class MissionList(MissionBase, flask_restful.Resource):
     """Resource for working with collections of missions."""
 
     parser = resource.ProvidedParser()
@@ -63,7 +63,7 @@ class MissionList(MissionBase, restful.Resource):
         return self.as_dict(mission, mission.id)
 
 
-class MissionUserList(MissionBase, restful.Resource):
+class MissionUserList(MissionBase, flask_restful.Resource):
     """List missions linked to a user."""
     def get(self, user_id):
         """Return a list of missions linked to the given user_id."""

@@ -1,0 +1,4 @@
+#! /usr/bin/env python
+import backend
+backend.db.drop_all()
+backend.db.create_all()

@@ -2,8 +2,8 @@
 
 
 import flask
-import flask.ext.restful as restful
-import flask.ext.restful.reqparse as reqparse
+import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy
 
 import backend
@@ -53,7 +53,7 @@ class ProvidedParser(reqparse.RequestParser):
                 value is not NOTHING}
 
 
-class SimpleResource(restful.Resource):
+class SimpleResource(flask_restful.Resource):
     """Base class defining the simplest common set of CRUD endpoints
     for working with single resources.
     """
@@ -61,6 +61,7 @@ class SimpleResource(restful.Resource):
     # for the parser attribute to be used when parsing PUT requests.
     parser = None
 
+    @staticmethod
     def query(*args, **kwargs):
         """Needs to be implemented by child classes.  Should return
         a query to select the row being operated upon by the GET,
@@ -68,6 +69,7 @@ class SimpleResource(restful.Resource):
         """
         raise NotImplementedError
 
+    @staticmethod
     def as_dict(*args, **kwargs):
         """Needs to be implemented by child classes.  Given an object,
         returns a serializable dictionary representing that object to
@@ -108,7 +110,7 @@ class SimpleResource(restful.Resource):
             return flask.Response('', 404)
 
 
-class ManyToManyLink(restful.Resource):
+class ManyToManyLink(flask_restful.Resource):
     """Resource dealing with many-to-many links between collections."""
 
     left_id_name = None

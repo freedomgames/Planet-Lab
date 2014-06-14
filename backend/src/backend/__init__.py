@@ -2,8 +2,8 @@
 
 
 import flask
-import flask.ext.restful as flask_restful
-import flask.ext.sqlalchemy as flask_sqlalchemy
+import flask_restful
+import flask_sqlalchemy
 import logging
 import traceback
 
@@ -66,7 +66,8 @@ api.add_resource(user_views.UserList, '/v1/users/')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
 api.add_resource(mission_views.MissionList, '/v1/missions/')
-api.add_resource(mission_views.MissionUserList, '/v1/users/<int:user_id>/missions/')
+api.add_resource(
+        mission_views.MissionUserList, '/v1/users/<int:user_id>/missions/')
 
 api.add_resource(quest_views.Quest, '/v1/quests/<int:quest_id>')
 api.add_resource(quest_views.QuestList, '/v1/quests/')
@@ -78,7 +79,9 @@ api.add_resource(
         quest_views.QuestMissionLinkList,
         '/v1/missions/<int:mission_id>/quests/')
 
-api.add_resource(organization_views.Organization, '/v1/organizations/<int:organization_id>')
+api.add_resource(
+        organization_views.Organization,
+        '/v1/organizations/<int:organization_id>')
 api.add_resource(organization_views.OrganizationList, '/v1/organizations/')
 api.add_resource(
         organization_views.OrganizationUserLink,

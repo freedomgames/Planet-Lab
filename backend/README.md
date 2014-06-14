@@ -2,6 +2,7 @@ The Backend
 ===========
 This is the REST service which supports the front-end application.
 The full API spec is [available here.](API_DOCS.md)
+Information on contributing is [available here.](CONTRIBUTING.md)
 
 
 Quick Start for Development
@@ -52,3 +53,4 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
   runs the unit tests and outputs coverage information (the -e .test\_env bit is important!)
 * "foreman run bash -e .dev\_env"
   gives you a shell session with your environment set up to run the REST service
+* "foreman run flush\_db -e .dev\_env" drops and recreates the db schema

@@ -1,7 +1,7 @@
 """Views for users."""
 
 
-import flask.ext.restful as restful
+import flask_restful
 
 import backend
 import backend.common.resource as resource
@@ -36,7 +36,7 @@ class User(UserBase, resource.SimpleResource):
         return user_models.User.query.filter_by(id=user_id)
 
 
-class UserList(UserBase, restful.Resource):
+class UserList(UserBase, flask_restful.Resource):
     """Views for user creation."""
 
     parser = resource.ProvidedParser()
