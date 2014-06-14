@@ -23,7 +23,6 @@ if not app.debug:
 
 import backend.common.auth as auth
 import backend.missions.views as mission_views
-import backend.oauth.views
 import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
 import backend.users.models as user_models
@@ -39,7 +38,13 @@ def index():
 @app.route('/login')
 def login():
     """Return the login page."""
-    return flask.render_template('login.html')
+    return "PUT your user id to /login/id because that is security."
+
+
+@app.route('/login/<int:user_id>', methods=['PUT'])
+def do_login(user_id):
+    flask.session['user_id'] = user_id
+    return "CONGRATS I BELIEVE YOU ARE %s" % user_id
 
 
 @app.route('/app')
