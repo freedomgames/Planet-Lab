@@ -25,6 +25,13 @@ class MissionTest(harness.TestHarness):
         resp = self.post_json(
                 "api/users/1/missions/",
                 {"name": "happy", "description": "socks", "points": 1})
+        self.assertEqual(json.loads(resp.data), {
+            "description": "socks",
+            "id": 2,
+            "name": "happy",
+            "points": 1,
+            "url": "/api/users/1/missions/2",
+            "user_id": 1})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back

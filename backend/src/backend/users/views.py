@@ -22,7 +22,9 @@ class User(resource.SimpleResource):
 
     def as_dict(self, user, user_id):
         """Return a serializable dictionary representing the given user."""
-        return {field: getattr(user, field) for field in self.view_fields}
+        resp = {field: getattr(user, field) for field in self.view_fields}
+        resp['url'] = backend.api.url_for(User, user_id=user_id)
+        return resp
 
     @staticmethod
     def query(user_id):
