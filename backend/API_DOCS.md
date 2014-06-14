@@ -1,13 +1,17 @@
 API Docs
 ========
-Description of the resources and verbs provided by the REST service.
+Description of the REST service and the API it provides.
 
 Authorization
--------------
+=============
 User authorization is performed via OAuth.
 New user accounts are automatically created for un-met OAuth accounts
 after login.
 Authorization information is stored in a cookie-backed session.
+
+Resources
+=========
+Description of the resources and verbs provided by the REST service.
 
 Users
 -----
