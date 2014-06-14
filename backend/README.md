@@ -19,21 +19,21 @@ Quick Start for Development
   (already included if you do a brew install python / sudo apt-get install python-pip)
 * foreman: https://github.com/ddollar/foreman
   (gem install foreman -- if you have Ruby installed)
-
-You'll also need an database.
-For light development or front-end work, sqlite is fine (http://www.sqlite.org brew install sqlite / sudo apt-get install sqlite3)
-I would recomend using postgresql for real backend development, as that's what we'll be running in production and sqlite doesn't support things like migrations.
+* PostgreSQL 9.3: http://www.postgresql.org
+  (brew install postgresql / sudo apt-get install postgresql-9.3)
+* A google developer account for OAuth (https://code.google.com/apis/console)
 
 ###First Run:
 * pip install virtualenv
 * git clone [git@github.com:freedomgamees/parklab.git](git@github.com:freedomgamees/parklab.git])
 * cd parklab
+* edit the GOOGLE\_CLIENT\_ID and GOOGLE\_CLIENT\_SECRET lines in the .dev\_env file to
+match your id and secret from https://code.google.com/apis/console
 * virtualenv venv
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
-* If you are using sqlite, change the DATABASE\_URL line in the .dev\_env file in this directory to read: "DATABASE\_URL=sqlite:///test.db"
-* If you are using postgresql, then issue the command: "createdb parklab"
+* createdb parklab
 * foreman start create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
 
@@ -46,8 +46,8 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
   (if your shell has not already sourced this file)
 * pip install --upgrade -r requirements.txt 
   (if requirements.txt has changed and you need to install new requirements)
-* rm -f backend/src/backend/test.db; foreman start create\_db -e .dev\_env
-  (if the db schema has changed and you need to flush and recreate your sqlite database)
+* foreman run flush\_db -e .dev\_env
+  (if the db schema has changed and you need to flush and recreate your database)
 * foreman start dev\_server -e .dev\_env
 
 ###Other Utilities:

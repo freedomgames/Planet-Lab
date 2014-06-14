@@ -9,8 +9,16 @@ class TestHarness(unittest.TestCase):
 
     def setUp(self):
         """Flush the db, create the tables and start the test app."""
+        # All of these goofy commit() calls are to force transactions
+        # to finish up before proceeding.  Bad things happen if you
+        # try to do a drop_all while a transaction is still hanging
+        # around (it hangs indefinitely.)
+        backend.db.session.commit()
         backend.db.drop_all()
+        backend.db.session.commit()
         backend.db.create_all()
+        backend.db.session.commit()
+
         self.app = backend.app.test_client()
 
     def post_json(self, url, data):
