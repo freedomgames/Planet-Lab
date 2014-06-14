@@ -1,4 +1,4 @@
-parklab
+Planet Lab
 =======
 
-Parklab: Connecting STEAM learning
+Planet Lab: A gamified citizen science network for youth.
