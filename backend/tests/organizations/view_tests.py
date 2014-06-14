@@ -13,6 +13,15 @@ class OrganizationTest(harness.TestHarness):
     @harness.with_sess(user_id=1)
     def test_crud(self):
         """Basic CRUD tests."""
+        # create a user
+        resp = self.post_json("/v1/users/", {"name": "snakes"})
+        self.assertEqual(json.loads(resp.data), {
+            'avatar_url': None,
+            'id': 1,
+            'organizations': [],
+            'url': '/v1/users/1',
+            'name': 'snakes'})
+
         # no quest yet, so 404
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(resp.status_code, 404)
