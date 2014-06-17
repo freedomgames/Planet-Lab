@@ -36,23 +36,3 @@ class User(UserBase, resource.SimpleResource):
     def query(user_id):
         """Return the query to select the user with the given id."""
         return user_models.User.query.filter_by(id=user_id)
-
-
-class UserList(UserBase, flask_restful.Resource):
-    """Views for user creation."""
-
-    parser = resource.ProvidedParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('email', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('avatar_url', type=str)
-
-    def post(self):
-        """Create a new user and return its id."""
-        args = self.parser.parse_args()
-        user = user_models.User(**args)
-
-        backend.db.session.add(user)
-        backend.db.session.commit()
-
-        return self.as_dict(user, user.id)

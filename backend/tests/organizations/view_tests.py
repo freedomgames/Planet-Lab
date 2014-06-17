@@ -14,13 +14,7 @@ class OrganizationTest(harness.TestHarness):
     def test_crud(self):
         """Basic CRUD tests."""
         # create a user
-        resp = self.post_json("/v1/users/", {"name": "snakes"})
-        self.assertEqual(json.loads(resp.data), {
-            'avatar_url': None,
-            'id': 1,
-            'organizations': [],
-            'url': '/v1/users/1',
-            'name': 'snakes'})
+        harness.create_user(name='snakes')
 
         # no quest yet, so 404
         resp = self.app.get("/v1/organizations/1")
@@ -78,11 +72,8 @@ class OrganizationTest(harness.TestHarness):
         """Test linking users and organizations together."""
 
         # create the resources
-        resp = self.post_json("/v1/users/", {"name": "snakes"})
-        self.assertEqual(resp.status_code, 200)
-
-        resp = self.post_json("/v1/users/", {"name": "rakes"})
-        self.assertEqual(resp.status_code, 200)
+        harness.create_user(name='snakes')
+        harness.create_user(name='rakes')
 
         resp = self.post_json(
                 "/v1/organizations/",

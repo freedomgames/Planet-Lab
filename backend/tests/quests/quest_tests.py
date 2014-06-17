@@ -18,8 +18,8 @@ class QuestTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         # create a user, some missions, and some quests
-        self.post_json("/v1/users/", {"name": "snakes"})
-        self.post_json("/v1/users/", {"name": "rakes"})
+        harness.create_user(name="snakes")
+        harness.create_user(name="rakes")
 
         resp = self.post_json(
                 "/v1/quests/",
@@ -90,8 +90,7 @@ class QuestTest(harness.TestHarness):
         """Test linking quests and missions together."""
 
         # create the resources
-        resp = self.post_json("/v1/users/", {"name": "snakes"})
-        self.assertEqual(resp.status_code, 200)
+        harness.create_user(name='snakes')
 
         resp = self.post_json(
                 "/v1/quests/",

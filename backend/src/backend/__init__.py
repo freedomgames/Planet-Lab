@@ -95,7 +95,6 @@ def other_error(error):
 
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
-api.add_resource(user_views.UserList, '/v1/users/')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
 api.add_resource(mission_views.MissionList, '/v1/missions/')
