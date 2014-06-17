@@ -9,4 +9,4 @@ disable=C0330,R0903,W0232,W0221,W0142,C0103
 
 [TYPECHECK]
 # all the SQLAlchemy stuff is too dynamic for poor pylint
-generated-members=query,__table__,Integer,Column,String,Enum,relationship,commit,add,execute,ForeignKey,Table,UniqueConstraint,Index
+generated-members=query,__table__,Boolean,Integer,Column,String,Enum,relationship,commit,add,execute,ForeignKey,Table,UniqueConstraint,Index
