@@ -1,3 +1,4 @@
 PYTHONPATH=backend/src:backend/tests
 DATABASE_URL=postgresql://localhost/parklabtest
 DEBUG=1
+USER_ENABLE_EMAIL=''
