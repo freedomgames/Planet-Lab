@@ -1,5 +1,3 @@
 PYTHONPATH=backend/src:backend/tests
 DATABASE_URL=postgresql://localhost/parklabtest
 DEBUG=1
-GOOGLE_CLIENT_ID=client_id
-GOOGLE_CLIENT_SECRET=client_secret
