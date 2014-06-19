@@ -21,7 +21,7 @@ A user account for either a learner or a mentor.
 ####GET /v1/users/\<id\>
 #####Retrieve the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 5,
   "url": "/v1/users/5",
@@ -41,7 +41,7 @@ Returns an object in the form:
 ####PUT /v1/users/\<id\>
 #####Update the user with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Neo Walt",
   "avatar_url": "/static/super-happy-cat.png"
@@ -61,7 +61,7 @@ missions quest by quest.
 ####POST /v1/missions/
 #####Create a new mission
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
@@ -70,7 +70,7 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "user_id": 5,
@@ -87,7 +87,7 @@ for manipulating it
 ####GET /api/users/\<id\>/missions/
 #####Return missions created by the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "missions": [
     {
@@ -123,7 +123,7 @@ Returns an object in the form:
 ####GET /v1/missions/\<id\>
 #####Retrieve the mission with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "user_id": 5,
@@ -146,7 +146,7 @@ Returns an object in the form:
 ####PUT /v1/missions/\<id\>
 #####Update the mission with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
@@ -167,7 +167,7 @@ Learners complete quests.
 ####POST /v1/quests/
 #####Create a new quest
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
@@ -176,7 +176,7 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "user_id": 5,
@@ -192,7 +192,7 @@ for manipulating it
 ####GET /api/users/\<id\>/quests/
 #####Return quests created by the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "quests": [
     {
@@ -218,7 +218,7 @@ Returns an object in the form:
 ####GET /v1/quests/\<id\>
 #####Retrieve the quest with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "user_id": 5,
@@ -232,7 +232,7 @@ Returns an object in the form:
 ####PUT /v1/quests/\<id\>
 #####Update the quest with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
@@ -257,7 +257,7 @@ The many-to-many links used to group quests into missions.
 ####GET /v1/missions/\<id\>/quests/
 #####List the quests linked to a mission with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "quests": [
     {
@@ -287,7 +287,7 @@ An organization is a collection of users.
 ####POST /v1/organizations/
 #####Create a new organization
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Planeteers",
   "description": "Saving our planet is the thing to do!",
@@ -296,7 +296,7 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "url": "/v1/organizations/2",
@@ -313,7 +313,7 @@ for manipulating it
 ####GET /v1/organizations/\<id\>
 #####Retrieve the organization with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "url": "/v1/organizations/2",
@@ -335,7 +335,7 @@ Returns an object in the form:
 ####PUT /v1/organizations/\<id\>
 #####Update the organization with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Planeteers",
   "description": "Saving our planet is the thing to do!",
