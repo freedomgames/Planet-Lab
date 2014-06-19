@@ -32,3 +32,4 @@ class Quest(db.Model):
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     missions = db.relationship(
             "Mission", secondary=join_table, backref="quests")
+    questions = db.relationship("Question", backref="quest")
