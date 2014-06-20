@@ -1,9 +1,8 @@
 """Views for users."""
 
 
-import flask_restful
+import flask_restful.reqparse as reqparse
 
-import backend
 import backend.common.resource as resource
 import backend.users.models as user_models
 
@@ -26,7 +25,7 @@ class UserBase(object):
 class User(UserBase, resource.SimpleResource):
     """Views for a single user resource."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', type=str)
     parser.add_argument('email', type=str)
     parser.add_argument('description', type=str)

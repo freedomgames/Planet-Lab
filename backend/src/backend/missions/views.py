@@ -2,6 +2,7 @@
 
 
 import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
 import backend
@@ -30,7 +31,7 @@ class MissionBase(object):
 class Mission(MissionBase, resource.SimpleResource):
     """Resource for working with a single mission."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', type=str)
     parser.add_argument('description', type=str)
     parser.add_argument('points', type=int)
@@ -46,7 +47,7 @@ class Mission(MissionBase, resource.SimpleResource):
 class MissionList(MissionBase, flask_restful.Resource):
     """Resource for working with collections of missions."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('description', type=str, required=True)
     parser.add_argument('points', type=int, required=True)

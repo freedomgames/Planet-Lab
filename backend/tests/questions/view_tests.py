@@ -83,7 +83,7 @@ class QuestionTest(harness.TestHarness):
 
         # edit
         resp = self.put_json('/v1/quests/1/questions/1', {
-            'description': 'a blue house'})
+            "question_type": "text", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 200)
 
         # and get them back

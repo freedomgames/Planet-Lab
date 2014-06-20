@@ -3,6 +3,7 @@
 
 import flask
 import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy.exc
 import sqlalchemy.orm as orm
 
@@ -28,7 +29,7 @@ class QuestionBase(object):
 class Question(QuestionBase, resource.SimpleResource):
     """Manipulate questions linked to a quest."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('description', type=str)
     parser.add_argument(
             'question_type', type=str, choices=question_models.QUESTION_TYPES)
@@ -48,7 +49,7 @@ class Question(QuestionBase, resource.SimpleResource):
 class QuestionList(QuestionBase, flask_restful.Resource):
     """Resource for working with collections of questions."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('description', type=str, required=True)
     parser.add_argument(
             'question_type', type=str, required=True,

@@ -49,7 +49,7 @@ class MissionTest(harness.TestHarness):
 
         # edit
         resp = self.put_json('/v1/missions/1', {
-            'name': 'cat', 'description': 'hat'})
+            'name': 'cat', 'description': 'hat', 'points': 3})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back

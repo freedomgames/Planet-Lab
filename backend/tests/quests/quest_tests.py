@@ -50,7 +50,7 @@ class QuestTest(harness.TestHarness):
 
         # edit
         resp = self.put_json('/v1/quests/1', {
-            'icon_url': 'rubber'})
+            'description': 'nip', 'name': 'mouse', 'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 200)
 
         # and get it back

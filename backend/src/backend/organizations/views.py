@@ -2,6 +2,7 @@
 
 
 import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
 import backend
@@ -29,7 +30,7 @@ class OrganizationBase(object):
 class Organization(OrganizationBase, resource.SimpleResource):
     """Resource for working with a single organization."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', type=str)
     parser.add_argument('description', type=str)
     parser.add_argument('icon_url', type=str)
@@ -44,7 +45,7 @@ class Organization(OrganizationBase, resource.SimpleResource):
 class OrganizationList(OrganizationBase, flask_restful.Resource):
     """Resource for working with collections of organizations."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('description', type=str, required=True)
     parser.add_argument('icon_url', type=str)

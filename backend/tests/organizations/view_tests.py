@@ -39,6 +39,7 @@ class OrganizationTest(harness.TestHarness):
 
         # edit
         resp = self.put_json('/v1/organizations/1', {
+            'name': 'hotel', 'description': 'cat hotel house',
             'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 200)
 
