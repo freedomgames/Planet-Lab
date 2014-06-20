@@ -24,8 +24,7 @@ class SimpleResource(flask_restful.Resource):
         """
         raise NotImplementedError
 
-    @staticmethod
-    def as_dict(*args, **kwargs):
+    def as_dict(self, resource):
         """Needs to be implemented by child classes.  Given an object,
         returns a serializable dictionary representing that object to
         be returned on GET's.
@@ -38,7 +37,7 @@ class SimpleResource(flask_restful.Resource):
         if resource is None:
             return flask.Response('', 404)
         else:
-            return self.as_dict(resource, *args, **kwargs)
+            return self.as_dict(resource)
 
     def put(self, *args, **kwargs):
         """Update a resource."""

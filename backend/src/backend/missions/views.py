@@ -14,15 +14,15 @@ import backend.missions.models as mission_models
 class MissionBase(object):
     """Provide a common as_dict method."""
 
-    view_fields = ('id', 'name', 'description', 'points', 'user_id')
+    view_fields = (
+            'id', 'url', 'name', 'description', 'points',
+            'user_id')
     quest_fields = (
             'id', 'name', 'description', 'icon_url', 'user_id')
 
-    def as_dict(self, mission, mission_id):
+    def as_dict(self, mission):
         """Return a serializable dictionary representing the given mission."""
         resp = {field: getattr(mission, field) for field in self.view_fields}
-        resp['url'] = backend.api.url_for(
-                Mission, mission_id=mission_id)
         resp['quests'] = [{field: getattr(quest, field) for
             field in self.quest_fields} for quest in mission.quests]
         return resp
@@ -61,7 +61,7 @@ class MissionList(MissionBase, flask_restful.Resource):
         backend.db.session.add(mission)
         backend.db.session.commit()
 
-        return self.as_dict(mission, mission.id)
+        return self.as_dict(mission)
 
 
 class MissionUserList(MissionBase, flask_restful.Resource):
@@ -69,5 +69,5 @@ class MissionUserList(MissionBase, flask_restful.Resource):
     def get(self, user_id):
         """Return a list of missions linked to the given user_id."""
         missions = mission_models.Mission.query.filter_by(user_id=user_id).all()
-        return {'missions': [self.as_dict(mission, mission.id) for
+        return {'missions': [self.as_dict(mission) for
             mission in missions]}

@@ -21,7 +21,7 @@ class QuestionBase(object):
             'id', 'url', 'description', 'question_type',
             'quest_id', 'quest_url', 'creator', 'creator_url')
 
-    def as_dict(self, question, quest_id, question_id):
+    def as_dict(self, question):
         """Return a serializable dictionary representing the given quest."""
         return {field: getattr(question, field) for field in self.view_fields}
 
@@ -69,7 +69,7 @@ class QuestionList(QuestionBase, flask_restful.Resource):
             # tried to link to a non-existant quest
             return flask.Response('', 404)
         else:
-            return self.as_dict(question, quest_id, question.id)
+            return self.as_dict(question)
 
     def get(self, quest_id):
         """Return questions linked to a given quest."""
@@ -80,5 +80,4 @@ class QuestionList(QuestionBase, flask_restful.Resource):
             return flask.Response('', 404)
         else:
             return {'questions': [
-                self.as_dict(question, quest_id, question.id) for
-                question in quest.questions]}
+                self.as_dict(question) for question in quest.questions]}

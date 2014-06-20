@@ -33,3 +33,9 @@ class Quest(db.Model):
     missions = db.relationship(
             "Mission", secondary=join_table, backref="quests")
     questions = db.relationship("Question", backref="quest")
+
+    @property
+    def url(self):
+        """Return the URL for this resource."""
+        return backend.api.url_for(
+                backend.quest_views.Quest, quest_id=self.id)

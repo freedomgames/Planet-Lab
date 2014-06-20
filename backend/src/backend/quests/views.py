@@ -17,13 +17,11 @@ class QuestBase(object):
     """Provide a common as_dict method."""
 
     view_fields = (
-            'id', 'name', 'description', 'icon_url', 'user_id')
+            'id', 'url', 'name', 'description', 'icon_url', 'user_id')
 
-    def as_dict(self, quest, quest_id):
+    def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
         resp = {field: getattr(quest, field) for field in self.view_fields}
-        resp['url'] = backend.api.url_for(
-                Quest, quest_id=quest_id)
         return resp
 
 
@@ -71,7 +69,7 @@ class QuestUserList(QuestBase, flask_restful.Resource):
         query = quest_models.Quest.query.filter_by(user_id=user_id)
         quests = query.all()
 
-        return {'quests': [self.as_dict(quest, quest.id) for quest in quests]}
+        return {'quests': [self.as_dict(quest) for quest in quests]}
 
 
 class QuestMissionLink(resource.ManyToManyLink):
@@ -93,5 +91,5 @@ class QuestMissionLinkList(QuestBase, flask_restful.Resource):
         if mission is None:
             return flask.Response('', 404)
         else:
-            return {'quests': [self.as_dict(quest, quest.id) for
+            return {'quests': [self.as_dict(quest) for
                 quest in mission.quests]}

@@ -19,3 +19,9 @@ class Mission(db.Model):
 
     user_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+
+    @property
+    def url(self):
+        """Return the url for the resource."""
+        return backend.api.url_for(
+                backend.mission_views.Mission, mission_id=self.id)

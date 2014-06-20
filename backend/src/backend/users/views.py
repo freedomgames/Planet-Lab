@@ -13,7 +13,7 @@ class UserBase(object):
     view_fields = ('id', 'name', 'avatar_url', 'url')
     organization_fields = ('id', 'url', 'name', 'icon_url')
 
-    def as_dict(self, user, user_id):
+    def as_dict(self, user):
         """Return a serializable dictionary representing the given user."""
         resp = {field: getattr(user, field) for field in self.view_fields}
         resp['organizations'] = [{field: getattr(organization, field) for

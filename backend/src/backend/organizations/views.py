@@ -17,7 +17,7 @@ class OrganizationBase(object):
     view_fields = ('id', 'url', 'name', 'description', 'icon_url', 'user_id')
     user_fields = ('id', 'url', 'name', 'avatar_url')
 
-    def as_dict(self, organization, organization_id):
+    def as_dict(self, organization):
         """Return a serializable dictionary representing the given org."""
         resp = {field: getattr(organization, field) for
                 field in self.view_fields}
@@ -59,7 +59,7 @@ class OrganizationList(OrganizationBase, flask_restful.Resource):
         backend.db.session.add(organization)
         backend.db.session.commit()
 
-        return self.as_dict(organization, organization.id)
+        return self.as_dict(organization)
 
 
 class OrganizationUserLink(resource.ManyToManyLink):
