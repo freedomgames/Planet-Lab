@@ -5,8 +5,10 @@ import flask
 import flask_restful
 import flask_restful.reqparse as reqparse
 import sqlalchemy
+import sqlalchemy.orm as orm
 
 import backend
+import backend.common.auth as auth
 
 
 NOTHING = object()
@@ -108,6 +110,55 @@ class SimpleResource(flask_restful.Resource):
 
         if not rows_deleted:
             return flask.Response('', 404)
+
+
+class ManyToOneLink(flask_restful.Resource):
+    """Resource dealing with creating and listing a resource linked
+    to one single other resource.
+    """
+    # child classes need to override all of these
+    parent_id_name = None
+    child_link_name = None
+    resource_type = lambda *args, **kwargs: None
+    parent_resource_type = None
+    parser = None
+
+    @staticmethod
+    def as_dict(*args, **kwargs):
+        """Needs to be implemented by child classes.  Given an object,
+        returns a serializable dictionary representing that object to
+        be returned on GET's.
+        """
+        raise NotImplementedError
+
+
+    def post(self, parent_id):
+        """Create a new resource and link it to its creator and parent."""
+        args = self.parser.parse_args()
+        args['creator_id'] = auth.current_user_id()
+        args[self.parent_id_name] = parent_id
+        new_resource = self.resource_type(**args)
+
+        try:
+            backend.db.session.add(new_resource)
+            backend.db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            # tried to link to a non-existant parent
+            return flask.Response('', 404)
+        else:
+            return self.as_dict(new_resource, parent_id, new_resource.id)
+
+    def get(self, parent_id):
+        """Return children linked to a given parent."""
+        parent = self.parent_resource_type.query.filter_by(
+                id=parent_id).options(
+                        orm.joinedload(self.child_link_name)).first()
+        if parent is None:
+            return flask.Response('', 404)
+        else:
+            return {self.child_link_name: [
+                self.as_dict(child, parent_id, child.id) for
+                child in getattr(parent, self.child_link_name)]}
 
 
 class ManyToManyLink(flask_restful.Resource):
