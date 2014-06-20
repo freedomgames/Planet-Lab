@@ -26,7 +26,7 @@ class Question(db.Model):
     quest_id = db.Column(
             db.Integer, db.ForeignKey('quests.id', ondelete='cascade'),
             nullable=False, index=True)
-    creator = db.Column(
+    creator_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
 
     @property
@@ -46,4 +46,4 @@ class Question(db.Model):
     def creator_url(self):
         """Return the URL for this resource."""
         return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator)
+                backend.user_views.User, user_id=self.creator_id)

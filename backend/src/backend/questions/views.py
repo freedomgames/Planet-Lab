@@ -18,7 +18,7 @@ class QuestionBase(object):
 
     view_fields = (
             'id', 'url', 'description', 'question_type',
-            'quest_id', 'quest_url', 'creator', 'creator_url')
+            'quest_id', 'quest_url', 'creator_id', 'creator_url')
 
     def as_dict(self, question, quest_id, question_id):
         """Return a serializable dictionary representing the given quest."""
@@ -57,7 +57,7 @@ class QuestionList(QuestionBase, flask_restful.Resource):
     def post(self, quest_id):
         """Create a new question and link it to its creator and quest."""
         args = self.parser.parse_args()
-        args['creator'] = auth.current_user_id()
+        args['creator_id'] = auth.current_user_id()
         args['quest_id'] = quest_id
         question = question_models.Question(**args)
 

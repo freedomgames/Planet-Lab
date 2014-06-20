@@ -35,7 +35,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "description": "cat hotel", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
-            "creator": 1, "creator_url": "/v1/users/1",
+            "creator_id": 1, "creator_url": "/v1/users/1",
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
         # or two
@@ -45,7 +45,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "description": "snake farm", "question_type": "upload",
             "id": 2, "url": "/v1/quests/1/questions/2",
-            "creator": 1, "creator_url": "/v1/users/1",
+            "creator_id": 1, "creator_url": "/v1/users/1",
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
         # and one more linked to a different quest
@@ -64,7 +64,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "description": "cat hotel", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
-            "creator": 1, "creator_url": "/v1/users/1",
+            "creator_id": 1, "creator_url": "/v1/users/1",
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
         resp = self.app.get("/v1/quests/1/questions/2")
@@ -74,11 +74,11 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data)['questions'], [
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
-                "creator": 1, "creator_url": "/v1/users/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
                 "quest_id": 1, "quest_url": "/v1/quests/1"},
             {"description": "snake farm", "question_type": "upload",
                 "id": 2, "url": "/v1/quests/1/questions/2",
-                "creator": 1, "creator_url": "/v1/users/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
         # edit
@@ -91,7 +91,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "description": "a blue house", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
-            "creator": 1, "creator_url": "/v1/users/1",
+            "creator_id": 1, "creator_url": "/v1/users/1",
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
 
