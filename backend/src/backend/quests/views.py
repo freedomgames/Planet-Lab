@@ -14,7 +14,12 @@ import backend.quests.models as quest_models
 
 
 class QuestBase(object):
-    """Provide a common as_dict method."""
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument('icon_url', type=str)
 
     view_fields = (
             'id', 'url', 'name', 'description', 'icon_url',
@@ -29,11 +34,6 @@ class QuestBase(object):
 class Quest(QuestBase, resource.SimpleResource):
     """Resource for working with a single quest."""
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('icon_url', type=str)
-
     @staticmethod
     def query(quest_id):
         """Return the query to select the quest with the given ids."""
@@ -42,11 +42,6 @@ class Quest(QuestBase, resource.SimpleResource):
 
 class QuestList(QuestBase, flask_restful.Resource):
     """Resource for working with collections of quests."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument('icon_url', type=str)
 
     def post(self):
         """Create a new quest and link it to its creator and mission."""

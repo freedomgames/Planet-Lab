@@ -12,7 +12,12 @@ import backend.organizations.models as organization_models
 
 
 class OrganizationBase(object):
-    """Provide a common as_dict method."""
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument('icon_url', type=str)
 
     view_fields = ('id', 'url', 'name', 'description', 'icon_url',
             'creator_id', 'creator_url')
@@ -31,11 +36,6 @@ class OrganizationBase(object):
 class Organization(OrganizationBase, resource.SimpleResource):
     """Resource for working with a single organization."""
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('icon_url', type=str)
-
     @staticmethod
     def query(organization_id):
         """Return the query to select the organization with the given id."""
@@ -45,11 +45,6 @@ class Organization(OrganizationBase, resource.SimpleResource):
 
 class OrganizationList(OrganizationBase, flask_restful.Resource):
     """Resource for working with collections of organizations."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument('icon_url', type=str)
 
     def post(self):
         """Create a new organization and link it to its creator."""

@@ -15,7 +15,13 @@ import backend.questions.models as question_models
 
 
 class QuestionBase(object):
-    """Provide an as_dict method."""
+    """Provide an as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument(
+            'question_type', type=str, required=True,
+            choices=question_models.QUESTION_TYPES)
 
     view_fields = (
             'id', 'url', 'description', 'question_type',
@@ -28,11 +34,6 @@ class QuestionBase(object):
 
 class Question(QuestionBase, resource.SimpleResource):
     """Manipulate questions linked to a quest."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('description', type=str)
-    parser.add_argument(
-            'question_type', type=str, choices=question_models.QUESTION_TYPES)
 
     @staticmethod
     def query(quest_id, question_id):
@@ -48,12 +49,6 @@ class Question(QuestionBase, resource.SimpleResource):
 
 class QuestionList(QuestionBase, flask_restful.Resource):
     """Resource for working with collections of questions."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument(
-            'question_type', type=str, required=True,
-            choices=question_models.QUESTION_TYPES)
 
     def post(self, quest_id):
         """Create a new question and link it to its creator and quest."""

@@ -64,7 +64,9 @@ class OrganizationTest(harness.TestHarness):
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.put_json('/v1/organizations/1', {'name': 'no!'})
+        resp = self.put_json('/v1/organizations/1', {
+            'name': 'hotel', 'description': 'cat hotel house',
+            'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 404)
 
         resp = self.app.delete("/v1/organizations/1")
