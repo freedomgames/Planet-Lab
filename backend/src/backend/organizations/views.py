@@ -14,7 +14,8 @@ import backend.organizations.models as organization_models
 class OrganizationBase(object):
     """Provide a common as_dict method."""
 
-    view_fields = ('id', 'url', 'name', 'description', 'icon_url', 'user_id')
+    view_fields = ('id', 'url', 'name', 'description', 'icon_url',
+            'creator_id', 'creator_url')
     user_fields = ('id', 'url', 'name', 'avatar_url')
 
     def as_dict(self, organization):
@@ -53,7 +54,7 @@ class OrganizationList(OrganizationBase, flask_restful.Resource):
     def post(self):
         """Create a new organization and link it to its creator."""
         args = self.parser.parse_args()
-        args['user_id'] = auth.current_user_id()
+        args['creator_id'] = auth.current_user_id()
         organization = organization_models.Organization(**args)
 
         backend.db.session.add(organization)

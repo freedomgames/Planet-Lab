@@ -41,7 +41,8 @@ class QuestTest(harness.TestHarness):
         # and get it back
         resp = self.app.get("/v1/quests/1")
         self.assertEqual(json.loads(resp.data), {
-            'user_id': 1,
+            'creator_id': 1,
+            'creator_url': '/v1/users/1',
             'description': 'nip',
             'icon_url': None,
             'id': 1,
@@ -56,7 +57,8 @@ class QuestTest(harness.TestHarness):
         # and get it back
         resp = self.app.get("/v1/quests/1")
         self.assertEqual(json.loads(resp.data), {
-            'user_id': 1,
+            'creator_id': 1,
+            'creator_url': '/v1/users/1',
             'description': 'nip',
             'icon_url': 'rubber',
             'id': 1,
@@ -66,9 +68,11 @@ class QuestTest(harness.TestHarness):
         # list them
         resp = self.app.get("/v1/users/1/quests/")
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
-            {'user_id': 1, 'description': 'nip', 'icon_url': 'rubber',
+            {'creator_id': 1, 'description': 'nip', 'icon_url': 'rubber',
+                'creator_url': '/v1/users/1',
                 'url': '/v1/quests/1', 'id': 1, 'name': 'mouse'},
-            {'user_id': 1, 'description': 'blip', 'icon_url': None,
+            {'creator_id': 1, 'description': 'blip', 'icon_url': None,
+                'creator_url': '/v1/users/1',
                 'url': '/v1/quests/2', 'id': 2, 'name': 'blouse'}])
 
         # delete
@@ -125,7 +129,7 @@ class QuestTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1",
-                "user_id": 1}])
+                'creator_url': '/v1/users/1', "creator_id": 1}])
 
         resp = self.app.put("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
@@ -134,8 +138,9 @@ class QuestTest(harness.TestHarness):
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1",
-                "user_id": 1},
-            {'user_id': 1, 'description': 'blip',
+                'creator_url': '/v1/users/1', "creator_id": 1},
+            {'creator_id': 1, 'description': 'blip',
+                'creator_url': '/v1/users/1',
                 'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
@@ -151,8 +156,9 @@ class QuestTest(harness.TestHarness):
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1",
-                "user_id": 1},
-            {'user_id': 1, 'description': 'blip',
+                'creator_url': '/v1/users/1', "creator_id": 1},
+            {'creator_id': 1, 'description': 'blip',
+                'creator_url': '/v1/users/1',
                 'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
@@ -164,7 +170,7 @@ class QuestTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"description": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1",
-                "user_id": 1}])
+                'creator_url': '/v1/users/1', "creator_id": 1}])
 
         resp = self.app.delete("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)

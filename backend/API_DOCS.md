@@ -73,8 +73,9 @@ Returns an object in the form:
 ```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/missions/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5,
@@ -92,15 +93,18 @@ Returns an object in the form:
   "missions": [
     {
       "id": 2,
-      "user_id": 5,
-      "url": "/api/users/5/missions/2",
+      "url": "/v1/missions/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Garden Expert",
       "description": "Learn how to be a gardener!",
       "points": 5
       "quests": [
         {
-          "id": 1,
-          "user_id": 1,
+          "id": 8,
+          "url": "/v1/quests/8",
+          "creator_id": 1,
+          "creator_url": "/v1/users/1",
           "name": "Tree Science",
           "description": "Learn all about trees!",
           "icon_url": "/static/tree.png",
@@ -109,8 +113,9 @@ Returns an object in the form:
     },
     {
       "id": 4,
-      "user_id": 5,
-      "url": "/api/users/5/missions/4",
+      "url": "/v1/missions/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Music Man",
       "description": "Learn about sound and music!",
       "points": 2,
@@ -126,15 +131,18 @@ Returns an object in the form:
 ```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/missions/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5,
   "quests": [
     {
-      "id": 1,
-      "user_id": 1,
+      "id": 8,
+      "url": "/v1/quests/8",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1",
       "name": "Tree Science",
       "description": "Learn all about trees!",
       "icon_url": "/static/tree.png",
@@ -179,8 +187,9 @@ Returns an object in the form:
 ```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/quests/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
@@ -197,16 +206,18 @@ Returns an object in the form:
   "quests": [
     {
       "id": 2,
-      "user_id": 5,
-      "url": "/api/users/5/quests/2",
+      "url": "/v1/quests/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Flower Planting",
       "description": "Plant lots of flowers!",
       "icon_url": "/static/flower.png"
     },
     {
       "id": 4,
-      "user_id": 5,
-      "url": "/api/users/5/quests/4",
+      "url": "/v1/quests/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Tree Planting",
       "description": "Plant lots of trees!",
       "icon_url": "/static/tree.png"
@@ -221,8 +232,9 @@ Returns an object in the form:
 ```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/quests/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
@@ -262,16 +274,18 @@ Returns an object in the form:
   "quests": [
     {
       "id": 2,
-      "user_id": 5,
       "url": "/v1/quests/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Flower Planting",
       "description": "Plant lots of flowers!",
       "icon_url": "/static/flower.png"
     },
     {
       "id": 4,
-      "user_id": 5,
       "url": "/v1/quests/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Tree Planting",
       "description": "Plant lots of trees!",
       "icon_url": "/static/tree.png"
@@ -304,7 +318,8 @@ Returns an object in the form:
   "description": "Saving our planet is the thing to do!",
   "icon_url": "/static/happy-earth.png",
   "members": [],
-  "user_id": 1
+  "creator_id": 1
+  "creator_url": "/v1/users/1",
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -328,7 +343,8 @@ Returns an object in the form:
       "avatar_url": "/static/cpt-planet.png"
     }
   ],
-  "user_id": 1
+  "creator_id": 1
+  "creator_url": "/v1/users/1",
 }
 ```
 
@@ -379,7 +395,7 @@ Returns an object in the form:
   "question_type": "text" // "upload" | "text" | "multiple_choice"
   "id": 2,
   "url": "/v1/quests/1/questions/2",
-  "creator": 1,
+  "creator_id": 1,
   "creator_url": "/v1/users/1",
   "quest_id": 1,
   "quest_url": "/v1/quests/1"
@@ -399,7 +415,7 @@ Returns an object in the form:
       "question_type": "text" // "upload" | "text" | "multiple_choice"
       "id": 2,
       "url": "/v1/quests/1/questions/2",
-      "creator": 1,
+      "creator_id": 1,
       "creator_url": "/v1/users/1",
       "quest_id": 1,
       "quest_url": "/v1/quests/1"
@@ -417,7 +433,7 @@ Returns an object in the form:
   "question_type": "text" // "upload" | "text" | "multiple_choice"
   "id": 1,
   "url": "/v1/quests/1/questions/1",
-  "creator": 1,
+  "creator_id": 1,
   "creator_url": "/v1/users/1",
   "quest_id": 1,
   "quest_url": "/v1/quests/1"

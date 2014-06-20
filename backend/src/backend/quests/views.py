@@ -17,7 +17,8 @@ class QuestBase(object):
     """Provide a common as_dict method."""
 
     view_fields = (
-            'id', 'url', 'name', 'description', 'icon_url', 'user_id')
+            'id', 'url', 'name', 'description', 'icon_url',
+            'creator_id', 'creator_url')
 
     def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
@@ -50,7 +51,7 @@ class QuestList(QuestBase, flask_restful.Resource):
     def post(self):
         """Create a new quest and link it to its creator and mission."""
         args = self.parser.parse_args()
-        args['user_id'] = auth.current_user_id()
+        args['creator_id'] = auth.current_user_id()
         quest = quest_models.Quest(**args)
 
         backend.db.session.add(quest)
@@ -66,7 +67,7 @@ class QuestUserList(QuestBase, flask_restful.Resource):
 
     def get(self, user_id):
         """Return a list of quests linked to the given user_id."""
-        query = quest_models.Quest.query.filter_by(user_id=user_id)
+        query = quest_models.Quest.query.filter_by(creator_id=user_id)
         quests = query.all()
 
         return {'quests': [self.as_dict(quest) for quest in quests]}

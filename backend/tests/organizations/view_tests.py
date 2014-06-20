@@ -35,7 +35,8 @@ class OrganizationTest(harness.TestHarness):
             "members": [],
             "name": "hotel",
             "url": "/v1/organizations/1",
-            "user_id": 1})
+            "creator_url": "/v1/users/1",
+            "creator_id": 1})
 
         # edit
         resp = self.put_json('/v1/organizations/1', {
@@ -52,7 +53,8 @@ class OrganizationTest(harness.TestHarness):
             "members": [],
             "name": "hotel",
             "url": "/v1/organizations/1",
-            "user_id": 1})
+            "creator_url": "/v1/users/1",
+            "creator_id": 1})
 
         # delete
         resp = self.app.delete("/v1/organizations/1")

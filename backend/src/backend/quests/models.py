@@ -28,7 +28,7 @@ class Quest(db.Model):
     description = db.Column(db.String, nullable=False)
     icon_url = db.Column(db.String, nullable=True)
 
-    user_id = db.Column(
+    creator_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     missions = db.relationship(
             "Mission", secondary=join_table, backref="quests")
@@ -39,3 +39,9 @@ class Quest(db.Model):
         """Return the URL for this resource."""
         return backend.api.url_for(
                 backend.quest_views.Quest, quest_id=self.id)
+
+    @property
+    def creator_url(self):
+        """Return the URL for this resource."""
+        return backend.api.url_for(
+                backend.user_views.User, user_id=self.creator_id)
