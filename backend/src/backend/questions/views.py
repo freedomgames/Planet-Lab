@@ -1,6 +1,8 @@
 """Views for supporting quest resources."""
 
 
+import flask_restful.reqparse as reqparse
+
 import backend
 import backend.common.resource as resource
 import backend.quests.models as quest_models
@@ -14,7 +16,7 @@ class QuestionBase(object):
             'id', 'url', 'description', 'question_type',
             'quest_id', 'quest_url', 'creator_id', 'creator_url')
 
-    def as_dict(self, question, quest_id, question_id):
+    def as_dict(self, question):
         """Return a serializable dictionary representing the given quest."""
         return {field: getattr(question, field) for field in self.view_fields}
 
@@ -22,7 +24,7 @@ class QuestionBase(object):
 class Question(QuestionBase, resource.SimpleResource):
     """Manipulate questions linked to a quest."""
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('description', type=str)
     parser.add_argument(
             'question_type', type=str, choices=question_models.QUESTION_TYPES)
@@ -48,7 +50,7 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
     resource_type = question_models.Question
     parent_resource_type = quest_models.Quest
 
-    parser = resource.ProvidedParser()
+    parser = reqparse.RequestParser()
     parser.add_argument('description', type=str, required=True)
     parser.add_argument(
             'question_type', type=str, required=True,

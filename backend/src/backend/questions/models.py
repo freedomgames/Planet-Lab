@@ -1,10 +1,6 @@
 """SQLAlchemy models for questions and quest completions."""
 
-import datetime
-import pytz
-
 import backend
-import backend.common.custom_types as custom_types
 
 db = backend.db
 

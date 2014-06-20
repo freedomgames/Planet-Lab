@@ -3,56 +3,11 @@
 
 import flask
 import flask_restful
-import flask_restful.reqparse as reqparse
 import sqlalchemy
 import sqlalchemy.orm as orm
 
 import backend
 import backend.common.auth as auth
-
-
-NOTHING = object()
-
-
-class ProvidedParser(reqparse.RequestParser):
-    """A subclass which allows us to discriminate between lack of
-    values from a caller and default values for keys.
-
-    That is, if a parser is created like so:
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('description', type=str)
-
-    parser.parse_args() may return
-    {"name": "sam", "description": None}
-
-    whether the caller provided either
-    {"name": "sam"} or {"name": "sam", "description": null}
-
-    We remove this ambiguity by returning
-    {"name": "sam"} in the first case and
-    {"name": "sam", "description": None} in the second
-
-    If a default value is given in and add_argument() call, that
-    field will always be present whether it was supplied or not.
-    """
-
-    def add_argument(self, *args, **kwargs):
-        """If not given by the caller, add a default value of 'nothing'
-        to a field so we can tell if a user has provided a value for it.
-        """
-        if 'default' not in kwargs:
-            kwargs['default'] = NOTHING
-        super(ProvidedParser, self).add_argument(*args, **kwargs)
-
-    def parse_args(self):
-        """Return the dictionary from parse_args() without
-        entries which were given no value by the caller.
-        """
-        args = super(ProvidedParser, self).parse_args()
-        return {key: value for key, value in args.iteritems() if
-                value is not NOTHING}
 
 
 class SimpleResource(flask_restful.Resource):
@@ -71,8 +26,7 @@ class SimpleResource(flask_restful.Resource):
         """
         raise NotImplementedError
 
-    @staticmethod
-    def as_dict(*args, **kwargs):
+    def as_dict(self, resource):
         """Needs to be implemented by child classes.  Given an object,
         returns a serializable dictionary representing that object to
         be returned on GET's.
@@ -85,7 +39,7 @@ class SimpleResource(flask_restful.Resource):
         if resource is None:
             return flask.Response('', 404)
         else:
-            return self.as_dict(resource, *args, **kwargs)
+            return self.as_dict(resource)
 
     def put(self, *args, **kwargs):
         """Update a resource."""
@@ -123,14 +77,13 @@ class ManyToOneLink(flask_restful.Resource):
     parent_resource_type = None
     parser = None
 
-    @staticmethod
-    def as_dict(*args, **kwargs):
+
+    def as_dict(self, resource):
         """Needs to be implemented by child classes.  Given an object,
         returns a serializable dictionary representing that object to
         be returned on GET's.
         """
         raise NotImplementedError
-
 
     def post(self, parent_id):
         """Create a new resource and link it to its creator and parent."""
@@ -146,7 +99,7 @@ class ManyToOneLink(flask_restful.Resource):
             # tried to link to a non-existant parent
             return flask.Response('', 404)
         else:
-            return self.as_dict(new_resource, parent_id, new_resource.id)
+            return self.as_dict(new_resource)
 
     def get(self, parent_id):
         """Return children linked to a given parent."""
@@ -157,8 +110,8 @@ class ManyToOneLink(flask_restful.Resource):
             return flask.Response('', 404)
         else:
             return {self.child_link_name: [
-                self.as_dict(child, parent_id, child.id) for
-                child in getattr(parent, self.child_link_name)]}
+                self.as_dict(child) for child in
+                getattr(parent, self.child_link_name)]}
 
 
 class ManyToManyLink(flask_restful.Resource):
