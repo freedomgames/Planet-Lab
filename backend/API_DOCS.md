@@ -379,7 +379,7 @@ Returns an object in the form:
   "question_type": "text" // "upload" | "text" | "multiple_choice"
   "id": 2,
   "url": "/v1/quests/1/questions/2",
-  "creator": 1,
+  "creator_id": 1,
   "creator_url": "/v1/users/1",
   "quest_id": 1,
   "quest_url": "/v1/quests/1"
@@ -399,7 +399,7 @@ Returns an object in the form:
       "question_type": "text" // "upload" | "text" | "multiple_choice"
       "id": 2,
       "url": "/v1/quests/1/questions/2",
-      "creator": 1,
+      "creator_id": 1,
       "creator_url": "/v1/users/1",
       "quest_id": 1,
       "quest_url": "/v1/quests/1"
@@ -417,7 +417,7 @@ Returns an object in the form:
   "question_type": "text" // "upload" | "text" | "multiple_choice"
   "id": 1,
   "url": "/v1/quests/1/questions/1",
-  "creator": 1,
+  "creator_id": 1,
   "creator_url": "/v1/users/1",
   "quest_id": 1,
   "quest_url": "/v1/quests/1"
