@@ -35,7 +35,7 @@ import backend.users.models as user_models
 import backend.users.views as user_views
 
 
-db_adapter = flask_user.SQLAlchemyAdapter(db,  user_models.User)
+db_adapter = flask_user.SQLAlchemyAdapter(db, user_models.User)
 flask_user.UserManager(db_adapter, app)
 
 
