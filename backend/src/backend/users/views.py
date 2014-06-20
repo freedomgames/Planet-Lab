@@ -8,7 +8,13 @@ import backend.users.models as user_models
 
 
 class UserBase(object):
-    """Provide a shared as_dict method."""
+    """Provide a shared as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str)
+    parser.add_argument('email', type=str)
+    parser.add_argument('description', type=str)
+    parser.add_argument('avatar_url', type=str)
 
     view_fields = ('id', 'name', 'avatar_url', 'url')
     organization_fields = ('id', 'url', 'name', 'icon_url')
@@ -24,12 +30,6 @@ class UserBase(object):
 
 class User(UserBase, resource.SimpleResource):
     """Views for a single user resource."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('email', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('avatar_url', type=str)
 
     @staticmethod
     def query(user_id):

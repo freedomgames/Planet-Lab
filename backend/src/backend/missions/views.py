@@ -12,7 +12,12 @@ import backend.missions.models as mission_models
 
 
 class MissionBase(object):
-    """Provide a common as_dict method."""
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument('points', type=int, required=True)
 
     view_fields = (
             'id', 'url', 'name', 'description', 'points',
@@ -32,11 +37,6 @@ class MissionBase(object):
 class Mission(MissionBase, resource.SimpleResource):
     """Resource for working with a single mission."""
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('points', type=int)
-
     @staticmethod
     def query(mission_id):
         """Return the query to select the mission with the given ids."""
@@ -47,11 +47,6 @@ class Mission(MissionBase, resource.SimpleResource):
 
 class MissionList(MissionBase, flask_restful.Resource):
     """Resource for working with collections of missions."""
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument('points', type=int, required=True)
 
     def post(self):
         """Create a new mission and link it to its creator."""

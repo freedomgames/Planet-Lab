@@ -83,7 +83,9 @@ class QuestTest(harness.TestHarness):
         resp = self.app.get("/v1/quests/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.put_json('/v1/quests/1', {'name': 'no!'})
+        resp = self.put_json('/v1/quests/1', {
+            'description': 'nip', 'name': 'mouse',
+            'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 404)
 
         resp = self.app.delete("/v1/quests/1")
