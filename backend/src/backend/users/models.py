@@ -6,7 +6,6 @@ import flask_user
 import backend
 
 db = backend.db
-GOOGLE_OAUTH_TYPE = "google"
 
 
 class User(db.Model, flask_user.UserMixin):
@@ -22,6 +21,8 @@ class User(db.Model, flask_user.UserMixin):
     email = db.Column(db.String, nullable=True)
     description = db.Column(db.String, nullable=True)
     avatar_url = db.Column(db.String, nullable=True)
+
+    answers = db.relationship("Answer", backref="creator")
 
     missions = db.relationship("Mission", backref="user")
     quests = db.relationship("Quest", backref="user")

@@ -1,7 +1,7 @@
 """SQLAlchemy models for quests."""
 
-
 import backend
+
 db = backend.db
 
 
@@ -30,9 +30,11 @@ class Quest(db.Model):
 
     creator_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+
+    questions = db.relationship("Question", backref="quest")
+
     missions = db.relationship(
             "Mission", secondary=join_table, backref="quests")
-    questions = db.relationship("Question", backref="quest")
 
     @property
     def url(self):
