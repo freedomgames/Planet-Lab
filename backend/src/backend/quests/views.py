@@ -72,6 +72,7 @@ class QuestUserList(QuestBase, flask_restful.Resource):
 
         return {'quests': [self.as_dict(quest, quest.id) for quest in quests]}
 
+
 class QuestMissionLink(resource.ManyToManyLink):
     """Many-to-many links between quests and missions."""
 

@@ -119,21 +119,17 @@ class ManyToManyLink(flask_restful.Resource):
 
     def put(self, left_id, right_id):
         """Create a link between the two given ids in the join table."""
-        # We want to do an 'insert into ... where not exists' so we
-        # can atomically do an insert-if-not-exists thing.
-        select = sqlalchemy.select([
-            sqlalchemy.literal(left_id),
-            sqlalchemy.literal(right_id)]).where(~ sqlalchemy.exists(
-                [sqlalchemy.literal(1)]).where(
-                    sqlalchemy.and_(
-                        self.left_id_name == left_id,
-                        self.right_id_name == right_id)))
 
-        insert = self.join_table.insert().from_select(
-                [self.left_id_name, self.right_id_name], select)
-
-        backend.db.session.execute(insert)
-        backend.db.session.commit()
+        insert = self.join_table.insert().values({
+            self.left_id_name: left_id,
+            self.right_id_name: right_id})
+        try:
+            backend.db.session.execute(insert)
+            backend.db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            # We hit a unique constraint for this combination
+            # of ids, so we happily let the insert fail.
+            pass
 
     def delete(self, left_id, right_id):
         """Delete a link between the two given ids in the join table."""

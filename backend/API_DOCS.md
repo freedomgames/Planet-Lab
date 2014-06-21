@@ -356,3 +356,83 @@ The many-to-many links used to group users into organizations.
 
 ####DELETE /v1/organizations/\<id\>/users/\<id\>
 #####Un-link the user from the organization with the given ids
+
+
+Questions
+---------
+Evaluations questions linked to quests.
+
+####POST /v1/quests/\<id\>/questions/
+#####Create a new question linked to the given quest
+Accepts an object in the form:
+```javascript
+{
+  "description": "What is the moon?",
+  "question_type": "text" // "upload" | "text" | "multiple_choice"
+}
+```
+
+Returns an object in the form:
+```javascript
+{
+  "description": "What is the moon?",
+  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "id": 2,
+  "url": "/v1/quests/1/questions/2",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "quest_id": 1,
+  "quest_url": "/v1/quests/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it
+
+####GET /v1/quests/\<id\>/questions/
+#####Return a list of all questions linked to the given quest
+Returns an object in the form:
+```javascript
+{
+  "questions": [
+    {
+      "description": "What is the moon?",
+      "question_type": "text" // "upload" | "text" | "multiple_choice"
+      "id": 2,
+      "url": "/v1/quests/1/questions/2",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1",
+      "quest_id": 1,
+      "quest_url": "/v1/quests/1"
+    }
+  ]
+}
+```
+
+####GET /v1/quests/\<id\>/questions/\<id\>
+#####Retrieve the question with the given id
+Returns an object in the form:
+```javascript
+{
+  "description": "What is the moon?",
+  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "id": 1,
+  "url": "/v1/quests/1/questions/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "quest_id": 1,
+  "quest_url": "/v1/quests/1"
+}
+```
+
+####PUT /v1/quests/\<id\>/questions/\<id\>
+#####Update the question with the given id
+Accepts an object in the form:
+```javascript
+{
+  "description": "What is cheese?",
+  "question_type": "text" // "upload" | "text" | "multiple_choice"
+}
+```
+
+####DELETE /v1/quests/\<id\>/questions/\<id\>
+#####Delete the question with the given id
