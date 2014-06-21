@@ -2,8 +2,10 @@
 
 
 import flask
+import flask_babel
 import flask_restful
 import flask_sqlalchemy
+import flask_user
 import logging
 import traceback
 
@@ -11,6 +13,7 @@ import traceback
 app = flask.Flask(__name__)
 app.config.from_object('backend.config')
 api = flask_restful.Api(app)
+babel = flask_babel.Babel(app)
 db = flask_sqlalchemy.SQLAlchemy(app)
 
 if not app.debug:
@@ -21,6 +24,8 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
 
 
+# We have to import these after defining app, api and db as these
+# imports will be looking for those variables.
 import backend.common.auth as auth
 import backend.missions.views as mission_views
 import backend.organizations.views as organization_views
@@ -29,26 +34,18 @@ import backend.users.models as user_models
 import backend.users.views as user_views
 
 
+db_adapter = flask_user.SQLAlchemyAdapter(db,  user_models.User)
+flask_user.UserManager(db_adapter, app)
+
+
 @app.route('/')
 def index():
     """Return the index page."""
     return flask.render_template('index.html')
 
 
-@app.route('/login')
-def login():
-    """Return the login page."""
-    return "PUT your user id to /login/id because that is security."
-
-
-@app.route('/login/<int:user_id>', methods=['PUT'])
-def do_login(user_id):
-    flask.session['user_id'] = user_id
-    return "CONGRATS I BELIEVE YOU ARE %s" % user_id
-
-
 @app.route('/app')
-@auth.login_required
+@flask_user.login_required
 def app_page():
     """Return the javascript for the app and pass along information
     on the currently logged-in user.
@@ -98,7 +95,6 @@ def other_error(error):
 
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
-api.add_resource(user_views.UserList, '/v1/users/')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
 api.add_resource(mission_views.MissionList, '/v1/missions/')

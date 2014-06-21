@@ -1,8 +1,11 @@
 import functools
 import json
 import unittest
+import uuid
 
 import backend
+import backend.users.models as user_models
+
 
 class TestHarness(unittest.TestCase):
     """Base class for writing unit tests against the backend."""
@@ -35,6 +38,19 @@ class TestHarness(unittest.TestCase):
         """Set the given session values."""
         with self.app.session_transaction() as sess:
             sess.update(**session_update)
+
+
+def create_user(**user_args):
+    """Insert a user into the database with the given paramater."""
+    if 'username' not in user_args:
+        user_args['username'] = str(uuid.uuid4())
+    if 'active' not in user_args:
+        user_args['active'] = True
+
+    user = user_models.User(**user_args)
+    backend.db.session.add(user)
+    backend.db.session.commit()
+
 
 def with_sess(**session_update):
     """Decorator for calling a function with the suplied session

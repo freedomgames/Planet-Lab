@@ -4,10 +4,11 @@ Description of the REST service and the API it provides.
 
 Authorization
 -------------
-Authorization is currently very fake.
-Perform a PUT to /login/\<id\> to set that id as the current user.
-The id must the id of a real user, or else you will get
-key constraint errors from the database.
+Authorization information is stored in cookie-backed sessions.
+Redirects to the log-in page will be returned when non-authenticated
+sessions attempt to access resources which require authorization.
+The log-in flow takes care of creating user resources, obviating
+the need for a POST /users end-point.
 
 Resources
 =========
@@ -16,29 +17,6 @@ Description of the resources and verbs provided by the REST service.
 Users
 -----
 A user account for either a learner or a mentor.
-
-####POST /v1/users/
-#####Create a new user
-Accepts an object in the form:
-```json
-{
-  "name": "Walt",
-  "avatar_url": "/static/happy-cat.png"
-}
-```
-
-Returns an object in the form:
-```json
-{
-  "id": 5,
-  "url": "/v1/users/5",
-  "name": "Walt",
-  "organizations": [],
-  "avatar_url": "/static/happy-cat.png"
-}
-```
-most notably containing the id for the newly created resource and the url
-for manipulating it
 
 ####GET /v1/users/\<id\>
 #####Retrieve the user with the given id

@@ -18,13 +18,7 @@ class UsersTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         # create a user
-        resp = self.post_json("/v1/users/", {"name": "snakes"})
-        self.assertEqual(json.loads(resp.data), {
-            'avatar_url': None,
-            'id': 1,
-            'organizations': [],
-            'url': '/v1/users/1',
-            'name': 'snakes'})
+        harness.create_user(name='snakes')
 
         # and get it back
         resp = self.app.get("/v1/users/1")
@@ -34,10 +28,6 @@ class UsersTest(harness.TestHarness):
             'organizations': [],
             'url': '/v1/users/1',
             'name': 'snakes'})
-
-        # missing required fields for a 400
-        resp = self.post_json("/v1/users/", {})
-        self.assertEqual(resp.status_code, 400)
 
         # edit the user
         resp = self.put_json('/v1/users/1', {
