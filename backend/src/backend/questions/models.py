@@ -11,6 +11,8 @@ class Answer(db.Model):
     """An answer to a question.  Answers are submitted by learners and
     evaluated by mentors.
     """
+    __tablename__ = 'answers'
+
     id = db.Column(db.Integer, primary_key=True, nullable=False)
 
     question_type = db.Column(
