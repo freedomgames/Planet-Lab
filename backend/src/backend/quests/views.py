@@ -3,6 +3,7 @@
 
 import flask
 import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
 import backend
@@ -13,26 +14,25 @@ import backend.quests.models as quest_models
 
 
 class QuestBase(object):
-    """Provide a common as_dict method."""
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument('icon_url', type=str)
 
     view_fields = (
-            'id', 'name', 'description', 'icon_url', 'user_id')
+            'id', 'url', 'name', 'description', 'icon_url',
+            'creator_id', 'creator_url')
 
-    def as_dict(self, quest, quest_id):
+    def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
         resp = {field: getattr(quest, field) for field in self.view_fields}
-        resp['url'] = backend.api.url_for(
-                Quest, quest_id=quest_id)
         return resp
 
 
 class Quest(QuestBase, resource.SimpleResource):
     """Resource for working with a single quest."""
-
-    parser = resource.ProvidedParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('icon_url', type=str)
 
     @staticmethod
     def query(quest_id):
@@ -43,15 +43,10 @@ class Quest(QuestBase, resource.SimpleResource):
 class QuestList(QuestBase, flask_restful.Resource):
     """Resource for working with collections of quests."""
 
-    parser = resource.ProvidedParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument('icon_url', type=str)
-
     def post(self):
         """Create a new quest and link it to its creator and mission."""
         args = self.parser.parse_args()
-        args['user_id'] = auth.current_user_id()
+        args['creator_id'] = auth.current_user_id()
         quest = quest_models.Quest(**args)
 
         backend.db.session.add(quest)
@@ -67,10 +62,10 @@ class QuestUserList(QuestBase, flask_restful.Resource):
 
     def get(self, user_id):
         """Return a list of quests linked to the given user_id."""
-        query = quest_models.Quest.query.filter_by(user_id=user_id)
+        query = quest_models.Quest.query.filter_by(creator_id=user_id)
         quests = query.all()
 
-        return {'quests': [self.as_dict(quest, quest.id) for quest in quests]}
+        return {'quests': [self.as_dict(quest) for quest in quests]}
 
 
 class QuestMissionLink(resource.ManyToManyLink):
@@ -92,5 +87,5 @@ class QuestMissionLinkList(QuestBase, flask_restful.Resource):
         if mission is None:
             return flask.Response('', 404)
         else:
-            return {'quests': [self.as_dict(quest, quest.id) for
+            return {'quests': [self.as_dict(quest) for
                 quest in mission.quests]}

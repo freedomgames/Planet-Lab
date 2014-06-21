@@ -35,10 +35,12 @@ class OrganizationTest(harness.TestHarness):
             "members": [],
             "name": "hotel",
             "url": "/v1/organizations/1",
-            "user_id": 1})
+            "creator_url": "/v1/users/1",
+            "creator_id": 1})
 
         # edit
         resp = self.put_json('/v1/organizations/1', {
+            'name': 'hotel', 'description': 'cat hotel house',
             'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 200)
 
@@ -51,7 +53,8 @@ class OrganizationTest(harness.TestHarness):
             "members": [],
             "name": "hotel",
             "url": "/v1/organizations/1",
-            "user_id": 1})
+            "creator_url": "/v1/users/1",
+            "creator_id": 1})
 
         # delete
         resp = self.app.delete("/v1/organizations/1")
@@ -61,7 +64,9 @@ class OrganizationTest(harness.TestHarness):
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.put_json('/v1/organizations/1', {'name': 'no!'})
+        resp = self.put_json('/v1/organizations/1', {
+            'name': 'hotel', 'description': 'cat hotel house',
+            'icon_url': 'rubber'})
         self.assertEqual(resp.status_code, 404)
 
         resp = self.app.delete("/v1/organizations/1")

@@ -83,7 +83,7 @@ class QuestionTest(harness.TestHarness):
 
         # edit
         resp = self.put_json('/v1/quests/1/questions/1', {
-            'description': 'a blue house'})
+            "question_type": "text", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 200)
 
         # and get them back
@@ -103,14 +103,16 @@ class QuestionTest(harness.TestHarness):
         resp = self.app.get("/v1/quests/1/questions/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.put_json("/v1/quests/1/questions/1", {'description': 'a'})
+        resp = self.put_json('/v1/quests/1/questions/1', {
+            "question_type": "text", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 404)
 
         resp = self.app.delete("/v1/quests/1/questions/1")
         self.assertEqual(resp.status_code, 404)
 
         # make sure we handled enums properly
-        resp = self.put_json("/v1/quests/1/questions/2", {'question_type': 'a'})
+        resp = self.put_json('/v1/quests/1/questions/1', {
+            "question_type": "snakes", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 400)
 
         # and 404 on bad quest ids

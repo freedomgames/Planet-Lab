@@ -1,20 +1,25 @@
 """Views for users."""
 
 
-import flask_restful
+import flask_restful.reqparse as reqparse
 
-import backend
 import backend.common.resource as resource
 import backend.users.models as user_models
 
 
 class UserBase(object):
-    """Provide a shared as_dict method."""
+    """Provide a shared as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str)
+    parser.add_argument('email', type=str)
+    parser.add_argument('description', type=str)
+    parser.add_argument('avatar_url', type=str)
 
     view_fields = ('id', 'name', 'avatar_url', 'url')
     organization_fields = ('id', 'url', 'name', 'icon_url')
 
-    def as_dict(self, user, user_id):
+    def as_dict(self, user):
         """Return a serializable dictionary representing the given user."""
         resp = {field: getattr(user, field) for field in self.view_fields}
         resp['organizations'] = [{field: getattr(organization, field) for
@@ -25,12 +30,6 @@ class UserBase(object):
 
 class User(UserBase, resource.SimpleResource):
     """Views for a single user resource."""
-
-    parser = resource.ProvidedParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('email', type=str)
-    parser.add_argument('description', type=str)
-    parser.add_argument('avatar_url', type=str)
 
     @staticmethod
     def query(user_id):

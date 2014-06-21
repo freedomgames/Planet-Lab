@@ -21,7 +21,7 @@ A user account for either a learner or a mentor.
 ####GET /v1/users/\<id\>
 #####Retrieve the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 5,
   "url": "/v1/users/5",
@@ -41,7 +41,7 @@ Returns an object in the form:
 ####PUT /v1/users/\<id\>
 #####Update the user with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Neo Walt",
   "avatar_url": "/static/super-happy-cat.png"
@@ -61,7 +61,7 @@ missions quest by quest.
 ####POST /v1/missions/
 #####Create a new mission
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
@@ -70,11 +70,12 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/missions/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5,
@@ -87,20 +88,23 @@ for manipulating it
 ####GET /api/users/\<id\>/missions/
 #####Return missions created by the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "missions": [
     {
       "id": 2,
-      "user_id": 5,
-      "url": "/api/users/5/missions/2",
+      "url": "/v1/missions/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Garden Expert",
       "description": "Learn how to be a gardener!",
       "points": 5
       "quests": [
         {
-          "id": 1,
-          "user_id": 1,
+          "id": 8,
+          "url": "/v1/quests/8",
+          "creator_id": 1,
+          "creator_url": "/v1/users/1",
           "name": "Tree Science",
           "description": "Learn all about trees!",
           "icon_url": "/static/tree.png",
@@ -109,8 +113,9 @@ Returns an object in the form:
     },
     {
       "id": 4,
-      "user_id": 5,
-      "url": "/api/users/5/missions/4",
+      "url": "/v1/missions/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Music Man",
       "description": "Learn about sound and music!",
       "points": 2,
@@ -123,18 +128,21 @@ Returns an object in the form:
 ####GET /v1/missions/\<id\>
 #####Retrieve the mission with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/missions/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
   "points": 5,
   "quests": [
     {
-      "id": 1,
-      "user_id": 1,
+      "id": 8,
+      "url": "/v1/quests/8",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1",
       "name": "Tree Science",
       "description": "Learn all about trees!",
       "icon_url": "/static/tree.png",
@@ -146,7 +154,7 @@ Returns an object in the form:
 ####PUT /v1/missions/\<id\>
 #####Update the mission with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Garden Expert",
   "description": "Learn how to be a gardener!",
@@ -167,7 +175,7 @@ Learners complete quests.
 ####POST /v1/quests/
 #####Create a new quest
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
@@ -176,11 +184,12 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/quests/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
@@ -192,21 +201,23 @@ for manipulating it
 ####GET /api/users/\<id\>/quests/
 #####Return quests created by the user with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "quests": [
     {
       "id": 2,
-      "user_id": 5,
-      "url": "/api/users/5/quests/2",
+      "url": "/v1/quests/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Flower Planting",
       "description": "Plant lots of flowers!",
       "icon_url": "/static/flower.png"
     },
     {
       "id": 4,
-      "user_id": 5,
-      "url": "/api/users/5/quests/4",
+      "url": "/v1/quests/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Tree Planting",
       "description": "Plant lots of trees!",
       "icon_url": "/static/tree.png"
@@ -218,11 +229,12 @@ Returns an object in the form:
 ####GET /v1/quests/\<id\>
 #####Retrieve the quest with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
-  "user_id": 5,
   "url": "/v1/quests/2",
+  "creator_id": 5,
+  "creator_url": "/v1/users/5",
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
   "icon_url": "/static/flower.png"
@@ -232,7 +244,7 @@ Returns an object in the form:
 ####PUT /v1/quests/\<id\>
 #####Update the quest with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Flower Planting",
   "description": "Plant lots of flowers!",
@@ -257,21 +269,23 @@ The many-to-many links used to group quests into missions.
 ####GET /v1/missions/\<id\>/quests/
 #####List the quests linked to a mission with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "quests": [
     {
       "id": 2,
-      "user_id": 5,
       "url": "/v1/quests/2",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Flower Planting",
       "description": "Plant lots of flowers!",
       "icon_url": "/static/flower.png"
     },
     {
       "id": 4,
-      "user_id": 5,
       "url": "/v1/quests/4",
+      "creator_id": 5,
+      "creator_url": "/v1/users/5",
       "name": "Tree Planting",
       "description": "Plant lots of trees!",
       "icon_url": "/static/tree.png"
@@ -287,7 +301,7 @@ An organization is a collection of users.
 ####POST /v1/organizations/
 #####Create a new organization
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Planeteers",
   "description": "Saving our planet is the thing to do!",
@@ -296,7 +310,7 @@ Accepts an object in the form:
 ```
 
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "url": "/v1/organizations/2",
@@ -304,7 +318,8 @@ Returns an object in the form:
   "description": "Saving our planet is the thing to do!",
   "icon_url": "/static/happy-earth.png",
   "members": [],
-  "user_id": 1
+  "creator_id": 1
+  "creator_url": "/v1/users/1",
 }
 ```
 most notably containing the id for the newly created resource and the url
@@ -313,7 +328,7 @@ for manipulating it
 ####GET /v1/organizations/\<id\>
 #####Retrieve the organization with the given id
 Returns an object in the form:
-```json
+```javascript
 {
   "id": 2,
   "url": "/v1/organizations/2",
@@ -328,14 +343,15 @@ Returns an object in the form:
       "avatar_url": "/static/cpt-planet.png"
     }
   ],
-  "user_id": 1
+  "creator_id": 1
+  "creator_url": "/v1/users/1",
 }
 ```
 
 ####PUT /v1/organizations/\<id\>
 #####Update the organization with the given id
 Accepts an object in the form:
-```json
+```javascript
 {
   "name": "Planeteers",
   "description": "Saving our planet is the thing to do!",

@@ -3,6 +3,7 @@
 
 import flask
 import flask_restful
+import flask_restful.reqparse as reqparse
 import sqlalchemy.exc
 import sqlalchemy.orm as orm
 
@@ -14,24 +15,25 @@ import backend.questions.models as question_models
 
 
 class QuestionBase(object):
-    """Provide an as_dict method."""
+    """Provide an as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('description', type=str, required=True)
+    parser.add_argument(
+            'question_type', type=str, required=True,
+            choices=question_models.QUESTION_TYPES)
 
     view_fields = (
             'id', 'url', 'description', 'question_type',
             'quest_id', 'quest_url', 'creator_id', 'creator_url')
 
-    def as_dict(self, question, quest_id, question_id):
+    def as_dict(self, question):
         """Return a serializable dictionary representing the given quest."""
         return {field: getattr(question, field) for field in self.view_fields}
 
 
 class Question(QuestionBase, resource.SimpleResource):
     """Manipulate questions linked to a quest."""
-
-    parser = resource.ProvidedParser()
-    parser.add_argument('description', type=str)
-    parser.add_argument(
-            'question_type', type=str, choices=question_models.QUESTION_TYPES)
 
     @staticmethod
     def query(quest_id, question_id):
@@ -48,12 +50,6 @@ class Question(QuestionBase, resource.SimpleResource):
 class QuestionList(QuestionBase, flask_restful.Resource):
     """Resource for working with collections of questions."""
 
-    parser = resource.ProvidedParser()
-    parser.add_argument('description', type=str, required=True)
-    parser.add_argument(
-            'question_type', type=str, required=True,
-            choices=question_models.QUESTION_TYPES)
-
     def post(self, quest_id):
         """Create a new question and link it to its creator and quest."""
         args = self.parser.parse_args()
@@ -68,7 +64,7 @@ class QuestionList(QuestionBase, flask_restful.Resource):
             # tried to link to a non-existant quest
             return flask.Response('', 404)
         else:
-            return self.as_dict(question, quest_id, question.id)
+            return self.as_dict(question)
 
     def get(self, quest_id):
         """Return questions linked to a given quest."""
@@ -79,5 +75,4 @@ class QuestionList(QuestionBase, flask_restful.Resource):
             return flask.Response('', 404)
         else:
             return {'questions': [
-                self.as_dict(question, quest_id, question.id) for
-                question in quest.questions]}
+                self.as_dict(question) for question in quest.questions]}

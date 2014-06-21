@@ -29,7 +29,7 @@ class Organization(db.Model):
     description = db.Column(db.String, nullable=False)
     icon_url = db.Column(db.String, nullable=True)
 
-    user_id = db.Column(
+    creator_id = db.Column(
             db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     members = db.relationship(
             "User", secondary=join_table, backref="organizations")
@@ -40,3 +40,9 @@ class Organization(db.Model):
         return backend.api.url_for(
                 backend.organization_views.Organization,
                 organization_id=self.id)
+
+    @property
+    def creator_url(self):
+        """Return the URL for this resource."""
+        return backend.api.url_for(
+                backend.user_views.User, user_id=self.creator_id)
