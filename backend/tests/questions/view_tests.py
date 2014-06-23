@@ -168,16 +168,19 @@ class QuestionTest(harness.TestHarness):
                 "/v1/quests/",
                 {"name": "mouse", "description": "nap"})
         self.assertEqual(resp.status_code, 200)
-        # create a question
+        # create some questions
         resp = self.post_json(
                 "/v1/quests/1/questions/",
                 {"question_type": "text", "description": "cat hotel"})
         self.assertEqual(resp.status_code, 200)
+        resp = self.post_json(
+                "/v1/quests/1/questions/",
+                {"question_type": "upload", "description": "cat upload"})
+        self.assertEqual(resp.status_code, 200)
 
         # link some answers
         resp = self.post_json(
-                "/v1/questions/1/answers/",
-                {"question_type": "text", "answer_text": "cats"})
+                "/v1/questions/1/answers/", {"answer_text": "cats"})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "cats",
             "answer_upload_url": None,
@@ -187,34 +190,32 @@ class QuestionTest(harness.TestHarness):
 
         resp = self.post_json(
                 "/v1/questions/1/answers/",
-                {"question_type": "upload", "answer_upload_url": "cats.html"})
+                {"answer_text": "more cats"})
         self.assertEqual(json.loads(resp.data), {
-            "question_type": "upload", "answer_text": None,
-            "answer_upload_url": "cats.html",
+            "question_type": "text", "answer_text": "more cats",
+            "answer_upload_url": None,
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
 
-        # 400 on invalid combinations
+        # 400 on invalid combinations of question_type and answer fields
         resp = self.post_json(
-                "/v1/questions/1/answers/",
-                {"question_type": "upload", "answer_text": "cats"})
+                "/v1/questions/1/answers/", {"answer_upload_url": "cats.html"})
+        self.assertEqual(resp.status_code, 400)
+
+        resp = self.put_json(
+                "/v1/questions/1/answers/1", {"answer_upload_url": "cats.html"})
         self.assertEqual(resp.status_code, 400)
 
         resp = self.post_json(
-                "/v1/questions/1/answers/",
-                {"question_type": "text", "answer_upload_url": "cats.html"})
-        self.assertEqual(resp.status_code, 400)
-
-        resp = self.post_json(
-                "/v1/questions/1/answers/", {"question_type": "text"})
+                "/v1/questions/2/answers/", {"answer_text": "cats"})
         self.assertEqual(resp.status_code, 400)
 
         # get them back
         resp = self.app.get('/v1/questions/1/answers/2')
         self.assertEqual(json.loads(resp.data), {
-            "question_type": "upload", "answer_text": None,
-            "answer_upload_url": "cats.html",
+            "question_type": "text", "answer_text": "more cats",
+            "answer_upload_url": None,
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
@@ -238,6 +239,23 @@ class QuestionTest(harness.TestHarness):
 
         resp = self.app.get('/v1/questions/1/answers/2')
         self.assertEqual(resp.status_code, 404)
+
+        # bad question_id / answer_id combos 404
+        resp = self.app.get('/v1/questions/1/answers/1')
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.get('/v1/questions/100/answers/1')
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.put('/v1/questions/100/answers/1')
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.delete('/v1/questions/100/answers/1')
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.app.post('/v1/questions/100/answers/')
+        self.assertEqual(resp.status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()

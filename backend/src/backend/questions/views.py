@@ -71,37 +71,10 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
     parent_resource_type = quest_models.Quest
 
 
-class AnswerParser(reqparse.RequestParser):
-    """Special parser for answers, which have switching logic
-    based on the question type.
-    """
-    def parse_args(self, *args, **kwargs):
-        """Call the parent parse_args and ensure that the
-        fields provided match up with the question_type.
-        """
-        parsed_args = super(AnswerParser, self).parse_args(*args, **kwargs)
-
-        question_type = parsed_args['question_type']
-        has_text = parsed_args['answer_text'] is not None
-        has_url = parsed_args['answer_upload_url'] is not None
-
-        if question_type == 'upload' and (not has_url or has_text):
-            flask_restful.abort(400, message='If question_type is upload, '
-                    'the answer_upload_url field must only be present.')
-        elif question_type == 'text' and (not has_text or has_url):
-            flask_restful.abort(400, message='If question_type is text, '
-                    'the answer_text field must only be present.')
-        else:
-            return parsed_args
-
-
 class AnswerBase(object):
     """Provide an as_dict method and a parser."""
 
-    parser = AnswerParser()
-    parser.add_argument(
-            'question_type', type=str, required=True,
-            choices=question_models.QUESTION_TYPES)
+    parser = reqparse.RequestParser()
     parser.add_argument('answer_text', type=str)
     parser.add_argument('answer_upload_url', type=str)
 
@@ -112,6 +85,35 @@ class AnswerBase(object):
     def as_dict(self, answer):
         """Return a serializable dictionary representing the given quest."""
         return {field: getattr(answer, field) for field in self.view_fields}
+
+
+def assert_answer_matches_question(question_id, answer):
+    """We need to make sure the answer type matches the question
+    type -- e.g. if the question type is a text response, make
+    sure the answer is a text response rather than a file upload.
+    Aborts with a 400 error if the types do not match, returns the
+    question type on success.
+    """
+    question_type = backend.db.session.query(
+            question_models.Question.question_type).filter_by(
+                    id=question_id).first()
+    if question_type is None:
+        flask_restful.abort(404)
+    else:
+        question_type = question_type[0]
+        has_text = answer['answer_text'] is not None
+        has_url = answer['answer_upload_url'] is not None
+
+        if question_type == 'upload' and (not has_url or has_text):
+            flask_restful.abort(
+                    400, message='If question_type is upload, the '
+                    'answer_upload_url field must only be present.')
+        elif question_type == 'text' and (not has_text or has_url):
+            flask_restful.abort(
+                    400, message='If question_type is text, the '
+                    'answer_text field must only be present.')
+        else:
+            return question_type
 
 
 class Answer(AnswerBase, resource.SimpleResource):
@@ -128,6 +130,14 @@ class Answer(AnswerBase, resource.SimpleResource):
                             question_query.subquery()))
         return answer_query
 
+    def put(self, question_id, answer_id):
+        """Check that the answer type matches the question type
+        before updating the answer.
+        """
+        assert_answer_matches_question(question_id, self.parser.parse_args())
+        return super(Answer, self).put(
+                question_id=question_id, answer_id=answer_id)
+
 
 class AnswerList(AnswerBase, resource.ManyToOneLink):
     """Resource for working with collections of answers."""
@@ -137,3 +147,13 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
 
     resource_type = question_models.Answer
     parent_resource_type = question_models.Answer
+
+    def build_args(self, parent_id):
+        """Check that the answer type matches the question type
+        before creating the answer.  Add the question type from the
+        parent question into the answer's arguments.
+        """
+        args = super(AnswerList, self).build_args(parent_id)
+        question_type = assert_answer_matches_question(parent_id, args)
+        args['question_type'] = question_type
+        return args
