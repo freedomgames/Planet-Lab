@@ -54,7 +54,7 @@ class SimpleResource(flask_restful.Resource):
             if not rows_updated:
                 return flask.Response('', 404)
             else:
-                return args
+                return update
 
     def delete(self, *args, **kwargs):
         """Delete a quest."""
