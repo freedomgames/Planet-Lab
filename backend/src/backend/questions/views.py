@@ -158,7 +158,7 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
     child_link_name = 'answers'
 
     resource_type = question_models.Answer
-    parent_resource_type = question_models.Answer
+    parent_resource_type = question_models.Question
 
     def build_args(self, parent_id):
         """Check that the answer type matches the question type

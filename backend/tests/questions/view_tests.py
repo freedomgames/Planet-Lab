@@ -117,7 +117,6 @@ class QuestionTest(harness.TestHarness):
             "creator_id": 1, "creator_url": "/v1/users/1",
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
-
         # delete
         resp = self.app.delete("/v1/quests/1/questions/1")
         self.assertEqual(resp.status_code, 200)
@@ -224,6 +223,19 @@ class QuestionTest(harness.TestHarness):
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
+
+        resp = self.app.get('/v1/questions/1/answers/')
+        self.assertEqual(json.loads(resp.data)['answers'], [
+            {"answer_text": "cats", "answer_upload_url": None,
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "id": 1, "question_id": 1, "question_type": "text",
+                "question_url": "/v1/questions/1",
+                "url": "/v1/questions/1/answers/1"},
+            {"answer_text": "more cats", "answer_upload_url": None,
+                "creator_id": 1, "creator_url": "/v1/users/1", "id": 2,
+                "question_id": 1, "question_type": "text",
+                "question_url": "/v1/questions/1",
+                "url": "/v1/questions/1/answers/2"}])
 
         # edit
         resp = self.put_json('/v1/questions/1/answers/2', {
