@@ -87,11 +87,24 @@ class ManyToOneLink(flask_restful.Resource):
 
     def post(self, parent_id):
         """Create a new resource and link it to its creator and parent."""
+        args = self.build_args(parent_id)
+        return self.create_resource(args)
+
+    def build_args(self, parent_id):
+        """Build a dictionary from the parsed request arguments
+        representing the new resource to be created.
+        """
         args = self.parser.parse_args()
         args['creator_id'] = auth.current_user_id()
         args[self.parent_id_name] = parent_id
-        new_resource = self.resource_type(**args)
+        return args
 
+    def create_resource(self, args):
+        """Given a dictionary representing the new resource to be
+        created, insert that new resource into the database and
+        return a representation of the created resource.
+        """
+        new_resource = self.resource_type(**args)
         try:
             backend.db.session.add(new_resource)
             backend.db.session.commit()
