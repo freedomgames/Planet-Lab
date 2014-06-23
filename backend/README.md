@@ -28,7 +28,7 @@ Quick Start for Development
 ###First Run:
 * pip install virtualenv
 * git clone \<your fork of the repo\>
-* cd parklab
+* cd Planet-Lab (or whatever you named your fork)
 * virtualenv venv
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
