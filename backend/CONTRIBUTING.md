@@ -6,7 +6,7 @@ that would be super.
 
 Pull Requests
 -------------
-* Fork https://github.com/freedomgames/parklab
+* Fork https://github.com/freedomgames/Planet-Lab
 and send pull requests against the master branch.
 * Try to keep them short -- aim for a focused pull requests of around
 300 lines or shorter.

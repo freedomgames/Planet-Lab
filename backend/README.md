@@ -20,13 +20,15 @@ Quick Start for Development
 * foreman: https://github.com/ddollar/foreman
   (gem install foreman -- if you have Ruby installed)
 * PostgreSQL 9.3: http://www.postgresql.org
-  (brew install postgresql / sudo apt-get install postgresql-9.3)
-* Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3)
+  (brew install postgresql / sudo apt-get install postgresql-9.3; sudo -u postgres createuser -rs \<your user name\>)
+  (if postgresql-9.3 is not available, you need to update your apt repository sources as described here: 
+  http://www.postgresql.org/download/linux/ubuntu/)
+* Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev)
 
 ###First Run:
 * pip install virtualenv
-* git clone [git@github.com:freedomgamees/parklab.git](git@github.com:freedomgamees/parklab.git])
-* cd parklab
+* git clone \<your fork of the repo\>
+* cd Planet-Lab (or whatever you named your fork)
 * virtualenv venv
 * source venv/bin/activate
 * pip install -r backend/requirements.txt
