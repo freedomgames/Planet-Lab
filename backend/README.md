@@ -27,7 +27,7 @@ Quick Start for Development
 
 ###First Run:
 * pip install virtualenv
-* git clone <your fork>
+* git clone \<your fork of the repo\>
 * cd parklab
 * virtualenv venv
 * source venv/bin/activate
