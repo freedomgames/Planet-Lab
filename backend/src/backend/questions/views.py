@@ -11,14 +11,22 @@ import backend.quests.models as quest_models
 import backend.questions.models as question_models
 
 
-class QuestionBase(object):
-    """Provide an as_dict method and a parser."""
-
+def make_parser(with_question_type=False):
+    """Return a parser for the Question resource.
+    Allows question_type to be an argument depending on the
+    value of with_question_type.
+    """
     parser = reqparse.RequestParser()
     parser.add_argument('description', type=str, required=True)
-    parser.add_argument(
-            'question_type', type=str, required=True,
-            choices=question_models.QUESTION_TYPES)
+    if with_question_type:
+        parser.add_argument(
+                'question_type', type=str, required=True,
+                choices=question_models.QUESTION_TYPES)
+    return parser
+
+
+class QuestionBase(object):
+    """Provide an as_dict method."""
 
     view_fields = (
             'id', 'url', 'description', 'question_type',
@@ -31,6 +39,8 @@ class QuestionBase(object):
 
 class Question(QuestionBase, resource.SimpleResource):
     """Manipulate questions linked to a quest."""
+
+    parser = make_parser()
 
     @staticmethod
     def query(quest_id, question_id):
@@ -63,6 +73,8 @@ class QuestionView(QuestionBase, resource.SimpleResource):
 
 class QuestionList(QuestionBase, resource.ManyToOneLink):
     """Resource for working with collections of questions."""
+
+    parser = make_parser(with_question_type=True)
 
     parent_id_name = 'quest_id'
     child_link_name = 'questions'

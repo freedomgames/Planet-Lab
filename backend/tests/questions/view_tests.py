@@ -104,6 +104,11 @@ class QuestionTest(harness.TestHarness):
             "question_type": "text", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 200)
 
+        # but we can't change the question_type after creating it
+        resp = self.put_json('/v1/quests/1/questions/1', {
+            "question_type": "upload", 'description': 'a blue house'})
+        self.assertEqual(resp.status_code, 200)
+
         # and get them back
         resp = self.app.get("/v1/quests/1/questions/1")
         self.assertEqual(json.loads(resp.data), {
@@ -128,8 +133,8 @@ class QuestionTest(harness.TestHarness):
         resp = self.app.delete("/v1/quests/1/questions/1")
         self.assertEqual(resp.status_code, 404)
 
-        # make sure we handled enums properly
-        resp = self.put_json('/v1/quests/1/questions/1', {
+        # make sure we can't create invalid question types
+        resp = self.post_json('/v1/quests/1/questions/', {
             "question_type": "snakes", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 400)
 
