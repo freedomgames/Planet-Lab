@@ -8,6 +8,10 @@ import backend
 db = backend.db
 
 
+DEFAULT_AVATAR_URL = 'http://s3.amazonaws.com/%s/default-avatar.jpg' % (
+        backend.app.config['S3_BUCKET'])
+
+
 class User(db.Model, flask_user.UserMixin):
     """A user account for either a learner or a mentor."""
     __tablename__ = 'users'
@@ -20,7 +24,8 @@ class User(db.Model, flask_user.UserMixin):
     name = db.Column(db.String, nullable=True)
     email = db.Column(db.String, nullable=True)
     description = db.Column(db.String, nullable=True)
-    avatar_url = db.Column(db.String, nullable=True)
+    avatar_url = db.Column(
+            db.String, nullable=False, default=DEFAULT_AVATAR_URL)
 
     answers = db.relationship("Answer", backref="creator")
 
