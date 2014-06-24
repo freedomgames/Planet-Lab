@@ -3,7 +3,6 @@ Flask==0.10.1
 Flask-Babel==0.9
 Flask-Login==0.2.11
 Flask-Mail==0.9.0
-Flask-OAuth==0.12
 Flask-RESTful==0.2.12
 Flask-SQLAlchemy==1.0
 Flask-User==0.5.1
@@ -16,9 +15,7 @@ Werkzeug==0.9.4
 aniso8601==0.82
 blinker==1.3
 gunicorn==18.0
-httplib2==0.9
 itsdangerous==0.24
-oauth2==1.5.211
 passlib==1.6.2
 psycopg2==2.5.3
 py-bcrypt==0.4
