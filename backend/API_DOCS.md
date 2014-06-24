@@ -10,6 +10,52 @@ sessions attempt to access resources which require authorization.
 The log-in flow takes care of creating user resources, obviating
 the need for a POST /users end-point.
 
+Static Content
+--------------
+Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
+The front-end is responsible for uploading files to S3, but it must use the
+back-end to authorize upload requests.
+The front-end must then inform the back-end that the upload is complete and set
+the asset url on the affected resource via a PUT.
+The following end-points may be used to sign upload requests to S3 for
+user-uploaded static assets.
+
+They may be used with the s3upload.js script as shown below.
+See https://devcenter.heroku.com/articles/s3-upload-python for more details.
+
+```javascript
+<input type="file" id="file"/>
+<p id="status">Please select a file</p>
+<div id="preview"></div>
+
+<script>
+  var avatar_url = null;
+
+  var s3_upload = function() {
+    var s3upload = new S3Upload({
+        file_dom_selector: 'file',
+        s3_sign_put_url: '/v1//v1/sign-avatar-upload',
+
+        onProgress: function(percent, message) {
+            $('#status').html('Upload progress: ' + percent + '%' + message);
+        },
+        onFinishS3Put: function(url) {
+            $('#status').html('Upload completed. Uploaded to: '+ url);
+            $("#preview").html('<img src="'+url+'" style="width:300px;" />');
+            avatar_url = url;
+        },
+        onError: function(status) {
+            $('#status').html('Upload error: ' + status);
+        }
+    });
+  };
+</script>
+```
+
+####GET /v1//v1/sign-avatar-upload
+#####Retrieve a signing key for uploading avatar images
+
+
 Resources
 =========
 Description of the resources and verbs provided by the REST service.

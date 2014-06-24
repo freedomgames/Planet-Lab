@@ -24,6 +24,7 @@ Quick Start for Development
   (if postgresql-9.3 is not available, you need to update your apt repository sources as described here: 
   http://www.postgresql.org/download/linux/ubuntu/)
 * Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev)
+* An AWS account and S3 bucket (http://aws.amazon.com)
 
 ###First Run:
 * pip install virtualenv
@@ -34,6 +35,14 @@ Quick Start for Development
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
 * createdb parklab
+* create an S3 bucket, upload a file called 'default-avatar.jpg' into it and
+  make the file public
+* edit the .dev\_env file so that it contains your correct bucket name and
+  credentials in the fields
+  S3\_BUCKET,
+  AWS\_ACCESS\_KEY\_ID and
+  AWS\_SECRET\_ACCESS\_KEY
+  (see https://devcenter.heroku.com/articles/s3 for more details.)
 * foreman start create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
 
