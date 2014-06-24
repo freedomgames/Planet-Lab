@@ -46,6 +46,13 @@ def index():
     return flask.render_template('index.html')
 
 
+@app.route('/logout')
+def logout():
+    """Clear the session and return the index page."""
+    flask.session.clear()
+    return flask.render_template('index.html')
+
+
 @app.route('/avatar')
 @flask_user.login_required
 def update_avatar():
