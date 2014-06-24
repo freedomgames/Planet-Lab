@@ -31,6 +31,7 @@ import backend.missions.views as mission_views
 import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
 import backend.questions.views as question_views
+import backend.s3.views as s3_views
 import backend.users.models as user_models
 import backend.users.views as user_views
 
@@ -94,6 +95,8 @@ def other_error(error):
     """
     return error_handler(error, payload={'type': 'general error'})
 
+
+app.register_blueprint(s3_views.blueprint, url_prefix='/v1')
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
 
