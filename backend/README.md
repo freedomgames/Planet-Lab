@@ -81,7 +81,7 @@ The relevant steps are:
   AWS\_ACCESS\_KEY\_ID and
   AWS\_SECRET\_ACCESS\_KEY
 
-NEVER COMMIT YOUR KEYS INTO THE REPO
+#####NEVER COMMIT YOUR KEYS INTO THE REPO
 
 * foreman start create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
