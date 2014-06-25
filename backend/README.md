@@ -24,7 +24,47 @@ Quick Start for Development
   (if postgresql-9.3 is not available, you need to update your apt repository sources as described here: 
   http://www.postgresql.org/download/linux/ubuntu/)
 * Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev)
-* An AWS account and S3 bucket (http://aws.amazon.com)
+* An AWS account and S3 bucket for hosting static content
+
+###Your S3 Bucket
+Please read https://devcenter.heroku.com/articles/s3 for an overview of
+how we are using S3 with our application and Heroku.
+
+The relevant steps are:
+* Create an AWS account with amazon: http://aws.amazon.com
+* Create an S3 bucket: https://console.aws.amazon.com/s3
+* Select the bucket, click 'Properties,' 'Permissions,'
+  'Edit CORS Configuration' and give it a policy like:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>PUT</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+```
+* Upload a file called 'default-avatar.jpg' into the bucket
+* Right click 'default-avatar.jpg' and click the 'Make Public' button
+* On the security credentials tab: https://console.aws.amazon.com/iam/#users
+  create an IAM user with permissions to access S3 using a policy like:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": ["arn:aws:s3:::<your-bucket-name>/*"]
+    }
+  ]
+}
+```
+* Hold onto the access and secret keys for this IAM user --
+  you'll need them soon
 
 ###First Run:
 * pip install virtualenv
@@ -35,14 +75,14 @@ Quick Start for Development
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
 * createdb parklab
-* create an S3 bucket, upload a file called 'default-avatar.jpg' into it and
-  make the file public
 * edit the .dev\_env file so that it contains your correct bucket name and
   credentials in the fields
   S3\_BUCKET,
   AWS\_ACCESS\_KEY\_ID and
   AWS\_SECRET\_ACCESS\_KEY
-  (see https://devcenter.heroku.com/articles/s3 for more details.)
+
+NEVER COMMIT YOUR KEYS INTO THE REPO
+
 * foreman start create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
 
