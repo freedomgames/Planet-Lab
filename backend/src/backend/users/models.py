@@ -28,7 +28,7 @@ class User(db.Model, flask_user.UserMixin):
             db.String, nullable=False, default=DEFAULT_AVATAR_URL)
 
     answers = db.relationship("Answer", backref="creator")
-
+    questions = db.relationship("Question", backref="creator")
     missions = db.relationship("Mission", backref="user")
     quests = db.relationship("Quest", backref="user")
     organizations_created = db.relationship("Organization", backref="user")
