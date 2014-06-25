@@ -77,8 +77,8 @@ class OrganizationTest(harness.TestHarness):
         """Test linking users and organizations together."""
 
         # create the resources
-        harness.create_user(name='snakes')
-        harness.create_user(name='rakes')
+        harness.create_user(name='snakes', avatar_url='snakes.png')
+        harness.create_user(name='rakes', avatar_url='rakes.png')
 
         resp = self.post_json(
                 "/v1/organizations/",
@@ -113,14 +113,14 @@ class OrganizationTest(harness.TestHarness):
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 1, "name": "snakes",
-                "url": "/v1/users/1", "avatar_url": None},
+                "url": "/v1/users/1", "avatar_url": 'snakes.png'},
             {"id": 2, "name": "rakes",
-                "url": "/v1/users/2", "avatar_url": None}])
+                "url": "/v1/users/2", "avatar_url": 'rakes.png'}])
 
         resp = self.app.get("/v1/organizations/2")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 2, "name": "rakes",
-                "url": "/v1/users/2", "avatar_url": None}])
+                "url": "/v1/users/2", "avatar_url": 'rakes.png'}])
 
         # and on the users
         resp = self.app.get("/v1/users/1")
@@ -142,14 +142,14 @@ class OrganizationTest(harness.TestHarness):
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 1, "name": "snakes",
-                "url": "/v1/users/1", "avatar_url": None},
+                "url": "/v1/users/1", "avatar_url": 'snakes.png'},
             {"id": 2, "name": "rakes",
-                "url": "/v1/users/2", "avatar_url": None}])
+                "url": "/v1/users/2", "avatar_url": 'rakes.png'}])
 
         resp = self.app.get("/v1/organizations/2")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 2, "name": "rakes",
-                "url": "/v1/users/2", "avatar_url": None}])
+                "url": "/v1/users/2", "avatar_url": 'rakes.png'}])
 
         # delete a link
         resp = self.app.delete("/v1/organizations/1/users/2")
@@ -159,12 +159,12 @@ class OrganizationTest(harness.TestHarness):
         resp = self.app.get("/v1/organizations/1")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 1, "name": "snakes",
-                "url": "/v1/users/1", "avatar_url": None}])
+                "url": "/v1/users/1", "avatar_url": 'snakes.png'}])
 
         resp = self.app.get("/v1/organizations/2")
         self.assertEqual(json.loads(resp.data)['members'], [
             {"id": 2, "name": "rakes",
-                "url": "/v1/users/2", "avatar_url": None}])
+                "url": "/v1/users/2", "avatar_url": 'rakes.png'}])
 
 
 if __name__ == '__main__':
