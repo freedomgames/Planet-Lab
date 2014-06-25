@@ -32,6 +32,7 @@ class User(db.Model, flask_user.UserMixin):
     missions = db.relationship("Mission", backref="user")
     quests = db.relationship("Quest", backref="user")
     organizations_created = db.relationship("Organization", backref="user")
+    video_links_created = db.relationship('VideoLink', backref='creator')
 
     @property
     def url(self):

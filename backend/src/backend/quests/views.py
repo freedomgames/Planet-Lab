@@ -24,10 +24,15 @@ class QuestBase(object):
     view_fields = (
             'id', 'url', 'name', 'description', 'icon_url',
             'creator_id', 'creator_url')
+    video_link_fields = ('id', 'url', 'video_url', 'transcript')
 
     def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
         resp = {field: getattr(quest, field) for field in self.view_fields}
+        resp['video_links'] = [
+                {field: getattr(video_link, field) for
+                    field in self.video_link_fields} for
+                video_link in quest.video_links]
         return resp
 
 
@@ -37,7 +42,8 @@ class Quest(QuestBase, resource.SimpleResource):
     @staticmethod
     def query(quest_id):
         """Return the query to select the quest with the given ids."""
-        return quest_models.Quest.query.filter_by(id=quest_id)
+        return quest_models.Quest.query.filter_by(id=quest_id).options(
+                orm.joinedload('video_links'))
 
 
 class QuestList(QuestBase, flask_restful.Resource):
@@ -89,3 +95,46 @@ class QuestMissionLinkList(QuestBase, flask_restful.Resource):
         else:
             return {'quests': [self.as_dict(quest) for
                 quest in mission.quests]}
+
+
+class VideoLinkBase(object):
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('video_url', type=str, required=True)
+    parser.add_argument('transcript', type=str)
+
+    view_fields = (
+            'id', 'url', 'video_url', 'transcript',
+            'quest_id', 'quest_url',
+            'creator_id', 'creator_url')
+
+    def as_dict(self, quest):
+        """Return a serializable dictionary representing the given quest."""
+        resp = {field: getattr(quest, field) for field in self.view_fields}
+        return resp
+
+
+class VideoLink(VideoLinkBase, resource.SimpleResource):
+    """Manipulate video links linked to a quest."""
+
+    @staticmethod
+    def query(quest_id, video_link_id):
+        """Return the video link linked to the given quest."""
+        quest_query = backend.db.session.query(
+                quest_models.Quest.id).filter_by(id=quest_id)
+        video_link_query = quest_models.VideoLink.query.filter_by(
+                id=video_link_id).filter(
+                        quest_models.VideoLink.quest_id.in_(
+                            quest_query.subquery()))
+        return video_link_query
+
+
+class VideoLinkList(VideoLinkBase, resource.ManyToOneLink):
+    """Resource for working with collections of video links."""
+
+    parent_id_name = 'quest_id'
+    child_link_name = 'video_links'
+
+    resource_type = quest_models.VideoLink
+    parent_resource_type = quest_models.Quest
