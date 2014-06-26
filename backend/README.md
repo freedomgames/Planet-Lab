@@ -41,6 +41,7 @@ you need to update your apt repository sources as described here first:
 http://www.postgresql.org/download/linux/ubuntu/
 
 * Create a PostgreSQL user: sudo -u postgres createuser -rs \<your username\>
+
 where 'your username' is your linux username (whatever pops out from a whoami)
 * Install PostgreSQL and Python dev headers:
   sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev
