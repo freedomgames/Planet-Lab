@@ -10,7 +10,7 @@ Information on contributing is [available here.](CONTRIBUTING.md)
 Quick Start for Development
 ---------------------------
 
-###Requirements:
+###Requirements
 * Python 2.7: http://www.python.org 
 * pip: https://pypi.python.org/pypi/pip 
 * Foreman: https://github.com/ddollar/foreman
