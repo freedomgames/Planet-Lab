@@ -99,12 +99,12 @@ class MissionTest(harness.TestHarness):
 
         resp = self.post_json(
                 "/v1/quests/",
-                {"name": "mouse", "description": "nip"})
+                {"name": "mouse", "summary": "nip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
                 "/v1/quests/",
-                {"name": "blouse", "description": "blip"})
+                {"name": "blouse", "summary": "blip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
@@ -132,11 +132,11 @@ class MissionTest(harness.TestHarness):
             "url": "/v1/missions/1", "creator_id": 1,
             "creator_url": "/v1/users/1",
             "quests": [
-                {"description": "nip", "icon_url": None, "id": 1,
+                {"summary": "nip", "icon_url": None, "id": 1,
                     "url": "/v1/quests/1",
                     "creator_url": "/v1/users/1",
                     "name": "mouse", "creator_id": 1},
-                {"description": "blip", "icon_url": None, "id": 2,
+                {"summary": "blip", "icon_url": None, "id": 2,
                     "url": "/v1/quests/2",
                     "creator_url": "/v1/users/1",
                     "name": "blouse", "creator_id": 1}]})
@@ -147,7 +147,7 @@ class MissionTest(harness.TestHarness):
             "url": "/v1/missions/2", "creator_id": 1,
             "creator_url": "/v1/users/1",
             "quests": [
-                {"description": "nip", "icon_url": None, "id": 1,
+                {"summary": "nip", "icon_url": None, "id": 1,
                     "url": "/v1/quests/1",
                     "creator_url": "/v1/users/1",
                     "name": "mouse", "creator_id": 1}]})

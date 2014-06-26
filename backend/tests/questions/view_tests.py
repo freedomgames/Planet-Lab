@@ -18,7 +18,7 @@ class QuestionTest(harness.TestHarness):
         # create a quest
         resp = self.post_json(
                 "/v1/quests/",
-                {"name": "mouse", "description": "nap"})
+                {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
 
         # no questions yet
@@ -51,7 +51,7 @@ class QuestionTest(harness.TestHarness):
         # and one more linked to a different quest
         resp = self.post_json(
                 "/v1/quests/",
-                {"name": "mouse", "description": "nap"})
+                {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
@@ -170,7 +170,7 @@ class QuestionTest(harness.TestHarness):
         # create a quest
         resp = self.post_json(
                 "/v1/quests/",
-                {"name": "mouse", "description": "nap"})
+                {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
         # create some questions
         resp = self.post_json(
