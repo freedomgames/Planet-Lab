@@ -1,3 +1,7 @@
+[BASIC]
+#allow map and filter
+bad-functions=apply,input
+
 [MESSAGES CONTROL]
 #C0330 -- buggy indentation warnings
 #R0903: Too few public method
