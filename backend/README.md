@@ -11,22 +11,41 @@ Quick Start for Development
 ---------------------------
 
 ###Requirements:
-* (Optional) homebrew: http://brew.sh - if you are working on a Mac, this will make it easy to install the other requirements.  
-  If you're on Linux, you already have a package manager so use that.
 * Python 2.7: http://www.python.org 
-  (brew install python / sudo apt-get install python)
 * pip: https://pypi.python.org/pypi/pip 
-  (already included if you do a brew install python / sudo apt-get install python-pip)
-* foreman: https://github.com/ddollar/foreman
-  (gem install foreman -- if you have Ruby installed)
+* Foreman: https://github.com/ddollar/foreman
 * PostgreSQL 9.3: http://www.postgresql.org
-  (brew install postgresql / sudo apt-get install postgresql-9.3; sudo -u postgres createuser -rs \<your user name\>)
-  (if postgresql-9.3 is not available, you need to update your apt repository sources as described here: 
-  http://www.postgresql.org/download/linux/ubuntu/)
-* Postgres dev headers if you are on Linux (sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev)
-* An AWS account and S3 bucket for hosting static content
+* An AWS account and S3 bucket for hosting static content: http://aws.amazon.com
 
-###Your S3 Bucket
+###Fulfilling the Requirements on a Mac
+* Install the package manager Homebrew: http://brew.sh
+* Install Python and pip: brew install python
+* Install Ruby: brew install ruby
+* Install Foreman: gem install foreman
+* Install PostgreSQL: brew install postgresql
+* Set PostgreSQL to start on boot:
+  ln -s /usr/local/Cellar/postgresql/9.3.\*/homebrew.mxcl.postgresql.plist
+  ~/Library/LaunchAgents/
+* Start PostgreSQL now:
+  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+###Fulfilling the Requirements on Ubuntu
+* Install Python: sudo apt-get install python
+* Install pip: sudo apt-get install python-pip
+* Install Ruby: sudo apt-get install ruby1.9.1
+* Install Foreman: gem install foreman
+* Install PostgreSQL: sudo apt-get install postgresql-9.3
+
+If postgresql-9.3 is not available,
+you need to update your apt repository sources as described here first:
+http://www.postgresql.org/download/linux/ubuntu/
+
+* Create a PostgreSQL user: sudo -u postgres createuser -rs \<your username\>
+where 'your username' is your linux username (whatever pops out from a whoami)
+* Install PostgreSQL and Python dev headers:
+  sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev
+
+###Creating your S3 Bucket
 Please read https://devcenter.heroku.com/articles/s3 for an overview of
 how we are using S3 with our application and Heroku.
 
@@ -63,6 +82,7 @@ The relevant steps are:
   ]
 }
 ```
+where your-bucket-name is the bucket you created above
 * Hold onto the access and secret keys for this IAM user --
   you'll need them soon
 
