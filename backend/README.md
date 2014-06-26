@@ -83,7 +83,7 @@ The relevant steps are:
   ]
 }
 ```
-where your-bucket-name is the bucket you created above
+where 'your-bucket-name' is the bucket you created above
 * Hold onto the access and secret keys for this IAM user --
   you'll need them soon
 
