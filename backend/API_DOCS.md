@@ -384,7 +384,7 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
 }
 ```
 
@@ -392,7 +392,7 @@ Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
   "id": 2,
   "url": "/v1/quests/1/questions/2",
   "creator_id": 1,
@@ -412,7 +412,7 @@ Returns an object in the form:
   "questions": [
     {
       "description": "What is the moon?",
-      "question_type": "text" // "upload" | "text" | "multiple_choice"
+      "question_type": "text" // "upload" | "text"
       "id": 2,
       "url": "/v1/quests/1/questions/2",
       "creator_id": 1,
@@ -425,12 +425,28 @@ Returns an object in the form:
 ```
 
 ####GET /v1/quests/\<id\>/questions/\<id\>
+#####Retrieve the question with the given id linked to the given quest
+Returns an object in the form:
+```javascript
+{
+  "description": "What is the moon?",
+  "question_type": "text" // "upload" | "text"
+  "id": 1,
+  "url": "/v1/quests/1/questions/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "quest_id": 1,
+  "quest_url": "/v1/quests/1"
+}
+```
+
+####GET /v1/questions/\<id\>
 #####Retrieve the question with the given id
 Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
@@ -446,9 +462,116 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is cheese?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
 }
 ```
+Note that the question_type can not be change after resource creation.
 
 ####DELETE /v1/quests/\<id\>/questions/\<id\>
 #####Delete the question with the given id
+
+
+Answers
+-------
+Answers to questions provided by learners.
+
+####POST /v1/questions/\<id\>/answers/
+#####Create a new answer linked to the given question
+Accepts an object in the form:
+```javascript
+{
+  "answer_text": "The moon is cheese"
+}
+```
+for questions with a question_type of "text" and:
+```javascript
+{
+  "answer_upload_url": "moon.png"
+}
+```
+for questions with a question_type of "upload."
+
+Returns an object in the form:
+```javascript
+{
+  // Only one of these two fields will ever be populated.
+  "answer_text": "The moon is cheese",
+  "answer_upload_url": None,
+  "question_type": "text", // matches the parent's question type
+  "id": 1,
+  "url": "/v1/questions/1/answers/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "question_id": 1,
+  "question_url": "/v1/questions/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it
+
+####GET /v1/questions/\<id\>/answers/
+#####Return a list of all answers linked to the given question
+Returns an object in the form:
+```javascript
+{
+    "answers": [
+        {
+            "answer_text": "cats",
+            "answer_upload_url": null,
+            "question_type": "text",
+            "id": 1,
+            "url": "/v1/questions/1/answers/1",
+            "question_id": 1,
+            "question_url": "/v1/questions/1",
+            "creator_id": 1,
+            "creator_url": "/v1/users/1"
+        },
+        {
+            "answer_text": "more cats",
+            "answer_upload_url": null,
+            "question_type": "text",
+            "id": 2,
+            "url": "/v1/questions/1/answers/2",
+            "question_id": 1,
+            "question_url": "/v1/questions/1",
+            "creator_id": 1,
+            "creator_url": "/v1/users/1"
+        }
+    ]
+}
+```
+
+####GET /v1/questions/\<id\>/answers/\<id\>
+#####Retrieve the answer with the given id
+Returns an object in the form:
+```javascript
+{
+    "answer_text": "more cats",
+    "answer_upload_url": null,
+    "question_type": "text",
+    "id": 2,
+    "url": "/v1/questions/1/answers/2",
+    "question_id": 1,
+    "question_url": "/v1/questions/1",
+    "creator_id": 1,
+    "creator_url": "/v1/users/1"
+}
+```
+
+####PUT /v1/questions/\<id\>/answers/\<id\>
+#####Update the answer with the given id
+Accepts an object in the form:
+```javascript
+{
+  "answer_text": "The moon is cheese"
+}
+```
+for questions with a question_type of "text" and:
+```javascript
+{
+  "answer_upload_url": "moon.png"
+}
+```
+for questions with a question_type of "upload."
+
+####DELETE /v1/questions/\<id\>/answers/\<id\>
+#####Delete the answer with the given id

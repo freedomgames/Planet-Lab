@@ -117,7 +117,17 @@ api.add_resource(
         '/v1/quests/<int:quest_id>/questions/<int:question_id>')
 api.add_resource(
         question_views.QuestionList,
-        '/v1/quests/<int:quest_id>/questions/')
+        '/v1/quests/<int:parent_id>/questions/')
+api.add_resource(
+        question_views.QuestionView,
+        '/v1/questions/<int:question_id>')
+
+api.add_resource(
+        question_views.Answer,
+        '/v1/questions/<int:question_id>/answers/<int:answer_id>')
+api.add_resource(
+        question_views.AnswerList,
+        '/v1/questions/<int:parent_id>/answers/')
 
 api.add_resource(
         organization_views.Organization,
