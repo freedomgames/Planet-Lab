@@ -153,7 +153,6 @@ Returns an object in the form:
           "creator_url": "/v1/users/1",
           "name": "Tree Science",
           "summary": "Learn all about trees!",
-          "inquiry_questions": ["question 1", "question 2"]
           "icon_url": "/static/tree.png",
         }
       ]
@@ -192,7 +191,6 @@ Returns an object in the form:
       "creator_url": "/v1/users/1",
       "name": "Tree Science",
       "summary": "Learn all about trees!",
-      "inquiry_questions": ["question 1", "question 2"]
       "icon_url": "/static/tree.png",
     }
   ]
