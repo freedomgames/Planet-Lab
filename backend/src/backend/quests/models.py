@@ -1,5 +1,7 @@
 """SQLAlchemy models for quests."""
 
+import sqlalchemy.dialects.postgresql as postgresql
+
 import backend
 
 db = backend.db
@@ -24,7 +26,9 @@ class Quest(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
+    summary = db.Column(db.String, nullable=False)
+    inquiry_questions = db.Column(
+            postgresql.ARRAY(db.String), nullable=False, default=[])
     icon_url = db.Column(db.String, nullable=True)
 
     creator_id = db.Column(

@@ -152,7 +152,8 @@ Returns an object in the form:
           "creator_id": 1,
           "creator_url": "/v1/users/1",
           "name": "Tree Science",
-          "description": "Learn all about trees!",
+          "summary": "Learn all about trees!",
+          "inquiry_questions": ["question 1", "question 2"]
           "icon_url": "/static/tree.png",
         }
       ]
@@ -190,7 +191,8 @@ Returns an object in the form:
       "creator_id": 1,
       "creator_url": "/v1/users/1",
       "name": "Tree Science",
-      "description": "Learn all about trees!",
+      "summary": "Learn all about trees!",
+      "inquiry_questions": ["question 1", "question 2"]
       "icon_url": "/static/tree.png",
     }
   ]
@@ -224,7 +226,8 @@ Accepts an object in the form:
 ```javascript
 {
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -237,7 +240,8 @@ Returns an object in the form:
   "creator_id": 5,
   "creator_url": "/v1/users/5",
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
   "video_links": [],
   "icon_url": "/static/flower.png"
 }
@@ -257,7 +261,8 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Flower Planting",
-      "description": "Plant lots of flowers!",
+      "summary": "Plant lots of flowers!",
+      "inquiry_questions": ["question 1", "question 2"]
       "video_links": [
         {
           "id": 1,
@@ -274,7 +279,8 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Tree Planting",
-      "description": "Plant lots of trees!",
+      "summary": "Plant lots of trees!",
+      "inquiry_questions": ["question 1", "question 2"]
       "video_links": [],
       "icon_url": "/static/tree.png"
     }
@@ -292,7 +298,8 @@ Returns an object in the form:
   "creator_id": 5,
   "creator_url": "/v1/users/5",
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
   "video_links": [
     {
       "id": 1,
@@ -311,7 +318,8 @@ Accepts an object in the form:
 ```javascript
 {
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -342,7 +350,8 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Flower Planting",
-      "description": "Plant lots of flowers!",
+      "summary": "Plant lots of flowers!",
+      "inquiry_questions": ["question 1", "question 2"]
       "icon_url": "/static/flower.png"
     },
     {
@@ -351,7 +360,8 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Tree Planting",
-      "description": "Plant lots of trees!",
+      "summary": "Plant lots of trees!",
+      "inquiry_questions": [],
       "icon_url": "/static/tree.png"
     }
   ]

@@ -18,11 +18,13 @@ class QuestBase(object):
 
     parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True)
-    parser.add_argument('description', type=str, required=True)
+    parser.add_argument('summary', type=str, required=True)
+    parser.add_argument(
+            'inquiry_questions', type=lambda x: map(str, list(x)))
     parser.add_argument('icon_url', type=str)
 
     view_fields = (
-            'id', 'url', 'name', 'description', 'icon_url',
+            'id', 'url', 'name', 'summary', 'icon_url', 'inquiry_questions',
             'creator_id', 'creator_url')
     video_link_fields = ('id', 'url', 'video_url', 'transcript')
 
@@ -58,9 +60,7 @@ class QuestList(QuestBase, flask_restful.Resource):
         backend.db.session.add(quest)
         backend.db.session.commit()
 
-        args['id'] = quest.id
-
-        return args
+        return self.as_dict(quest)
 
 
 class QuestUserList(QuestBase, flask_restful.Resource):
