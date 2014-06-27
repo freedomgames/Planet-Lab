@@ -19,12 +19,24 @@ class QuestBase(object):
     parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('summary', type=str, required=True)
+
     parser.add_argument(
             'inquiry_questions', type=lambda x: map(str, list(x)))
+    parser.add_argument('pbl_description', type=str)
+    parser.add_argument('mentor_guide', type=str)
+
+    parser.add_argument('min_grade_level', type=int)
+    parser.add_argument('max_grade_level', type=int)
+
+    parser.add_argument('hours_required', type=int)
+    parser.add_argument('minutes_required', type=int)
+
     parser.add_argument('icon_url', type=str)
 
     view_fields = (
             'id', 'url', 'name', 'summary', 'icon_url', 'inquiry_questions',
+            'pbl_description', 'mentor_guide', 'min_grade_level',
+            'max_grade_level', 'hours_required', 'minutes_required',
             'creator_id', 'creator_url')
     video_link_fields = ('id', 'url', 'video_url', 'transcript')
 

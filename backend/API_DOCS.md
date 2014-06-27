@@ -153,7 +153,6 @@ Returns an object in the form:
           "creator_url": "/v1/users/1",
           "name": "Tree Science",
           "summary": "Learn all about trees!",
-          "inquiry_questions": ["question 1", "question 2"]
           "icon_url": "/static/tree.png",
         }
       ]
@@ -192,7 +191,6 @@ Returns an object in the form:
       "creator_url": "/v1/users/1",
       "name": "Tree Science",
       "summary": "Learn all about trees!",
-      "inquiry_questions": ["question 1", "question 2"]
       "icon_url": "/static/tree.png",
     }
   ]
@@ -228,6 +226,12 @@ Accepts an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
   "icon_url": "/static/flower.png"
 }
 ```
@@ -242,6 +246,12 @@ Returns an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
   "video_links": [],
   "icon_url": "/static/flower.png"
 }
@@ -263,6 +273,12 @@ Returns an object in the form:
       "name": "Flower Planting",
       "summary": "Plant lots of flowers!",
       "inquiry_questions": ["question 1", "question 2"]
+      "pbl_description": "learn a lot, please",
+      "mentor_guide": "be nice to kids",
+      "min_grade_level": 3,
+      "max_grade_level": 4,
+      "hours_required": 1,
+      "minutes_required": 45,
       "video_links": [
         {
           "id": 1,
@@ -281,6 +297,12 @@ Returns an object in the form:
       "name": "Tree Planting",
       "summary": "Plant lots of trees!",
       "inquiry_questions": ["question 1", "question 2"]
+      "pbl_description": "learn a lot, OR ELSE",
+      "mentor_guide": "be TERRIBLE to kids",
+      "min_grade_level": 1,
+      "max_grade_level": 6,
+      "hours_required": 4,
+      "minutes_required": 35,
       "video_links": [],
       "icon_url": "/static/tree.png"
     }
@@ -300,6 +322,12 @@ Returns an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
   "video_links": [
     {
       "id": 1,
@@ -320,6 +348,12 @@ Accepts an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
   "icon_url": "/static/flower.png"
 }
 ```
@@ -352,6 +386,12 @@ Returns an object in the form:
       "name": "Flower Planting",
       "summary": "Plant lots of flowers!",
       "inquiry_questions": ["question 1", "question 2"]
+      "pbl_description": "learn a lot, please",
+      "mentor_guide": "be nice to kids",
+      "min_grade_level": 3,
+      "max_grade_level": 4,
+      "hours_required": 1,
+      "minutes_required": 45,
       "icon_url": "/static/flower.png"
     },
     {
@@ -362,6 +402,12 @@ Returns an object in the form:
       "name": "Tree Planting",
       "summary": "Plant lots of trees!",
       "inquiry_questions": [],
+      "pbl_description": null,
+      "mentor_guide": null,
+      "min_grade_level": null,
+      "max_grade_level": null,
+      "hours_required": null,
+      "minutes_required": null,
       "icon_url": "/static/tree.png"
     }
   ]
