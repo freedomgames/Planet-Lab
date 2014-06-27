@@ -99,20 +99,28 @@ class AnswerBase(object):
         return {field: getattr(answer, field) for field in self.view_fields}
 
 
-def assert_answer_matches_question(question_id, answer):
+def get_question_type(question_id):
+    """Retrieve the question type for the question with the given id.
+    Return None if the question_id does not exist.
+    """
+    question_type_row = backend.db.session.query(
+            question_models.Question.question_type).filter_by(
+                    id=question_id).first()
+    if question_type_row is None:
+        return None
+    else:
+        return question_type_row[0]
+
+
+def assert_answer_matches_question(question_type, answer):
     """We need to make sure the answer type matches the question
     type -- e.g. if the question type is a text response, make
     sure the answer is a text response rather than a file upload.
-    Aborts with a 400 error if the types do not match, returns the
-    question type on success.
+    Aborts with a 400 error if the types do not match.
     """
-    question_type = backend.db.session.query(
-            question_models.Question.question_type).filter_by(
-                    id=question_id).first()
     if question_type is None:
         flask_restful.abort(404)
     else:
-        question_type = question_type[0]
         has_text = answer['answer_text'] is not None
         has_url = answer['answer_upload_url'] is not None
 
@@ -124,8 +132,6 @@ def assert_answer_matches_question(question_id, answer):
             flask_restful.abort(
                     400, message='If question_type is text, the '
                     'answer_text field must only be present.')
-        else:
-            return question_type
 
 
 class Answer(AnswerBase, resource.SimpleResource):
@@ -146,7 +152,8 @@ class Answer(AnswerBase, resource.SimpleResource):
         """Check that the answer type matches the question type
         before updating the answer.
         """
-        assert_answer_matches_question(question_id, self.parser.parse_args())
+        question_type = get_question_type(question_id)
+        assert_answer_matches_question(question_type, self.parser.parse_args())
         return super(Answer, self).put(
                 question_id=question_id, answer_id=answer_id)
 
@@ -166,6 +173,7 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
         parent question into the answer's arguments.
         """
         args = super(AnswerList, self).build_args(parent_id)
-        question_type = assert_answer_matches_question(parent_id, args)
+        question_type = get_question_type(parent_id)
+        assert_answer_matches_question(question_type, args)
         args['question_type'] = question_type
         return args
