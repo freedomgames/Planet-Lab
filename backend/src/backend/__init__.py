@@ -149,13 +149,6 @@ api.add_resource(
         '/v1/missions/<int:mission_id>/quests/')
 
 api.add_resource(
-        quest_views.VideoLink,
-        '/v1/quests/<int:quest_id>/video_links/<int:video_link_id>')
-api.add_resource(
-        quest_views.VideoLinkList,
-        '/v1/quests/<int:parent_id>/video_links/')
-
-api.add_resource(
         question_views.Question,
         '/v1/quests/<int:quest_id>/questions/<int:question_id>')
 api.add_resource(
