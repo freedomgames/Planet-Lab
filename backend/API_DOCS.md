@@ -233,6 +233,7 @@ Accepts an object in the form:
   "hours_required": 1,
   "minutes_required": 45,
   "icon_url": "/static/flower.png"
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
 }
 ```
 
@@ -252,7 +253,7 @@ Returns an object in the form:
   "max_grade_level": 4,
   "hours_required": 1,
   "minutes_required": 45,
-  "video_links": [],
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -279,14 +280,7 @@ Returns an object in the form:
       "max_grade_level": 4,
       "hours_required": 1,
       "minutes_required": 45,
-      "video_links": [
-        {
-          "id": 1,
-          "transcript": "cloudy",
-          "url": "/v1/quests/1/video_links/1",
-          "video_url": "clouds.mp4"
-        }
-      ],
+      "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"],
       "icon_url": "/static/flower.png"
     },
     {
@@ -328,14 +322,7 @@ Returns an object in the form:
   "max_grade_level": 4,
   "hours_required": 1,
   "minutes_required": 45,
-  "video_links": [
-    {
-      "id": 1,
-      "transcript": "cloudy",
-      "url": "/v1/quests/1/video_links/1",
-      "video_url": "clouds.mp4"
-    }
-  ],
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -354,6 +341,7 @@ Accepts an object in the form:
   "max_grade_level": 4,
   "hours_required": 1,
   "minutes_required": 45,
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -695,83 +683,3 @@ for questions with a question_type of "upload."
 
 ####DELETE /v1/questions/\<id\>/answers/\<id\>
 #####Delete the answer with the given id
-
-
-Video Links
------------
-Videos with optional transcripts linked to quests.
-
-####POST /v1/quests/\<id\>/video\_links/
-#####Create a new video link linked to the given quest
-Accepts an object in the form:
-```javascript
-{
-  "video_url": "youtube.com/clouds.mp4",
-  "trascript": "cloudy clouds"
-}
-```
-
-Returns an object in the form:
-```javascript
-{
-  "video_url": "youtube.com/clouds.mp4",
-  "transcript": "cloudy clouds",
-  "creator_id": 1,
-  "creator_url": "/v1/users/1",
-  "id": 1,
-  "url": "/v1/quests/1/video_links/1",
-  "quest_id": 1,
-  "quest_url": "/v1/quests/1"
-}
-```
-most notably containing the id for the newly created resource and the url
-for manipulating it
-
-####GET /v1/quests/\<id\>/video\_links/
-#####Return a list of all video links linked to the given quest
-Returns an object in the form:
-```javascript
-{
-  "video_links": [
-    {
-      "video_url": "youtube.com/clouds.mp4",
-      "transcript": "cloudy clouds",
-      "creator_id": 1,
-      "creator_url": "/v1/users/1",
-      "id": 1,
-      "url": "/v1/quests/1/video_links/1",
-      "quest_id": 1,
-      "quest_url": "/v1/quests/1"
-    }
-  ]
-}
-```
-
-####GET /v1/quests/\<id\>/video\_links/\<id\>
-#####Retrieve the video link with the given id linked to the given quest
-Returns an object in the form:
-```javascript
-{
-  "video_url": "youtube.com/clouds.mp4",
-  "transcript": "cloudy clouds",
-  "creator_id": 1,
-  "creator_url": "/v1/users/1",
-  "id": 1,
-  "url": "/v1/quests/1/video_links/1",
-  "quest_id": 1,
-  "quest_url": "/v1/quests/1"
-}
-```
-
-####PUT /v1/quests/\<id\>/video\_links/\<id\>
-#####Update the video link with the given id
-Accepts an object in the form:
-```javascript
-{
-  "video_url": "youtube.com/clouds.mp4",
-  "transcript": "cloudy clouds",
-}
-```
-
-####DELETE /v1/quests/\<id\>/video\_links/\<id\>
-#####Delete the video link with the given id
