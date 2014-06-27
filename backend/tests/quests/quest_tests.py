@@ -29,6 +29,9 @@ class QuestTest(harness.TestHarness):
             "name": "mouse", "summary": "nip", "inquiry_questions": ["a", "b"],
             "icon_url": None, "video_links": [],
             "id": 1, "url": "/v1/quests/1",
+            "pbl_description": None, "mentor_guide": None,
+            "min_grade_level": None, "max_grade_level": None,
+            "hours_required": None, "minutes_required": None,
             "creator_id": 1, "creator_url": "/v1/users/1"})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
@@ -52,6 +55,9 @@ class QuestTest(harness.TestHarness):
             'summary': 'nip',
             'icon_url': None,
             "inquiry_questions": ["a", "b"],
+            "pbl_description": None, "mentor_guide": None,
+            "min_grade_level": None, "max_grade_level": None,
+            "hours_required": None, "minutes_required": None,
             'id': 1,
             'video_links': [],
             'url': '/v1/quests/1',
@@ -60,6 +66,9 @@ class QuestTest(harness.TestHarness):
         # edit
         resp = self.put_json('/v1/quests/1', {
             'summary': 'nip', 'name': 'mouse', 'icon_url': 'rubber',
+            "pbl_description": 'p', "mentor_guide": 'g',
+            "min_grade_level": 1, "max_grade_level": 2,
+            "hours_required": 3, "minutes_required": 4,
             'inquiry_questions': ['b', 'c', 'd']})
         self.assertEqual(resp.status_code, 200)
 
@@ -69,6 +78,9 @@ class QuestTest(harness.TestHarness):
             'creator_id': 1,
             'creator_url': '/v1/users/1',
             'summary': 'nip',
+            "pbl_description": 'p', "mentor_guide": 'g',
+            "min_grade_level": 1, "max_grade_level": 2,
+            "hours_required": 3, "minutes_required": 4,
             'icon_url': 'rubber',
             'video_links': [],
             "inquiry_questions": ["b", "c", "d"],
@@ -82,10 +94,16 @@ class QuestTest(harness.TestHarness):
             {'creator_id': 1, 'summary': 'nip', 'icon_url': 'rubber',
                 'creator_url': '/v1/users/1', 'video_links': [],
                 "inquiry_questions": ["b", "c", "d"],
+                "pbl_description": 'p', "mentor_guide": 'g',
+                "min_grade_level": 1, "max_grade_level": 2,
+                "hours_required": 3, "minutes_required": 4,
                 'url': '/v1/quests/1', 'id': 1, 'name': 'mouse'},
             {'creator_id': 1, 'summary': 'blip', 'icon_url': None,
                 'creator_url': '/v1/users/1', 'video_links': [],
                 "inquiry_questions": [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'url': '/v1/quests/2', 'id': 2, 'name': 'blouse'}])
 
         # delete
@@ -145,6 +163,9 @@ class QuestTest(harness.TestHarness):
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'creator_url': '/v1/users/1', "creator_id": 1}])
 
         resp = self.app.put("/v1/missions/1/quests/2")
@@ -155,10 +176,16 @@ class QuestTest(harness.TestHarness):
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'creator_url': '/v1/users/1', "creator_id": 1},
             {'creator_id': 1, 'summary': 'blip',
                 'creator_url': '/v1/users/1', 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
@@ -175,10 +202,16 @@ class QuestTest(harness.TestHarness):
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'creator_url': '/v1/users/1', "creator_id": 1},
             {'creator_id': 1, 'summary': 'blip',
                 'creator_url': '/v1/users/1', 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'url': '/v1/quests/2', 'icon_url': None,
                 'id': 2, 'name': 'blouse'}])
 
@@ -191,6 +224,9 @@ class QuestTest(harness.TestHarness):
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
                 'inquiry_questions': [],
+                "pbl_description": None, "mentor_guide": None,
+                "min_grade_level": None, "max_grade_level": None,
+                "hours_required": None, "minutes_required": None,
                 'creator_url': '/v1/users/1', "creator_id": 1}])
 
         resp = self.app.delete("/v1/missions/1/quests/1")
