@@ -3,6 +3,7 @@
 import sqlalchemy.dialects.postgresql as postgresql
 
 import backend
+import backend.common.models as models
 
 db = backend.db
 
@@ -16,6 +17,35 @@ join_table = db.Table('mission_quests', db.Model.metadata,
 db.Index(
         'ix_mission_quests_id_combo',
         join_table.c.mission_id, join_table.c.quest_id)
+
+
+class Tag(db.Model, models.CreatedBy):
+    """Tags are associated with quests to aid their searchability."""
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
+
+    @property
+    def url(self):
+        """Return the URL for this resource."""
+        return backend.api.url_for(backend.quest_views.Tag, tag_id=self.id)
+
+
+class QuestTags(db.Model):
+    """Join table linking quests to tags."""
+
+    __tablename__ = 'quest_tags'
+
+    tag_id = db.Column(
+            db.Integer, db.ForeignKey(
+                'tags.id', onupdate='CASCADE', ondelete='CASCADE'),
+            nullable=False, index=True, primary_key=True)
+    quest_id = db.Column(
+            db.Integer, db.ForeignKey(
+                'quests.id', onupdate='CASCADE', ondelete='CASCADE'),
+            nullable=False, index=True, primary_key=True)
 
 
 class Quest(db.Model):
@@ -50,6 +80,8 @@ class Quest(db.Model):
 
     missions = db.relationship(
             "Mission", secondary=join_table, backref="quests")
+    tags = db.relationship(
+            "Tag", secondary=QuestTags.__table__, backref="quests")
 
     @property
     def url(self):

@@ -148,6 +148,12 @@ api.add_resource(
         quest_views.QuestMissionLinkList,
         '/v1/missions/<int:mission_id>/quests/')
 
+api.add_resource(quest_views.Tag, '/v1/quest-tags/<int:tag_id>')
+api.add_resource(quest_views.TagList, '/v1/quest-tags/')
+api.add_resource(
+        quest_views.QuestTagLink,
+        '/v1/quests/<int:left_id>/tags/<int:right_id>')
+
 api.add_resource(
         question_views.Question,
         '/v1/quests/<int:quest_id>/questions/<int:question_id>')

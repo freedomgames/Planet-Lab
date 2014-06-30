@@ -66,6 +66,30 @@ class SimpleResource(flask_restful.Resource):
             return flask.Response('', 404)
 
 
+class SimpleCreate(flask_restful.Resource):
+    """Base class defining the simplest POST for a new resource."""
+
+    parser = None
+    resource_type = lambda *args, **kwargs: None
+
+    def as_dict(self, resource):
+        """Needs to be implemented by child classes.  Given an object,
+        returns a serializable dictionary representing that object to
+        be returned after the resource is created.
+        """
+        raise NotImplementedError
+
+    def post(self):
+        """Create a new resource and link it to its creator."""
+        args = self.parser.parse_args()
+        args['creator_id'] = auth.current_user_id()
+        new_resource = self.resource_type(**args)
+
+        backend.db.session.add(new_resource)
+        backend.db.session.commit()
+
+        return self.as_dict(new_resource)
+
 class ManyToOneLink(flask_restful.Resource):
     """Resource dealing with creating and listing a resource linked
     to one single other resource.
