@@ -5,6 +5,7 @@ import flask
 import flask_restful
 import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
+import sqlalchemy.exc
 
 import backend
 import backend.common.auth as auth
@@ -12,6 +13,8 @@ import backend.common.resource as resource
 import backend.missions.models as mission_models
 import backend.quests.models as quest_models
 
+
+DUPE_TAG_MSG = 'A tag with this name already exists.'
 
 class QuestBase(object):
     """Provide a common as_dict method and a parser."""
@@ -40,10 +43,15 @@ class QuestBase(object):
             'pbl_description', 'mentor_guide', 'min_grade_level',
             'max_grade_level', 'hours_required', 'minutes_required',
             'video_links', 'creator_id', 'creator_url')
+    tag_fields = ('id', 'url', 'name')
 
     def as_dict(self, quest):
         """Return a serializable dictionary representing the given quest."""
-        return {field: getattr(quest, field) for field in self.view_fields}
+        resp = {field: getattr(quest, field) for field in self.view_fields}
+        resp['tags'] = [{
+            field: getattr(tag, field) for field in self.tag_fields} for
+            tag in quest.tags]
+        return resp
 
 
 class Quest(QuestBase, resource.SimpleResource):
@@ -52,7 +60,8 @@ class Quest(QuestBase, resource.SimpleResource):
     @staticmethod
     def query(quest_id):
         """Return the query to select the quest with the given ids."""
-        return quest_models.Quest.query.filter_by(id=quest_id)
+        return quest_models.Quest.query.filter_by(id=quest_id).options(
+                orm.joinedload('tags'))
 
 
 class QuestList(QuestBase, flask_restful.Resource):
@@ -102,3 +111,57 @@ class QuestMissionLinkList(QuestBase, flask_restful.Resource):
         else:
             return {'quests': [self.as_dict(quest) for
                 quest in mission.quests]}
+
+
+class TagBase(object):
+    """Provide a common as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('name', type=str, required=True)
+
+    view_fields = ('id', 'url', 'name', 'creator_id', 'creator_url')
+
+    def as_dict(self, tag):
+        """Return a serializable dictionary representing the given quest."""
+        return {field: getattr(tag, field) for field in self.view_fields}
+
+
+class Tag(TagBase, resource.SimpleResource):
+    """Resource for working with a single tag."""
+
+    @staticmethod
+    def query(tag_id):
+        """Return the query to select the quest with the given ids."""
+        return quest_models.Tag.query.filter_by(id=tag_id)
+
+    def put(self, *args, **kwargs):
+        """Handle duplicate names elegantly."""
+        try:
+            return super(Tag, self).put(*args, **kwargs)
+        except sqlalchemy.exc.IntegrityError:
+            flask_restful.abort(400, message=DUPE_TAG_MSG)
+
+class TagList(TagBase, resource.SimpleCreate):
+    """Resource for working with collections of tags."""
+
+    resource_type = quest_models.Tag
+
+    def post(self, *args, **kwargs):
+        """Handle duplicate names elegantly."""
+        try:
+            return super(TagList, self).post(*args, **kwargs)
+        except sqlalchemy.exc.IntegrityError:
+            flask_restful.abort(400, message=DUPE_TAG_MSG)
+
+    def get(self):
+        """Return all available tags."""
+        tags = self.resource_type.query.all()
+        return {'tags': [self.as_dict(tag) for tag in tags]}
+
+
+class QuestTagLink(resource.ManyToManyLink):
+    """Many-to-many links between quests and tags."""
+
+    left_id_name = quest_models.QuestTags.__table__.c.quest_id
+    right_id_name = quest_models.QuestTags.__table__.c.tag_id
+    join_table = quest_models.QuestTags.__table__

@@ -247,6 +247,7 @@ Returns an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "tags": [],
   "pbl_description": "learn a lot, please",
   "mentor_guide": "be nice to kids",
   "min_grade_level": 3,
@@ -274,6 +275,10 @@ Returns an object in the form:
       "name": "Flower Planting",
       "summary": "Plant lots of flowers!",
       "inquiry_questions": ["question 1", "question 2"]
+      "tags": [
+        {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+        {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+      ],
       "pbl_description": "learn a lot, please",
       "mentor_guide": "be nice to kids",
       "min_grade_level": 3,
@@ -291,6 +296,7 @@ Returns an object in the form:
       "name": "Tree Planting",
       "summary": "Plant lots of trees!",
       "inquiry_questions": ["question 1", "question 2"]
+      "tags": [],
       "pbl_description": "learn a lot, OR ELSE",
       "mentor_guide": "be TERRIBLE to kids",
       "min_grade_level": 1,
@@ -316,6 +322,10 @@ Returns an object in the form:
   "name": "Flower Planting",
   "summary": "Plant lots of flowers!",
   "inquiry_questions": ["question 1", "question 2"]
+  "tags": [
+    {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+    {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+  ],
   "pbl_description": "learn a lot, please",
   "mentor_guide": "be nice to kids",
   "min_grade_level": 3,
@@ -350,6 +360,94 @@ Accepts an object in the form:
 #####Delete the quest with the given id
 
 
+Quest Tags
+----------
+Tags linked to quests to make them more searchable.
+
+####POST /v1/quest-tags/
+#####Create a new quest tag
+Accepts an object in the form:
+```javascript
+{
+  "name": "Physics",
+}
+```
+where "name" must be unique among all tags.
+
+Returns an object in the form:
+```javascript
+{
+  "name": "Physics",
+  "id": 1,
+  "url": "/v1/quest-tags/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it.
+
+####GET /v1/quest-tags/
+#####Retrieve all available tags
+Returns an object in the form:
+```javascript
+{
+  "tags": [
+    {
+      "name": "physics",
+      "id": 1,
+      "url": "/v1/quest-tags/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    },
+    {
+      "name": "chemistry",
+      "id": 2,
+      "url": "/v1/quest-tags/2",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    }
+  ]
+}
+
+####GET /v1/quest-tags/\<id\>
+#####Retrieve the quest tag with the given id
+Returns an object in the form:
+```javascript
+{
+  "name": "Physics",
+  "id": 1,
+  "url": "/v1/quest-tags/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+
+####PUT /v1/quest-tags/\<id\>
+#####Update the quest tag with the given id
+Accepts an object in the form:
+```javascript
+{
+  "name": "Physics",
+}
+```
+where "name" must be unique among all tags.
+
+####DELETE /v1/quest-tags/\<id\>
+#####Delete the quest tag with the given id
+
+
+Quest-Tag Links
+---------------
+The many-to-many links used to links tags and quests
+
+####PUT /v1/quests/\<id\>/tags/\<id\>
+#####Link the quest to the tag with the given ids
+
+####DELETE /v1/quests/\<id\>/tags/\<id\>
+#####Un-link the quest from the tag with the given ids
+
+
 Quest-Mission Links
 -------------------
 The many-to-many links used to group quests into missions.
@@ -374,6 +472,10 @@ Returns an object in the form:
       "name": "Flower Planting",
       "summary": "Plant lots of flowers!",
       "inquiry_questions": ["question 1", "question 2"]
+      "tags": [
+        {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+        {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+      ],
       "pbl_description": "learn a lot, please",
       "mentor_guide": "be nice to kids",
       "min_grade_level": 3,
@@ -390,6 +492,7 @@ Returns an object in the form:
       "name": "Tree Planting",
       "summary": "Plant lots of trees!",
       "inquiry_questions": [],
+      "tags": [],
       "pbl_description": null,
       "mentor_guide": null,
       "min_grade_level": null,
