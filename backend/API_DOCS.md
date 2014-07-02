@@ -20,40 +20,75 @@ the asset url on the affected resource via a PUT.
 The following end-points may be used to sign upload requests to S3 for
 user-uploaded static assets.
 
-They may be used with the s3upload.js script as shown below.
-See https://devcenter.heroku.com/articles/s3-upload-python for more details.
-
+These end-points may be used as follows:
 ```javascript
-<input type="file" id="file"/>
-<p id="status">Please select a file</p>
-<div id="preview"></div>
-
-<script>
-  var avatar_url = null;
-
-  var s3_upload = function() {
-    var s3upload = new S3Upload({
-        file_dom_selector: 'file',
-        s3_sign_put_url: '/v1//v1/sign-avatar-upload',
-
-        onProgress: function(percent, message) {
-            $('#status').html('Upload progress: ' + percent + '%' + message);
-        },
-        onFinishS3Put: function(url) {
-            $('#status').html('Upload completed. Uploaded to: '+ url);
-            $("#preview").html('<img src="'+url+'" style="width:300px;" />');
-            avatar_url = url;
-        },
-        onError: function(status) {
-            $('#status').html('Upload error: ' + status);
-        }
-    });
-  };
-</script>
+var createCORSRequest = function(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+    return xhr;
+  } else if (typeof XDomainRequest != "undefined") {
+    // Otherwise, check for XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+    return xhr;
+  } else {
+    // Otherwise, CORS is not supported by the browser.
+    throw new Error('CORS not supported');
+  }
+};
+var s3_upload = function() {
+  var file = document.getElementById('file').files[0];
+  $.ajax({
+    url: '/v1/s3/sign-avatar-upload',
+    data: {file_name: 'avatar', mime_type: file.type},
+    success: function(response) {
+      var xhr = createCORSRequest('PUT', response.signed_request, true);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.send(file);
+    }
+  });
+};
 ```
 
-####GET /v1//v1/sign-avatar-upload
+####GET /v1/s3/sign-avatar-upload
 #####Retrieve a signing key for uploading avatar images
+######Required Query String Parameters:
+```
+file_name: the name the file will be given when uploaded to S3
+mime_type: the mime type of the file to be uploaded to S3
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/avatars/3/file_name"
+}
+```
+
+####GET /v1/s3/sign-quest-upload
+#####Retrieve a signing key for uploading avatar images
+######Required Query String Parameters:
+```
+file_name: the name the file will be given when uploaded to S3
+mime_type: the mime type of the file to be uploaded to S3
+quest_id: id of the quest for which the asset is being uploaded
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/quests/6/file_name"
+}
+```
 
 
 Resources

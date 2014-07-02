@@ -129,7 +129,7 @@ def other_error(error):
     return error_handler(error, payload={'type': 'general error'})
 
 
-app.register_blueprint(s3_views.blueprint, url_prefix='/v1')
+app.register_blueprint(s3_views.blueprint, url_prefix='/v1/s3')
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
 
