@@ -15,79 +15,34 @@ Static Content
 Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
 The front-end is responsible for uploading files to S3, but it must use the
 back-end to authorize upload requests.
-The front-end must then inform the back-end that the upload is complete and set
-the asset url on the affected resource via a PUT or POST.
-The following end-points may be used to sign upload requests to S3 for
-user-uploaded static assets.
+
+The back-end provides several end-points which return a signed URL that the
+front-end may use to upload files.
+The front-end must request a signed URL from the back-end using one of these
+end-points and then initiate the upload.
+Once complete, the front-end must set the uploaded file's url on the affected
+resource via a PUT or POST to the back-end.
 
 These end-points may be used as follows:
 ```javascript
 var s3_upload = function() {
   var file = document.getElementById('file').files[0];
   $.ajax({
-    url: '/v1/s3/sign-avatar-upload',
-    data: {file_name: 'avatar', mime_type: file.type},
+    url : '/v1/users/4/avatar/avatar_image',
+    data: {mime_type: file.type},
     success: function(response) {
+      // get an XMLHttpRequest object in a browser-compatible way
       var xhr = createCORSRequest('PUT', response.signed_request, true);
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.onload = function() {
+        // set the user's avatar URL to the URL for the now-uploaded image
+        update_avatar_url(response.url);
+      };
       xhr.send(file);
     }
   });
 };
-var createCORSRequest = function(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // Check if the XMLHttpRequest object has a "withCredentials" property.
-    // "withCredentials" only exists on XMLHTTPRequest2 objects.
-    xhr.open(method, url, true);
-    return xhr;
-  } else if (typeof XDomainRequest != "undefined") {
-    // Otherwise, check for XDomainRequest.
-    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-    return xhr;
-  } else {
-    // Otherwise, CORS is not supported by the browser.
-    throw new Error('CORS not supported');
-  }
-};
-```
-
-####GET /v1/s3/sign-avatar-upload
-#####Retrieve a signing key for uploading avatar images
-######Required Query String Parameters:
-```
-file_name: the name the file will be given when uploaded to S3
-mime_type: the mime type of the file to be uploaded to S3
-```
-Returns an object in the form:
-```javascript
-{
-  // the URL to use when uploading the file to S3
-  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
-  // the URL at which the uploaded file will be available after upload
-  "url": "https://freedomgames.s3.amazonaws.com/avatars/3/file_name"
-}
-```
-
-####GET /v1/s3/sign-quest-upload
-#####Retrieve a signing key for uploading avatar images
-######Required Query String Parameters:
-```
-file_name: the name the file will be given when uploaded to S3
-mime_type: the mime type of the file to be uploaded to S3
-quest_id: id of the quest for which the asset is being uploaded
-```
-Returns an object in the form:
-```javascript
-{
-  // the URL to use when uploading the file to S3
-  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
-  // the URL at which the uploaded file will be available after upload
-  "url": "https://freedomgames.s3.amazonaws.com/quests/6/file_name"
-}
 ```
 
 
@@ -132,6 +87,21 @@ Accepts an object in the form:
 ####DELETE /v1/users/\<id\>
 #####Delete the user with the given id
 
+####GET /v1/users/\<id\>/avatar/\<file\_name\>
+#####Retrieve a signing key for uploading an avatar image for the given user
+######Required Query String Parameters:
+```
+mime_type: the mime type of the file to be uploaded to S3
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/avatars/3/file_name"
+}
+```
 
 Missions
 --------
@@ -394,6 +364,43 @@ Accepts an object in the form:
 ####DELETE /v1/quests/\<id\>
 #####Delete the quest with the given id
 
+
+####GET /v1/quests/\<id\>/uploads/\<file_name\>
+#####Retrieve a signing key for uploading a static asset on the given quest
+######Required Query String Parameters:
+```
+mime_type: the mime type of the file to be uploaded to S3
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/quests/6/file_name"
+}
+```
+
+####DELETE /v1/quests/\<id\>/uploads/\<file_name\>
+#####Delete the given static asset for the given quest
+
+####GET /v1/quests/\<id\>/uploads/
+#####List uploaded static assets for the given quest
+Returns an object in the form:
+```javascript
+{
+  "assets": [
+    {
+      "file_name": "are pandas bears.png",
+      "url": "https://freedomgames.s3.amazonaws.com/quests/1/are%20pandas%20bears.png"
+    },
+    {
+      "file_name": "bears.png",
+      "url": "https://freedomgames.s3.amazonaws.com/quests/1/bears.png"
+    }
+  ]
+}
+```
 
 Quest Tags
 ----------
