@@ -16,7 +16,7 @@ Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
 The front-end is responsible for uploading files to S3, but it must use the
 back-end to authorize upload requests.
 The front-end must then inform the back-end that the upload is complete and set
-the asset url on the affected resource via a PUT.
+the asset url on the affected resource via a PUT or POST.
 The following end-points may be used to sign upload requests to S3 for
 user-uploaded static assets.
 
