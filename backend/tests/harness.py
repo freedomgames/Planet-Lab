@@ -40,7 +40,7 @@ class TestHarness(unittest.TestCase):
             sess.update(**session_update)
 
     def url_for(self, *args, **kwargs):
-        """Short-cut to the url_for function."""
+        """Short-cut to the flask_restful url_for function."""
         with backend.app.test_request_context():
             return backend.api.url_for(*args, **kwargs)
 
