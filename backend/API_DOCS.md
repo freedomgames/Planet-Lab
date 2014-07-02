@@ -22,6 +22,19 @@ user-uploaded static assets.
 
 These end-points may be used as follows:
 ```javascript
+var s3_upload = function() {
+  var file = document.getElementById('file').files[0];
+  $.ajax({
+    url: '/v1/s3/sign-avatar-upload',
+    data: {file_name: 'avatar', mime_type: file.type},
+    success: function(response) {
+      var xhr = createCORSRequest('PUT', response.signed_request, true);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.send(file);
+    }
+  });
+};
 var createCORSRequest = function(method, url) {
   var xhr = new XMLHttpRequest();
   if ("withCredentials" in xhr) {
@@ -39,19 +52,6 @@ var createCORSRequest = function(method, url) {
     // Otherwise, CORS is not supported by the browser.
     throw new Error('CORS not supported');
   }
-};
-var s3_upload = function() {
-  var file = document.getElementById('file').files[0];
-  $.ajax({
-    url: '/v1/s3/sign-avatar-upload',
-    data: {file_name: 'avatar', mime_type: file.type},
-    success: function(response) {
-      var xhr = createCORSRequest('PUT', response.signed_request, true);
-      xhr.setRequestHeader('Content-Type', file.type);
-      xhr.setRequestHeader('x-amz-acl', 'public-read');
-      xhr.send(file);
-    }
-  });
 };
 ```
 
