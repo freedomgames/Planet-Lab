@@ -31,6 +31,7 @@ import backend.missions.views as mission_views
 import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
 import backend.questions.views as question_views
+import backend.s3.views as s3_views
 import backend.users.models as user_models
 import backend.users.views as user_views
 
@@ -43,6 +44,39 @@ flask_user.UserManager(db_adapter, app)
 def index():
     """Return the index page."""
     return flask.render_template('index.html')
+
+
+@app.route('/logout')
+def logout():
+    """Clear the session and return the index page."""
+    flask.session.clear()
+    return flask.render_template('index.html')
+
+
+@app.route('/avatar')
+@flask_user.login_required
+def update_avatar():
+    """Example showing how to use s3 for uploading avatar images."""
+    user_id = auth.current_user_id()
+    user_row = db.session.query(
+            user_models.User.name,
+            user_models.User.email,
+            user_models.User.description,
+            user_models.User.avatar_url).filter_by(
+                    id=user_id).first()
+    if user_row is None:
+        # this really should not happen -- the user would have had
+        # to have been deleted without killing the session
+        return flask.redirect(flask.url_for('login'))
+    else:
+        return flask.render_template(
+                'avatar_example.html',
+                user_id=user_id,
+                name=user_row[0],
+                email=user_row[1],
+                description=user_row[2],
+                avatar_url=user_row[3],
+                user_url=api.url_for(user_views.User, user_id=user_id))
 
 
 @app.route('/app')
@@ -95,6 +129,8 @@ def other_error(error):
     return error_handler(error, payload={'type': 'general error'})
 
 
+app.register_blueprint(s3_views.blueprint, url_prefix='/v1')
+
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
@@ -112,12 +148,28 @@ api.add_resource(
         quest_views.QuestMissionLinkList,
         '/v1/missions/<int:mission_id>/quests/')
 
+api.add_resource(quest_views.Tag, '/v1/quest-tags/<int:tag_id>')
+api.add_resource(quest_views.TagList, '/v1/quest-tags/')
+api.add_resource(
+        quest_views.QuestTagLink,
+        '/v1/quests/<int:left_id>/tags/<int:right_id>')
+
 api.add_resource(
         question_views.Question,
         '/v1/quests/<int:quest_id>/questions/<int:question_id>')
 api.add_resource(
         question_views.QuestionList,
-        '/v1/quests/<int:quest_id>/questions/')
+        '/v1/quests/<int:parent_id>/questions/')
+api.add_resource(
+        question_views.QuestionView,
+        '/v1/questions/<int:question_id>')
+
+api.add_resource(
+        question_views.Answer,
+        '/v1/questions/<int:question_id>/answers/<int:answer_id>')
+api.add_resource(
+        question_views.AnswerList,
+        '/v1/questions/<int:parent_id>/answers/')
 
 api.add_resource(
         organization_views.Organization,

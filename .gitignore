@@ -1,6 +1,5 @@
-test.db
+# Python / virtualenv stuff
 venv
-.DS_Store
 *.py[cod]
 
 # Installer logs
@@ -10,3 +9,12 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

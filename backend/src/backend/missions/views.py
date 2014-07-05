@@ -23,7 +23,7 @@ class MissionBase(object):
             'id', 'url', 'name', 'description', 'points',
             'creator_id', 'creator_url')
     quest_fields = (
-            'id', 'url', 'name', 'description', 'icon_url',
+            'id', 'url', 'name', 'summary', 'icon_url',
             'creator_id', 'creator_url')
 
     def as_dict(self, mission):

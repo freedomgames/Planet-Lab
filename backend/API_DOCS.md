@@ -10,6 +10,52 @@ sessions attempt to access resources which require authorization.
 The log-in flow takes care of creating user resources, obviating
 the need for a POST /users end-point.
 
+Static Content
+--------------
+Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
+The front-end is responsible for uploading files to S3, but it must use the
+back-end to authorize upload requests.
+The front-end must then inform the back-end that the upload is complete and set
+the asset url on the affected resource via a PUT.
+The following end-points may be used to sign upload requests to S3 for
+user-uploaded static assets.
+
+They may be used with the s3upload.js script as shown below.
+See https://devcenter.heroku.com/articles/s3-upload-python for more details.
+
+```javascript
+<input type="file" id="file"/>
+<p id="status">Please select a file</p>
+<div id="preview"></div>
+
+<script>
+  var avatar_url = null;
+
+  var s3_upload = function() {
+    var s3upload = new S3Upload({
+        file_dom_selector: 'file',
+        s3_sign_put_url: '/v1//v1/sign-avatar-upload',
+
+        onProgress: function(percent, message) {
+            $('#status').html('Upload progress: ' + percent + '%' + message);
+        },
+        onFinishS3Put: function(url) {
+            $('#status').html('Upload completed. Uploaded to: '+ url);
+            $("#preview").html('<img src="'+url+'" style="width:300px;" />');
+            avatar_url = url;
+        },
+        onError: function(status) {
+            $('#status').html('Upload error: ' + status);
+        }
+    });
+  };
+</script>
+```
+
+####GET /v1//v1/sign-avatar-upload
+#####Retrieve a signing key for uploading avatar images
+
+
 Resources
 =========
 Description of the resources and verbs provided by the REST service.
@@ -106,7 +152,7 @@ Returns an object in the form:
           "creator_id": 1,
           "creator_url": "/v1/users/1",
           "name": "Tree Science",
-          "description": "Learn all about trees!",
+          "summary": "Learn all about trees!",
           "icon_url": "/static/tree.png",
         }
       ]
@@ -144,7 +190,7 @@ Returns an object in the form:
       "creator_id": 1,
       "creator_url": "/v1/users/1",
       "name": "Tree Science",
-      "description": "Learn all about trees!",
+      "summary": "Learn all about trees!",
       "icon_url": "/static/tree.png",
     }
   ]
@@ -178,8 +224,16 @@ Accepts an object in the form:
 ```javascript
 {
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
   "icon_url": "/static/flower.png"
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
 }
 ```
 
@@ -191,7 +245,16 @@ Returns an object in the form:
   "creator_id": 5,
   "creator_url": "/v1/users/5",
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
+  "tags": [],
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -210,7 +273,19 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Flower Planting",
-      "description": "Plant lots of flowers!",
+      "summary": "Plant lots of flowers!",
+      "inquiry_questions": ["question 1", "question 2"]
+      "tags": [
+        {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+        {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+      ],
+      "pbl_description": "learn a lot, please",
+      "mentor_guide": "be nice to kids",
+      "min_grade_level": 3,
+      "max_grade_level": 4,
+      "hours_required": 1,
+      "minutes_required": 45,
+      "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"],
       "icon_url": "/static/flower.png"
     },
     {
@@ -219,7 +294,16 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Tree Planting",
-      "description": "Plant lots of trees!",
+      "summary": "Plant lots of trees!",
+      "inquiry_questions": ["question 1", "question 2"]
+      "tags": [],
+      "pbl_description": "learn a lot, OR ELSE",
+      "mentor_guide": "be TERRIBLE to kids",
+      "min_grade_level": 1,
+      "max_grade_level": 6,
+      "hours_required": 4,
+      "minutes_required": 35,
+      "video_links": [],
       "icon_url": "/static/tree.png"
     }
   ]
@@ -236,7 +320,19 @@ Returns an object in the form:
   "creator_id": 5,
   "creator_url": "/v1/users/5",
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
+  "tags": [
+    {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+    {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+  ],
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
@@ -247,13 +343,109 @@ Accepts an object in the form:
 ```javascript
 {
   "name": "Flower Planting",
-  "description": "Plant lots of flowers!",
+  "summary": "Plant lots of flowers!",
+  "inquiry_questions": ["question 1", "question 2"]
+  "pbl_description": "learn a lot, please",
+  "mentor_guide": "be nice to kids",
+  "min_grade_level": 3,
+  "max_grade_level": 4,
+  "hours_required": 1,
+  "minutes_required": 45,
+  "video_links": ["youtube.com/clouds.mp4", "youtube.com/sun.mp4"]
   "icon_url": "/static/flower.png"
 }
 ```
 
 ####DELETE /v1/quests/\<id\>
 #####Delete the quest with the given id
+
+
+Quest Tags
+----------
+Tags linked to quests to make them more searchable.
+
+####POST /v1/quest-tags/
+#####Create a new quest tag
+Accepts an object in the form:
+```javascript
+{
+  "name": "Physics",
+}
+```
+where "name" must be unique among all tags.
+
+Returns an object in the form:
+```javascript
+{
+  "name": "Physics",
+  "id": 1,
+  "url": "/v1/quest-tags/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it.
+
+####GET /v1/quest-tags/
+#####Retrieve all available tags
+Returns an object in the form:
+```javascript
+{
+  "tags": [
+    {
+      "name": "physics",
+      "id": 1,
+      "url": "/v1/quest-tags/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    },
+    {
+      "name": "chemistry",
+      "id": 2,
+      "url": "/v1/quest-tags/2",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    }
+  ]
+}
+
+####GET /v1/quest-tags/\<id\>
+#####Retrieve the quest tag with the given id
+Returns an object in the form:
+```javascript
+{
+  "name": "Physics",
+  "id": 1,
+  "url": "/v1/quest-tags/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+
+####PUT /v1/quest-tags/\<id\>
+#####Update the quest tag with the given id
+Accepts an object in the form:
+```javascript
+{
+  "name": "Physics",
+}
+```
+where "name" must be unique among all tags.
+
+####DELETE /v1/quest-tags/\<id\>
+#####Delete the quest tag with the given id
+
+
+Quest-Tag Links
+---------------
+The many-to-many links used to links tags and quests
+
+####PUT /v1/quests/\<id\>/tags/\<id\>
+#####Link the quest to the tag with the given ids
+
+####DELETE /v1/quests/\<id\>/tags/\<id\>
+#####Un-link the quest from the tag with the given ids
 
 
 Quest-Mission Links
@@ -278,7 +470,18 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Flower Planting",
-      "description": "Plant lots of flowers!",
+      "summary": "Plant lots of flowers!",
+      "inquiry_questions": ["question 1", "question 2"]
+      "tags": [
+        {"name": "a", "id": 1, "url": "/v1/quest-tags/1"},
+        {"name": "b", "id": 2, "url": "/v1/quest-tags/2"}
+      ],
+      "pbl_description": "learn a lot, please",
+      "mentor_guide": "be nice to kids",
+      "min_grade_level": 3,
+      "max_grade_level": 4,
+      "hours_required": 1,
+      "minutes_required": 45,
       "icon_url": "/static/flower.png"
     },
     {
@@ -287,7 +490,15 @@ Returns an object in the form:
       "creator_id": 5,
       "creator_url": "/v1/users/5",
       "name": "Tree Planting",
-      "description": "Plant lots of trees!",
+      "summary": "Plant lots of trees!",
+      "inquiry_questions": [],
+      "tags": [],
+      "pbl_description": null,
+      "mentor_guide": null,
+      "min_grade_level": null,
+      "max_grade_level": null,
+      "hours_required": null,
+      "minutes_required": null,
       "icon_url": "/static/tree.png"
     }
   ]
@@ -384,7 +595,7 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
 }
 ```
 
@@ -392,7 +603,7 @@ Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
   "id": 2,
   "url": "/v1/quests/1/questions/2",
   "creator_id": 1,
@@ -412,7 +623,7 @@ Returns an object in the form:
   "questions": [
     {
       "description": "What is the moon?",
-      "question_type": "text" // "upload" | "text" | "multiple_choice"
+      "question_type": "text" // "upload" | "text"
       "id": 2,
       "url": "/v1/quests/1/questions/2",
       "creator_id": 1,
@@ -425,12 +636,28 @@ Returns an object in the form:
 ```
 
 ####GET /v1/quests/\<id\>/questions/\<id\>
+#####Retrieve the question with the given id linked to the given quest
+Returns an object in the form:
+```javascript
+{
+  "description": "What is the moon?",
+  "question_type": "text" // "upload" | "text"
+  "id": 1,
+  "url": "/v1/quests/1/questions/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "quest_id": 1,
+  "quest_url": "/v1/quests/1"
+}
+```
+
+####GET /v1/questions/\<id\>
 #####Retrieve the question with the given id
 Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text" // "upload" | "text"
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
@@ -446,9 +673,116 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is cheese?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
 }
 ```
+Note that the question_type can not be change after resource creation.
 
 ####DELETE /v1/quests/\<id\>/questions/\<id\>
 #####Delete the question with the given id
+
+
+Answers
+-------
+Answers to questions provided by learners.
+
+####POST /v1/questions/\<id\>/answers/
+#####Create a new answer linked to the given question
+Accepts an object in the form:
+```javascript
+{
+  "answer_text": "The moon is cheese"
+}
+```
+for questions with a question_type of "text" and:
+```javascript
+{
+  "answer_upload_url": "moon.png"
+}
+```
+for questions with a question_type of "upload."
+
+Returns an object in the form:
+```javascript
+{
+  // Only one of these two fields will ever be populated.
+  "answer_text": "The moon is cheese",
+  "answer_upload_url": None,
+  "question_type": "text", // matches the parent's question type
+  "id": 1,
+  "url": "/v1/questions/1/answers/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1",
+  "question_id": 1,
+  "question_url": "/v1/questions/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it
+
+####GET /v1/questions/\<id\>/answers/
+#####Return a list of all answers linked to the given question
+Returns an object in the form:
+```javascript
+{
+    "answers": [
+        {
+            "answer_text": "cats",
+            "answer_upload_url": null,
+            "question_type": "text",
+            "id": 1,
+            "url": "/v1/questions/1/answers/1",
+            "question_id": 1,
+            "question_url": "/v1/questions/1",
+            "creator_id": 1,
+            "creator_url": "/v1/users/1"
+        },
+        {
+            "answer_text": "more cats",
+            "answer_upload_url": null,
+            "question_type": "text",
+            "id": 2,
+            "url": "/v1/questions/1/answers/2",
+            "question_id": 1,
+            "question_url": "/v1/questions/1",
+            "creator_id": 1,
+            "creator_url": "/v1/users/1"
+        }
+    ]
+}
+```
+
+####GET /v1/questions/\<id\>/answers/\<id\>
+#####Retrieve the answer with the given id
+Returns an object in the form:
+```javascript
+{
+    "answer_text": "more cats",
+    "answer_upload_url": null,
+    "question_type": "text",
+    "id": 2,
+    "url": "/v1/questions/1/answers/2",
+    "question_id": 1,
+    "question_url": "/v1/questions/1",
+    "creator_id": 1,
+    "creator_url": "/v1/users/1"
+}
+```
+
+####PUT /v1/questions/\<id\>/answers/\<id\>
+#####Update the answer with the given id
+Accepts an object in the form:
+```javascript
+{
+  "answer_text": "The moon is cheese"
+}
+```
+for questions with a question_type of "text" and:
+```javascript
+{
+  "answer_upload_url": "moon.png"
+}
+```
+for questions with a question_type of "upload."
+
+####DELETE /v1/questions/\<id\>/answers/\<id\>
+#####Delete the answer with the given id
