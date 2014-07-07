@@ -10,6 +10,7 @@ import sqlalchemy.exc
 import backend
 import backend.common.auth as auth
 import backend.common.resource as resource
+import backend.common.s3 as s3
 import backend.missions.models as mission_models
 import backend.quests.models as quest_models
 
@@ -111,6 +112,44 @@ class QuestMissionLinkList(QuestBase, flask_restful.Resource):
         else:
             return {'quests': [self.as_dict(quest) for
                 quest in mission.quests]}
+
+
+class QuestStaticAsset(flask_restful.Resource):
+    """Handle individual assets attached to a quest."""
+
+    @staticmethod
+    def get(quest_id, file_name):
+        """Return a signed request to upload the given file name to
+        the given quest and the URL for the resource upon its upload.
+        """
+        mime_type = flask.request.args['mime_type']
+        upload_path = 'quests/%s/%s' % (quest_id, file_name)
+        return s3.s3_upload_signature(upload_path, mime_type)
+
+    @staticmethod
+    def delete(quest_id, file_name):
+        """Delete the given asset."""
+        bucket = s3.get_bucket()
+        key = 'quests/%s/%s' % (quest_id, file_name)
+        bucket.delete_key(key)
+
+
+class QuestStaticAssets(flask_restful.Resource):
+    """List the assets uploaded to S3 for a given quest."""
+
+    @staticmethod
+    def get(quest_id):
+        """List the assets uploaded to S3 for a given quest."""
+        bucket = s3.get_bucket()
+        prefix = 'quests/%s/' % quest_id
+        prefix_len = len(prefix)
+        # The prefix itself may appear as a key, so we filter
+        # it out leaving only its children.
+        keys = [key for key in bucket.list(prefix=prefix) if
+                len(key.key) != prefix_len]
+        return {'assets': [{
+            'url': key.generate_url(0, query_auth=False),
+            'file_name': key.key[prefix_len:]} for key in keys]}
 
 
 class TagBase(object):
