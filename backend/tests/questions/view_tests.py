@@ -4,6 +4,7 @@
 import json
 import unittest
 
+import backend
 import harness
 
 
@@ -33,6 +34,7 @@ class QuestionTest(harness.TestHarness):
                 "/v1/quests/1/questions/",
                 {"question_type": "text", "description": "cat hotel"})
         self.assertEqual(json.loads(resp.data), {
+            "multiple_choices": [],
             "description": "cat hotel", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
             "creator_id": 1, "creator_url": "/v1/users/1",
@@ -43,6 +45,7 @@ class QuestionTest(harness.TestHarness):
                 "/v1/quests/1/questions/",
                 {"question_type": "upload", "description": "snake farm"})
         self.assertEqual(json.loads(resp.data), {
+            "multiple_choices": [],
             "description": "snake farm", "question_type": "upload",
             "id": 2, "url": "/v1/quests/1/questions/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
@@ -62,6 +65,7 @@ class QuestionTest(harness.TestHarness):
         # and get them back
         resp = self.app.get("/v1/quests/1/questions/1")
         self.assertEqual(json.loads(resp.data), {
+            "multiple_choices": [],
             "description": "cat hotel", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
             "creator_id": 1, "creator_url": "/v1/users/1",
@@ -75,10 +79,12 @@ class QuestionTest(harness.TestHarness):
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
                 "creator_id": 1, "creator_url": "/v1/users/1",
+                "multiple_choices": [],
                 "quest_id": 1, "quest_url": "/v1/quests/1"},
             {"description": "snake farm", "question_type": "upload",
                 "id": 2, "url": "/v1/quests/1/questions/2",
                 "creator_id": 1, "creator_url": "/v1/users/1",
+                "multiple_choices": [],
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
         # and get them back with just the id
@@ -87,6 +93,7 @@ class QuestionTest(harness.TestHarness):
             "description": "cat hotel", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
             "creator_id": 1, "creator_url": "/v1/users/1",
+            "multiple_choices": [],
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
         # but can't do anything else with that URI
@@ -115,6 +122,7 @@ class QuestionTest(harness.TestHarness):
             "description": "a blue house", "question_type": "text",
             "id": 1, "url": "/v1/quests/1/questions/1",
             "creator_id": 1, "creator_url": "/v1/users/1",
+            "multiple_choices": [],
             "quest_id": 1, "quest_url": "/v1/quests/1"})
 
         # delete
@@ -271,6 +279,157 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         resp = self.app.post('/v1/questions/100/answers/')
+        self.assertEqual(resp.status_code, 404)
+
+    @harness.with_sess(user_id=1)
+    def multiple_choice_test(self):
+        """Test the multiple choice resource."""
+
+        # nothing, so 404
+        resp = self.app.get(self.url_for(
+            backend.question_views.MultipleChoice,
+            question_id=1, multiple_choice_id=1))
+        self.assertEqual(resp.status_code, 404)
+
+        # create our resources
+        harness.create_user(name='snakes')
+
+        resp = self.post_json(
+                self.url_for(backend.quest_views.QuestList),
+                {"name": "mouse", "summary": "nap"})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
+                {'description': 'q1', 'question_type': 'multiple_choice'})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
+                {'description': 'q2', 'question_type': 'text'})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=1),
+                {'answer': 'a', 'is_correct': False, 'order': 2})
+        self.assertEqual(json.loads(resp.data), {
+            "answer": "a", "is_correct": False, 'order': 2,
+            "id": 1, "url": "/v1/questions/1/multiple_choices/1",
+            "creator_id": 1, "creator_url": "/v1/users/1",
+            "question_id": 1, "question_url": "/v1/questions/1"})
+
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=1),
+                {'answer': 'b', 'is_correct': True, 'order': 1})
+        self.assertEqual(json.loads(resp.data), {
+            "answer": "b", "is_correct": True, 'order': 1,
+            "id": 2, "url": "/v1/questions/1/multiple_choices/2",
+            "creator_id": 1, "creator_url": "/v1/users/1",
+            "question_id": 1, "question_url": "/v1/questions/1"})
+
+        # can't add a multiple choice answer to a non-multiple choice question
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=2),
+                {'answer': 'a', 'is_correct': False, 'order': 3})
+        self.assertEqual(resp.status_code, 400)
+
+        # or link to a non-existant question
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=20),
+                {'answer': 'a', 'is_correct': False, 'order': 3})
+        self.assertEqual(resp.status_code, 404)
+
+        # edit
+        resp = self.put_json(
+                self.url_for(
+                    backend.question_views.MultipleChoice,
+                    question_id=1, multiple_choice_id=2),
+                {'answer': 'bee', 'is_correct': True, 'order': 1})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.MultipleChoice,
+                    question_id=1, multiple_choice_id=2))
+        self.assertEqual(json.loads(resp.data), {
+            "answer": "bee", "is_correct": True, 'order': 1,
+            "id": 2, "url": "/v1/questions/1/multiple_choices/2",
+            "creator_id": 1, "creator_url": "/v1/users/1",
+            "question_id": 1, "question_url": "/v1/questions/1"})
+
+        # see them get attached to a question
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.Question,
+                    quest_id=1, question_id=1))
+        self.assertEqual(json.loads(resp.data)['multiple_choices'], [
+            {"answer": "bee", "is_correct": True, 'order': 1,
+                "id": 2, "url": "/v1/questions/1/multiple_choices/2",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"},
+            {"answer": "a", "is_correct": False, 'order': 2,
+                "id": 1, "url": "/v1/questions/1/multiple_choices/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"}])
+
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=1))
+        self.assertEqual(json.loads(resp.data), {'multiple_choices': [
+            {"answer": "bee", "is_correct": True, 'order': 1,
+                "id": 2, "url": "/v1/questions/1/multiple_choices/2",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"},
+            {"answer": "a", "is_correct": False, 'order': 2,
+                "id": 1, "url": "/v1/questions/1/multiple_choices/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"}]})
+
+        # make sure order is respected
+        resp = self.put_json(
+                self.url_for(
+                    backend.question_views.MultipleChoice,
+                    question_id=1, multiple_choice_id=2),
+                {'answer': 'bee', 'is_correct': True, 'order': 3})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.Question, quest_id=1, question_id=1))
+        self.assertEqual(json.loads(resp.data)['multiple_choices'], [
+            {"answer": "a", "is_correct": False, 'order': 2,
+                "id": 1, "url": "/v1/questions/1/multiple_choices/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"},
+            {"answer": "bee", "is_correct": True, 'order': 3,
+                "id": 2, "url": "/v1/questions/1/multiple_choices/2",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"}])
+
+        # delete
+        resp = self.app.delete(
+                self.url_for(
+                    backend.question_views.MultipleChoice,
+                    question_id=1, multiple_choice_id=2))
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.Question, quest_id=1, question_id=1))
+        self.assertEqual(json.loads(resp.data)['multiple_choices'], [
+            {"answer": "a", "is_correct": False, 'order': 2,
+                "id": 1, "url": "/v1/questions/1/multiple_choices/1",
+                "creator_id": 1, "creator_url": "/v1/users/1",
+                "question_id": 1, "question_url": "/v1/questions/1"}])
+
+        resp = self.app.get(
+                self.url_for(
+                    backend.question_views.MultipleChoice,
+                    question_id=1, multiple_choice_id=2))
         self.assertEqual(resp.status_code, 404)
 
 

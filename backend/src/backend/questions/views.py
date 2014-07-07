@@ -3,6 +3,7 @@
 
 import flask_restful
 import flask_restful.reqparse as reqparse
+import sqlalchemy.orm as orm
 import werkzeug.exceptions
 
 import backend
@@ -31,10 +32,17 @@ class QuestionBase(object):
     view_fields = (
             'id', 'url', 'description', 'question_type',
             'quest_id', 'quest_url', 'creator_id', 'creator_url')
+    multiple_choice_fields = (
+            'id', 'url', 'answer', 'is_correct', 'order',
+            'question_id', 'question_url', 'creator_id', 'creator_url')
 
     def as_dict(self, question):
         """Return a serializable dictionary representing the given quest."""
-        return {field: getattr(question, field) for field in self.view_fields}
+        resp = {field: getattr(question, field) for field in self.view_fields}
+        resp['multiple_choices'] = [{field: getattr(choice, field) for
+            field in self.multiple_choice_fields} for
+            choice in question.multiple_choices]
+        return resp
 
 
 class Question(QuestionBase, resource.SimpleResource):
@@ -51,6 +59,8 @@ class Question(QuestionBase, resource.SimpleResource):
                 id=question_id).filter(
                         question_models.Question.quest_id.in_(
                             quest_query.subquery()))
+        question_query = question_query.options(
+                orm.joinedload('multiple_choices'))
         return question_query
 
 
@@ -177,3 +187,64 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
         assert_answer_matches_question(question_type, args)
         args['question_type'] = question_type
         return args
+
+
+class MultipleChoiceBase(object):
+    """Provide an as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('answer', type=str, required=True)
+    parser.add_argument('is_correct', type=bool, required=True)
+    parser.add_argument('order', type=int, required=True)
+
+    view_fields = (
+            'id', 'url', 'answer', 'is_correct', 'order',
+            'question_id', 'question_url', 'creator_id', 'creator_url')
+
+    def as_dict(self, answer):
+        """Return a serializable dictionary representing the given quest."""
+        return {field: getattr(answer, field) for field in self.view_fields}
+
+
+class MultipleChoice(MultipleChoiceBase, resource.SimpleResource):
+    """Manipulate answers linked to a question."""
+
+    @staticmethod
+    def query(question_id, multiple_choice_id):
+        """Return the question linked to the given quest."""
+        question_query = backend.db.session.query(
+                question_models.Question.id).filter_by(id=question_id)
+        multiple_choice_query = question_models.MultipleChoice.query.filter_by(
+                id=multiple_choice_id).filter(
+                        question_models.MultipleChoice.question_id.in_(
+                            question_query.subquery()))
+        return multiple_choice_query
+
+
+class MultipleChoiceList(MultipleChoiceBase, resource.ManyToOneLink):
+    """Resource for working with collections of multiple choices."""
+
+    parent_id_name = 'question_id'
+    child_link_name = 'multiple_choices'
+
+    resource_type = question_models.MultipleChoice
+    parent_resource_type = question_models.Question
+
+    def create_resource(self, args):
+        """Make sure the parent question is the correct type to allow
+        for multiple choice answers.
+        """
+        parent_id = args[self.parent_id_name]
+        question_type_row = backend.db.session.query(
+                question_models.Question.question_type).filter_by(
+                        id=parent_id).first()
+        if question_type_row is None:
+            flask_restful.abort(404)
+        else:
+            question_type = question_type_row[0]
+            if question_type != 'multiple_choice':
+                flask_restful.abort(
+                        400, message='Tried to link a multiple choice answer '
+                        'to a non-multiple choice question')
+            else:
+                return super(MultipleChoiceList, self).create_resource(args)
