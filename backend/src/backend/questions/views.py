@@ -99,10 +99,12 @@ class AnswerBase(object):
     parser = reqparse.RequestParser()
     parser.add_argument('answer_text', type=str)
     parser.add_argument('answer_upload_url', type=str)
+    parser.add_argument('answer_multiple_choice', type=int)
 
     view_fields = (
             'id', 'url', 'question_type', 'answer_text', 'answer_upload_url',
-            'question_id', 'question_url', 'creator_id', 'creator_url')
+            'answer_multiple_choice', 'question_id',
+            'question_url', 'creator_id', 'creator_url')
 
     def as_dict(self, answer):
         """Return a serializable dictionary representing the given quest."""
@@ -133,15 +135,21 @@ def assert_answer_matches_question(question_type, answer):
     else:
         has_text = answer['answer_text'] is not None
         has_url = answer['answer_upload_url'] is not None
+        has_mc = answer['answer_multiple_choice'] is not None
 
-        if question_type == 'upload' and (not has_url or has_text):
+        if question_type == 'upload' and (not has_url or has_text or has_mc):
             flask_restful.abort(
                     400, message='If question_type is upload, the '
                     'answer_upload_url field must only be present.')
-        elif question_type == 'text' and (not has_text or has_url):
+        elif question_type == 'text' and (not has_text or has_url or has_mc):
             flask_restful.abort(
                     400, message='If question_type is text, the '
                     'answer_text field must only be present.')
+        elif question_type == 'multiple_choice' and (
+                not has_mc or has_text or has_url):
+            flask_restful.abort(
+                    400, message='If question_type is multiple_choice, the '
+                    'answer_multiple_choice field must only be present.')
 
 
 class Answer(AnswerBase, resource.SimpleResource):

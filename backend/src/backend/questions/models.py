@@ -20,6 +20,10 @@ class Answer(db.Model):
             db.Enum(*QUESTION_TYPES, name='question_types'), nullable=False)
     answer_text = db.Column(db.String, nullable=True)
     answer_upload_url = db.Column(db.String, nullable=True)
+    answer_multiple_choice = db.Column(
+            db.Integer, db.ForeignKey(
+                'multiple_choices.id', onupdate='CASCADE', ondelete='SET NULL'),
+            index=True)
 
     creator_id = db.Column(
             db.Integer, db.ForeignKey('users.id', ondelete='cascade'),
@@ -108,6 +112,8 @@ class MultipleChoice(db.Model, models.CreatedBy):
             db.Integer, db.ForeignKey(
                 'questions.id', onupdate='CASCADE', ondelete='CASCADE'),
             nullable=False, index=True)
+    answered_with = db.relationship(
+            "Answer", backref="multiple_choice")
 
     @property
     def url(self):

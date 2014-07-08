@@ -189,12 +189,29 @@ class QuestionTest(harness.TestHarness):
                 "/v1/quests/1/questions/",
                 {"question_type": "upload", "description": "cat upload"})
         self.assertEqual(resp.status_code, 200)
+        resp = self.post_json(
+                "/v1/quests/1/questions/",
+                {"question_type": "multiple_choice", "description": "a choice"})
+        self.assertEqual(resp.status_code, 200)
+
+        # create some choices
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=3),
+                {'answer': 'a', 'is_correct': True, 'order': 1})
+        self.assertEqual(resp.status_code, 200)
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=3),
+                {'answer': 'b', 'is_correct': False, 'order': 2})
+        self.assertEqual(resp.status_code, 200)
 
         # link some answers
         resp = self.post_json(
                 "/v1/questions/1/answers/", {"answer_text": "cats"})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "cats",
+            "answer_multiple_choice": None,
             "answer_upload_url": None,
             "id": 1, "url": "/v1/questions/1/answers/1",
             "creator_id": 1, "creator_url": "/v1/users/1",
@@ -205,22 +222,47 @@ class QuestionTest(harness.TestHarness):
                 {"answer_text": "more cats"})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "more cats",
-            "answer_upload_url": None,
+            "answer_multiple_choice": None, "answer_upload_url": None,
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
+
+        resp = self.post_json(
+                "/v1/questions/3/answers/",
+                {"answer_multiple_choice": 1})
+        self.assertEqual(json.loads(resp.data), {
+            "question_type": "multiple_choice", "answer_text": None,
+            "answer_multiple_choice": 1, "answer_upload_url": None,
+            "id": 3, "url": "/v1/questions/3/answers/3",
+            "creator_id": 1, "creator_url": "/v1/users/1",
+            "question_id": 3, "question_url": "/v1/questions/3"})
+
+        # can't link to invalid multiple choice answers
+        resp = self.post_json(
+                "/v1/questions/3/answers/",
+                {"answer_multiple_choice": 70})
+        self.assertEqual(resp.status_code, 404)
 
         # 400 on invalid combinations of question_type and answer fields
         resp = self.post_json(
                 "/v1/questions/1/answers/", {"answer_upload_url": "cats.html"})
         self.assertEqual(resp.status_code, 400)
-
-        resp = self.put_json(
-                "/v1/questions/1/answers/1", {"answer_upload_url": "cats.html"})
+        resp = self.post_json(
+                "/v1/questions/1/answers/", {"answer_multiple_choice": "cats"})
         self.assertEqual(resp.status_code, 400)
 
         resp = self.post_json(
                 "/v1/questions/2/answers/", {"answer_text": "cats"})
+        self.assertEqual(resp.status_code, 400)
+        resp = self.post_json(
+                "/v1/questions/2/answers/", {"answer_multiple_choice": "cats"})
+        self.assertEqual(resp.status_code, 400)
+
+        resp = self.post_json(
+                "/v1/questions/3/answers/", {"answer_text": "cats"})
+        self.assertEqual(resp.status_code, 400)
+        resp = self.post_json(
+                "/v1/questions/3/answers/", {"answer_upload_url": "cats"})
         self.assertEqual(resp.status_code, 400)
 
         # get them back
@@ -228,6 +270,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "more cats",
             "answer_upload_url": None,
+            "answer_multiple_choice": None,
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
@@ -236,11 +279,13 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data)['answers'], [
             {"answer_text": "cats", "answer_upload_url": None,
                 "creator_id": 1, "creator_url": "/v1/users/1",
+                "answer_multiple_choice": None,
                 "id": 1, "question_id": 1, "question_type": "text",
                 "question_url": "/v1/questions/1",
                 "url": "/v1/questions/1/answers/1"},
             {"answer_text": "more cats", "answer_upload_url": None,
                 "creator_id": 1, "creator_url": "/v1/users/1", "id": 2,
+                "answer_multiple_choice": None,
                 "question_id": 1, "question_type": "text",
                 "question_url": "/v1/questions/1",
                 "url": "/v1/questions/1/answers/2"}])
@@ -254,6 +299,7 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "super cat",
             "answer_upload_url": None,
+            "answer_multiple_choice": None,
             "id": 2, "url": "/v1/questions/1/answers/2",
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})

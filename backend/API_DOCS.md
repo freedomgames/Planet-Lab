@@ -905,20 +905,27 @@ Accepts an object in the form:
   "answer_text": "The moon is cheese"
 }
 ```
-for questions with a question_type of "text" and:
+for questions with a question_type of "text"
 ```javascript
 {
   "answer_upload_url": "moon.png"
 }
 ```
-for questions with a question_type of "upload."
+for questions with a question_type of "upload"
+```javascript
+{
+  "answer_multiple_choice": 4 // id of the multiple choice resource selected
+}
+```
+for questions with a question_type of "multiple_choice"
 
 Returns an object in the form:
 ```javascript
 {
-  // Only one of these two fields will ever be populated.
+  // Only one of these three fields will ever be populated.
   "answer_text": "The moon is cheese",
   "answer_upload_url": None,
+  "answer_multiple_choice": None,
   "question_type": "text", // matches the parent's question type
   "id": 1,
   "url": "/v1/questions/1/answers/1",
@@ -940,6 +947,7 @@ Returns an object in the form:
     {
       "answer_text": "cats",
       "answer_upload_url": null,
+      "answer_multiple_choice": None,
       "question_type": "text",
       "id": 1,
       "url": "/v1/questions/1/answers/1",
@@ -951,6 +959,7 @@ Returns an object in the form:
     {
       "answer_text": "more cats",
       "answer_upload_url": null,
+      "answer_multiple_choice": None,
       "question_type": "text",
       "id": 2,
       "url": "/v1/questions/1/answers/2",
@@ -970,6 +979,7 @@ Returns an object in the form:
 {
     "answer_text": "more cats",
     "answer_upload_url": null,
+    "answer_multiple_choice": None,
     "question_type": "text",
     "id": 2,
     "url": "/v1/questions/1/answers/2",
@@ -988,13 +998,19 @@ Accepts an object in the form:
   "answer_text": "The moon is cheese"
 }
 ```
-for questions with a question_type of "text" and:
+for questions with a question_type of "text"
 ```javascript
 {
   "answer_upload_url": "moon.png"
 }
 ```
-for questions with a question_type of "upload."
+for questions with a question_type of "upload"
+```javascript
+{
+  "answer_multiple_choice": 4 // id of the multiple choice resource selected
+}
+```
+for questions with a question_type of "multiple_choice"
 
 ####DELETE /v1/questions/\<id\>/answers/\<id\>
 #####Delete the answer with the given id
