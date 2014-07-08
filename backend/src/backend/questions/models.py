@@ -57,7 +57,11 @@ class Answer(db.Model):
 # Make sure the answer to a multiple choice question is a valid choice
 # for that question.
 sqlalchemy.event.listen(Answer.__table__, 'after_create', sqlalchemy.DDL("""
-CREATE OR REPLACE FUNCTION check_valid_mc_answer() RETURNS trigger AS '
+CREATE OR REPLACE FUNCTION check_valid_mc_answer()
+  RETURNS trigger
+  LANGUAGE 'plpgsql'
+  STABLE
+AS '
 BEGIN
   PERFORM NULL
   FROM multiple_choices
@@ -70,8 +74,7 @@ BEGIN
       NEW.answer_multiple_choice, NEW.question_id
       USING ERRCODE = ''23000'';
   END IF;
-END'
-LANGUAGE 'plpgsql';
+END';
 
 CREATE TRIGGER multiple_choice_answer BEFORE INSERT OR UPDATE ON answers
 FOR EACH ROW
