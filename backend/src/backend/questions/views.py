@@ -1,8 +1,10 @@
 """Views for supporting quest resources."""
 
 
+import flask
 import flask_restful
 import flask_restful.reqparse as reqparse
+import sqlalchemy.exc
 import sqlalchemy.orm as orm
 import werkzeug.exceptions
 
@@ -172,8 +174,12 @@ class Answer(AnswerBase, resource.SimpleResource):
         """
         question_type = get_question_type(question_id)
         assert_answer_matches_question(question_type, self.parser.parse_args())
-        return super(Answer, self).put(
-                question_id=question_id, answer_id=answer_id)
+        try:
+            return super(Answer, self).put(
+                    question_id=question_id, answer_id=answer_id)
+        except sqlalchemy.exc.IntegrityError:
+            # Tried to link a multiple choice answer to a bad choice
+            return flask.Response('', 404)
 
 
 class AnswerList(AnswerBase, resource.ManyToOneLink):

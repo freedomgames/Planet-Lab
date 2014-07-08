@@ -3,6 +3,8 @@
 import backend
 import backend.common.models as models
 
+import sqlalchemy
+
 db = backend.db
 
 QUESTION_TYPES = ('upload', 'text', 'multiple_choice')
@@ -51,6 +53,30 @@ class Answer(db.Model):
         """Return the URL for this resource."""
         return backend.api.url_for(
                 backend.user_views.User, user_id=self.creator_id)
+
+# Make sure the answer to a multiple choice question is a valid choice
+# for that question.
+sqlalchemy.event.listen(Answer.__table__, 'after_create', sqlalchemy.DDL("""
+CREATE OR REPLACE FUNCTION check_valid_mc_answer() RETURNS trigger AS '
+BEGIN
+  PERFORM NULL
+  FROM multiple_choices
+  WHERE id=NEW.answer_multiple_choice AND question_id=NEW.question_id;
+
+  IF FOUND THEN
+    RETURN NEW;
+  ELSE
+    RAISE EXCEPTION ''Invalid multiple choice id %% given for question %%'',
+      NEW.answer_multiple_choice, NEW.question_id
+      USING ERRCODE = ''23000'';
+  END IF;
+END'
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER multiple_choice_answer BEFORE INSERT OR UPDATE ON answers
+FOR EACH ROW
+WHEN (NEW.answer_multiple_choice IS NOT NULL)
+EXECUTE PROCEDURE check_valid_mc_answer();"""))
 
 
 class Question(db.Model):

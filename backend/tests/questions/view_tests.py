@@ -194,6 +194,11 @@ class QuestionTest(harness.TestHarness):
                 {"question_type": "multiple_choice", "description": "a choice"})
         self.assertEqual(resp.status_code, 200)
 
+        resp = self.post_json(
+                "/v1/quests/1/questions/",
+                {"question_type": "multiple_choice", "description": "b choice"})
+        self.assertEqual(resp.status_code, 200)
+
         # create some choices
         resp = self.post_json(
                 self.url_for(
@@ -204,6 +209,12 @@ class QuestionTest(harness.TestHarness):
                 self.url_for(
                     backend.question_views.MultipleChoiceList, parent_id=3),
                 {'answer': 'b', 'is_correct': False, 'order': 2})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                self.url_for(
+                    backend.question_views.MultipleChoiceList, parent_id=4),
+                {'answer': 'a', 'is_correct': False, 'order': 2})
         self.assertEqual(resp.status_code, 200)
 
         # link some answers
@@ -237,7 +248,23 @@ class QuestionTest(harness.TestHarness):
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 3, "question_url": "/v1/questions/3"})
 
-        # can't link to invalid multiple choice answers
+        # multiple choice id 1 is linked to question 3, not 4
+        resp = self.post_json(
+                "/v1/questions/4/answers/",
+                {"answer_multiple_choice": 3})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.post_json(
+                "/v1/questions/4/answers/",
+                {"answer_multiple_choice": 1})
+        self.assertEqual(resp.status_code, 404)
+
+        resp = self.put_json(
+                "/v1/questions/4/answers/4",
+                {"answer_multiple_choice": 1})
+        self.assertEqual(resp.status_code, 404)
+
+        # non-existant multiple choice id 70
         resp = self.post_json(
                 "/v1/questions/3/answers/",
                 {"answer_multiple_choice": 70})
