@@ -690,7 +690,7 @@ Returns an object in the form:
           "creator_id": 1,
           "creator_url": "/v1/users/1"
         }
-      ]
+      ],
       "id": 2,
       "url": "/v1/quests/1/questions/2",
       "creator_id": 1,
@@ -732,7 +732,7 @@ Returns an object in the form:
       "creator_id": 1,
       "creator_url": "/v1/users/1"
     }
-  ]
+  ],
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
@@ -772,7 +772,7 @@ Returns an object in the form:
       "creator_id": 1,
       "creator_url": "/v1/users/1"
     }
-  ]
+  ],
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
