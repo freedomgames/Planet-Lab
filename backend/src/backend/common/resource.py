@@ -133,7 +133,7 @@ class ManyToOneLink(flask_restful.Resource):
             backend.db.session.add(new_resource)
             backend.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
-            # tried to link to a non-existant parent
+            # tried to link to a non-existent parent
             return flask.Response('', 404)
         else:
             return self.as_dict(new_resource)
