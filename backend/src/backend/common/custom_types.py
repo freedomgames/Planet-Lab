@@ -1,4 +1,5 @@
 """Custom SQLAlchemy types."""
+#pylint: disable=R0904,W0223
 
 
 import datetime
