@@ -1,16 +1,17 @@
 """SQLAlchemy models for questions and quest completions."""
 
+import sqlalchemy
+
 import backend
 import backend.common.models as models
 
-import sqlalchemy
 
 db = backend.db
 
 QUESTION_TYPES = ('upload', 'text', 'multiple_choice')
 
 
-class Answer(db.Model):
+class Answer(db.Model, models.CreatedBy):
     """An answer to a question.  Answers are submitted by learners and
     evaluated by mentors.
     """
@@ -27,9 +28,6 @@ class Answer(db.Model):
                 'multiple_choices.id', onupdate='CASCADE', ondelete='SET NULL'),
             index=True)
 
-    creator_id = db.Column(
-            db.Integer, db.ForeignKey('users.id', ondelete='cascade'),
-            nullable=False, index=True)
     question_id = db.Column(
             db.Integer, db.ForeignKey('questions.id', ondelete='cascade'),
             nullable=False, index=True)
@@ -47,12 +45,6 @@ class Answer(db.Model):
         return backend.api.url_for(
                 backend.question_views.QuestionView,
                 question_id=self.question_id)
-
-    @property
-    def creator_url(self):
-        """Return the URL for this resource."""
-        return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator_id)
 
 # Make sure the answer to a multiple choice question is a valid choice
 # for that question.
@@ -82,7 +74,7 @@ WHEN (NEW.answer_multiple_choice IS NOT NULL)
 EXECUTE PROCEDURE check_valid_mc_answer();"""))
 
 
-class Question(db.Model):
+class Question(db.Model, models.CreatedBy):
     """Quests are linked to assessment questions, which learners
     answer to complete quests.
     """
@@ -97,8 +89,6 @@ class Question(db.Model):
     quest_id = db.Column(
             db.Integer, db.ForeignKey('quests.id', ondelete='cascade'),
             nullable=False, index=True)
-    creator_id = db.Column(
-            db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
 
     answers = db.relationship("Answer", backref="question")
     answered_by = db.relationship(
@@ -119,12 +109,6 @@ class Question(db.Model):
         """Return the URL for this resource."""
         return backend.api.url_for(
                 backend.quest_views.Quest, quest_id=self.quest_id)
-
-    @property
-    def creator_url(self):
-        """Return the URL for this resource."""
-        return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator_id)
 
 
 class MultipleChoice(db.Model, models.CreatedBy):

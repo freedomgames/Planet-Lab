@@ -7,8 +7,6 @@ import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 import sqlalchemy.exc
 
-import backend
-import backend.common.auth as auth
 import backend.common.resource as resource
 import backend.common.s3 as s3
 import backend.missions.models as mission_models
@@ -65,19 +63,10 @@ class Quest(QuestBase, resource.SimpleResource):
                 orm.joinedload('tags'))
 
 
-class QuestList(QuestBase, flask_restful.Resource):
+class QuestList(QuestBase, resource.SimpleCreate):
     """Resource for working with collections of quests."""
 
-    def post(self):
-        """Create a new quest and link it to its creator and mission."""
-        args = self.parser.parse_args()
-        args['creator_id'] = auth.current_user_id()
-        quest = quest_models.Quest(**args)
-
-        backend.db.session.add(quest)
-        backend.db.session.commit()
-
-        return self.as_dict(quest)
+    resource_type = quest_models.Quest
 
 
 class QuestUserList(QuestBase, flask_restful.Resource):

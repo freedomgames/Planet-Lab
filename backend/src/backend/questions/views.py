@@ -74,11 +74,13 @@ class QuestionView(QuestionBase, resource.SimpleResource):
         """Return the given question."""
         return question_models.Question.query.filter_by(id=question_id)
 
-    def put(self, question_id):
+    @staticmethod
+    def put(*args, **kwargs):
         """Can only GET here -- other verbs available at the above resource."""
         raise werkzeug.exceptions.MethodNotAllowed
 
-    def delete(self, question_id):
+    @staticmethod
+    def delete(*args, **kwargs):
         """Can only GET here -- other verbs available at the above resource."""
         raise werkzeug.exceptions.MethodNotAllowed
 

@@ -2,10 +2,11 @@
 
 
 import backend
+import backend.common.models as models
 db = backend.db
 
 
-class Mission(db.Model):
+class Mission(db.Model, models.CreatedBy):
     """Missions are groups of quests.  Mentors chose how to group
     quests into missions and learners complete missions quest by quest.
     """
@@ -17,17 +18,8 @@ class Mission(db.Model):
     description = db.Column(db.String, nullable=False)
     points = db.Column(db.Integer, nullable=False)
 
-    creator_id = db.Column(
-            db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-
     @property
     def url(self):
         """Return the url for the resource."""
         return backend.api.url_for(
                 backend.mission_views.Mission, mission_id=self.id)
-
-    @property
-    def creator_url(self):
-        """Return the URL for this resource."""
-        return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator_id)
