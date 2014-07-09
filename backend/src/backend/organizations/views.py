@@ -1,12 +1,9 @@
 """Views for supporting organization resources."""
 
 
-import flask_restful
 import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
-import backend
-import backend.common.auth as auth
 import backend.common.resource as resource
 import backend.organizations.models as organization_models
 
@@ -43,19 +40,10 @@ class Organization(OrganizationBase, resource.SimpleResource):
                 id=organization_id).options(orm.joinedload('members'))
 
 
-class OrganizationList(OrganizationBase, flask_restful.Resource):
+class OrganizationList(OrganizationBase, resource.SimpleCreate):
     """Resource for working with collections of organizations."""
 
-    def post(self):
-        """Create a new organization and link it to its creator."""
-        args = self.parser.parse_args()
-        args['creator_id'] = auth.current_user_id()
-        organization = organization_models.Organization(**args)
-
-        backend.db.session.add(organization)
-        backend.db.session.commit()
-
-        return self.as_dict(organization)
+    resource_type = organization_models.Organization
 
 
 class OrganizationUserLink(resource.ManyToManyLink):
