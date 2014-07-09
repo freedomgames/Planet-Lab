@@ -21,6 +21,9 @@ def make_parser(with_question_type=False):
     """
     parser = reqparse.RequestParser()
     parser.add_argument('description', type=str, required=True)
+    parser.add_argument(
+            'question_group', type=str, required=True,
+            choices=question_models.QUESTION_GROUPS)
     if with_question_type:
         parser.add_argument(
                 'question_type', type=str, required=True,
@@ -32,7 +35,7 @@ class QuestionBase(object):
     """Provide an as_dict method."""
 
     view_fields = (
-            'id', 'url', 'description', 'question_type',
+            'id', 'url', 'description', 'question_type', 'question_group',
             'quest_id', 'quest_url', 'creator_id', 'creator_url')
     multiple_choice_fields = (
             'id', 'url', 'answer', 'is_correct', 'order',
@@ -85,6 +88,16 @@ class QuestionView(QuestionBase, resource.SimpleResource):
         raise werkzeug.exceptions.MethodNotAllowed
 
 
+def parse_question_groups(arg):
+    """Parse the question_group query string into a list of
+    question_groups and assert that each is a valid group.
+    """
+    question_groups = str(arg).split(',')
+    assert all(question_group in question_models.QUESTION_GROUPS
+                for question_group in question_groups), 'invalid question group'
+    return question_groups
+
+
 class QuestionList(QuestionBase, resource.ManyToOneLink):
     """Resource for working with collections of questions."""
 
@@ -95,6 +108,35 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
 
     resource_type = question_models.Question
     parent_resource_type = quest_models.Quest
+
+    def get(self, parent_id):
+        """Retrieve all questions linked to the given quest,
+        optionally filtering them by question_group.
+        """
+        parser = reqparse.RequestParser()
+        parser.add_argument('question_group', type=parse_question_groups)
+        question_groups = parser.parse_args()['question_group']
+
+        if question_groups is None:
+            return super(QuestionList, self).get(parent_id)
+        else:
+            parent_count = self.parent_resource_type.query.filter_by(
+                    id=parent_id).count()
+            if not parent_count:
+                return flask.Response('', 404)
+            else:
+                child_query = self.resource_type.query.filter_by(
+                        quest_id=parent_id)
+                if len(question_groups) == 1:
+                    child_query = child_query.filter_by(
+                            question_group=question_groups[0])
+                else:
+                    child_query = child_query.filter(
+                            self.resource_type.question_group.in_(
+                                question_groups))
+                children = child_query.all()
+                return {self.child_link_name: [
+                    self.as_dict(child) for child in children]}
 
 
 class AnswerBase(object):

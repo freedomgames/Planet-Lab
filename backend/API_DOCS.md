@@ -637,7 +637,8 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text" | "multiple_choice"
+  "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz" // "review_quiz" | "lab_report" | "closing_questions"
 }
 ```
 
@@ -646,6 +647,7 @@ Returns an object in the form:
 {
   "description": "What is the moon?",
   "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
   "multiple_choices": [],
   "id": 2,
   "url": "/v1/quests/1/questions/2",
@@ -660,6 +662,16 @@ for manipulating it
 
 ####GET /v1/quests/\<id\>/questions/
 #####Return a list of all questions linked to the given quest
+######Optional Query String Parameters:
+```
+question_group: A comma-seperated list of question groups to restrict
+results to.  If not provided, all question will be returned.
+Valid question groups are 'review_quiz', 'lab_report', and 'closing_questions'
+
+e.g. question_group=review_quiz,lab_report will only return questions
+in the review_quiz or lab_report question groups.
+```
+
 Returns an object in the form:
 ```javascript
 {
@@ -667,6 +679,7 @@ Returns an object in the form:
     {
       "description": "What is the moon?",
       "question_type": "text", // "upload" | "text" | "multiple_choice"
+      "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
       "multiple_choices": [
         {
           "answer": "bears",
@@ -709,6 +722,7 @@ Returns an object in the form:
 {
   "description": "What is the moon?",
   "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
   "multiple_choices": [
     {
       "answer": "bears",
@@ -749,6 +763,7 @@ Returns an object in the form:
 {
   "description": "What is the moon?",
   "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
   "multiple_choices": [
     {
       "answer": "bears",
@@ -788,6 +803,7 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is cheese?",
+  "question_group": "lab_report" // "review_quiz" | "lab_report" | "closing_questions"
 }
 ```
 Note that the question_type can not be change after resource creation.

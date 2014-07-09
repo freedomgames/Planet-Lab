@@ -8,6 +8,7 @@ import backend.common.models as models
 
 db = backend.db
 
+QUESTION_GROUPS = ('review_quiz', 'lab_report', 'closing_questions')
 QUESTION_TYPES = ('upload', 'text', 'multiple_choice')
 
 
@@ -85,6 +86,9 @@ class Question(db.Model, models.CreatedBy):
     question_type = db.Column(
             db.Enum(*QUESTION_TYPES, name='question_types'),
             nullable=False)
+    question_group = db.Column(
+            db.Enum(*QUESTION_GROUPS, name='question_group'),
+            nullable=False, index=True)
 
     quest_id = db.Column(
             db.Integer, db.ForeignKey('quests.id', ondelete='cascade'),
