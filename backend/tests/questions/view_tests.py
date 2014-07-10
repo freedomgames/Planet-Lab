@@ -97,6 +97,9 @@ class QuestionTest(harness.TestHarness):
                 "multiple_choices": [], 'question_group': 'review_quiz',
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
+        resp = self.app.get("/v1/quests/100/questions/")
+        self.assertEqual(resp.status_code, 404)
+
         # filter by question_group
         resp = self.app.get(
                 "/v1/quests/1/questions/?question_group=lab_report")
