@@ -8,13 +8,5 @@ install:
   - "pip install -r backend/test-requirements.txt"
 before_script:
   - psql -c 'create database parklabtest;' -U postgres
-script: nosetests backend/tests
-env:
-  - PYTHONPATH=backend/src:backend/tests
-  - DATABASE_URL=postgresql://postgres@localhost/parklabtest
-  - SECRET_KEY=snakes
-  - DEBUG=1
-  - USER_ENABLE_EMAIL=''
-  - S3_BUCKET=bucket
-  - AWS_ACCESS_KEY_ID=key
-  - AWS_SECRET_ACCESS_KEY=secret
+script: nosetests backend/tests --with-coverage --cover-package backend
+env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
