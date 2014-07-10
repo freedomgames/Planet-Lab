@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+addons:
+  postgresql: "9.3"
+install:
+  - "pip install -r backend/requirements.txt"
+  - "pip install -r backend/test-requirements.txt"
+before_script:
+  - psql -c 'create database parklabtest;' -U postgres
+script: nosetests backend/tests
+env:
+  - PYTHONPATH=backend/src:backend/tests
+  - DATABASE_URL=postgresql://postgres@localhost/parklabtest
+  - SECRET_KEY=snakes
+  - DEBUG=1
+  - USER_ENABLE_EMAIL=''
+  - S3_BUCKET=bucket
+  - AWS_ACCESS_KEY_ID=key
+  - AWS_SECRET_ACCESS_KEY=secret
