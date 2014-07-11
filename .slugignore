@@ -1,2 +1,4 @@
+frontend/static
+backend/src/backend/static
 backend/tests
 *.md

@@ -15,45 +15,35 @@ Static Content
 Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
 The front-end is responsible for uploading files to S3, but it must use the
 back-end to authorize upload requests.
-The front-end must then inform the back-end that the upload is complete and set
-the asset url on the affected resource via a PUT.
-The following end-points may be used to sign upload requests to S3 for
-user-uploaded static assets.
 
-They may be used with the s3upload.js script as shown below.
-See https://devcenter.heroku.com/articles/s3-upload-python for more details.
+The back-end provides several end-points which return a signed URL that the
+front-end may use to upload files.
+The front-end must request a signed URL from the back-end using one of these
+end-points and then initiate the upload.
+Once complete, the front-end must set the uploaded file's url on the affected
+resource via a PUT or POST to the back-end.
 
+These end-points may be used as follows:
 ```javascript
-<input type="file" id="file"/>
-<p id="status">Please select a file</p>
-<div id="preview"></div>
-
-<script>
-  var avatar_url = null;
-
-  var s3_upload = function() {
-    var s3upload = new S3Upload({
-        file_dom_selector: 'file',
-        s3_sign_put_url: '/v1//v1/sign-avatar-upload',
-
-        onProgress: function(percent, message) {
-            $('#status').html('Upload progress: ' + percent + '%' + message);
-        },
-        onFinishS3Put: function(url) {
-            $('#status').html('Upload completed. Uploaded to: '+ url);
-            $("#preview").html('<img src="'+url+'" style="width:300px;" />');
-            avatar_url = url;
-        },
-        onError: function(status) {
-            $('#status').html('Upload error: ' + status);
-        }
-    });
-  };
-</script>
+var s3_upload = function() {
+  var file = document.getElementById('file').files[0];
+  $.ajax({
+    url : '/v1/users/4/avatar/avatar_image',
+    data: {mime_type: file.type},
+    success: function(response) {
+      // get an XMLHttpRequest object in a browser-compatible way
+      var xhr = createCORSRequest('PUT', response.signed_request, true);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.onload = function() {
+        // set the user's avatar URL to the URL for the now-uploaded image
+        update_avatar_url(response.url);
+      };
+      xhr.send(file);
+    }
+  });
+};
 ```
-
-####GET /v1//v1/sign-avatar-upload
-#####Retrieve a signing key for uploading avatar images
 
 
 Resources
@@ -97,6 +87,21 @@ Accepts an object in the form:
 ####DELETE /v1/users/\<id\>
 #####Delete the user with the given id
 
+####GET /v1/users/\<id\>/avatar/\<file\_name\>
+#####Retrieve a signing key for uploading an avatar image for the given user
+######Required Query String Parameters:
+```
+mime_type: the mime type of the file to be uploaded to S3
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/avatars/3/file_name"
+}
+```
 
 Missions
 --------
@@ -359,6 +364,43 @@ Accepts an object in the form:
 ####DELETE /v1/quests/\<id\>
 #####Delete the quest with the given id
 
+
+####GET /v1/quests/\<id\>/uploads/\<file_name\>
+#####Retrieve a signing key for uploading a static asset on the given quest
+######Required Query String Parameters:
+```
+mime_type: the mime type of the file to be uploaded to S3
+```
+Returns an object in the form:
+```javascript
+{
+  // the URL to use when uploading the file to S3
+  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
+  // the URL at which the uploaded file will be available after upload
+  "url": "https://freedomgames.s3.amazonaws.com/quests/6/file_name"
+}
+```
+
+####DELETE /v1/quests/\<id\>/uploads/\<file_name\>
+#####Delete the given static asset for the given quest
+
+####GET /v1/quests/\<id\>/uploads/
+#####List uploaded static assets for the given quest
+Returns an object in the form:
+```javascript
+{
+  "assets": [
+    {
+      "file_name": "are pandas bears.png",
+      "url": "https://freedomgames.s3.amazonaws.com/quests/1/are%20pandas%20bears.png"
+    },
+    {
+      "file_name": "bears.png",
+      "url": "https://freedomgames.s3.amazonaws.com/quests/1/bears.png"
+    }
+  ]
+}
+```
 
 Quest Tags
 ----------

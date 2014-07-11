@@ -9,7 +9,8 @@ bad-functions=apply,input
 #W0221: Arguments number differs from %s method
 #W0142: Used * or ** magic
 #C0103: Invalid %s name "%s"
-disable=C0330,R0903,W0232,W0221,W0142,C0103
+#I0011: Locally disabling %s
+disable=C0330,R0903,W0232,W0221,W0142,C0103,I0011
 
 [TYPECHECK]
 # all the SQLAlchemy stuff is too dynamic for poor pylint

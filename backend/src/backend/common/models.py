@@ -16,6 +16,7 @@ class CreatedBy(object):
         """The creator_id column.  Columns from mixins need to be
         declared with the declared_attr decorator.
         """
+        #pylint: disable=E0213,R0201
         return db.Column(
             db.Integer, db.ForeignKey(
                 'users.id', onupdate='CASCADE', ondelete='SET NULL'),
