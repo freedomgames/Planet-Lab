@@ -19,8 +19,5 @@ nosetests.xml
 ehthumbs.db
 Thumbs.db
 
-# My local dev_env file
-#.dev_env
-
 # IntelliJ files
 .idea/
