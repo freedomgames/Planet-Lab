@@ -31,7 +31,6 @@ import backend.missions.views as mission_views
 import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
 import backend.questions.views as question_views
-import backend.s3.views as s3_views
 import backend.users.models as user_models
 import backend.users.views as user_views
 
@@ -129,9 +128,9 @@ def other_error(error):
     return error_handler(error, payload={'type': 'general error'})
 
 
-app.register_blueprint(s3_views.blueprint, url_prefix='/v1')
-
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')
+api.add_resource(
+        user_views.UserAvatar, '/v1/users/<int:user_id>/avatar/<file_name>')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
 api.add_resource(mission_views.MissionList, '/v1/missions/')
@@ -140,6 +139,13 @@ api.add_resource(
 
 api.add_resource(quest_views.Quest, '/v1/quests/<int:quest_id>')
 api.add_resource(quest_views.QuestList, '/v1/quests/')
+
+api.add_resource(
+        quest_views.QuestStaticAsset,
+        '/v1/quests/<int:quest_id>/uploads/<file_name>')
+api.add_resource(
+        quest_views.QuestStaticAssets, '/v1/quests/<int:quest_id>/uploads/')
+
 api.add_resource(quest_views.QuestUserList, '/v1/users/<int:user_id>/quests/')
 api.add_resource(
         quest_views.QuestMissionLink,

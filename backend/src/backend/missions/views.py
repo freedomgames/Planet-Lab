@@ -5,8 +5,6 @@ import flask_restful
 import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
-import backend
-import backend.common.auth as auth
 import backend.common.resource as resource
 import backend.missions.models as mission_models
 
@@ -45,19 +43,10 @@ class Mission(MissionBase, resource.SimpleResource):
                         orm.joinedload('quests'))
 
 
-class MissionList(MissionBase, flask_restful.Resource):
+class MissionList(MissionBase, resource.SimpleCreate):
     """Resource for working with collections of missions."""
 
-    def post(self):
-        """Create a new mission and link it to its creator."""
-        args = self.parser.parse_args()
-        args['creator_id'] = auth.current_user_id()
-        mission = mission_models.Mission(**args)
-
-        backend.db.session.add(mission)
-        backend.db.session.commit()
-
-        return self.as_dict(mission)
+    resource_type = mission_models.Mission
 
 
 class MissionUserList(MissionBase, flask_restful.Resource):

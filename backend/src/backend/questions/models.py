@@ -1,13 +1,14 @@
 """SQLAlchemy models for questions and quest completions."""
 
 import backend
+import backend.common.models as models
 
 db = backend.db
 
 QUESTION_TYPES = ('upload', 'text')
 
 
-class Answer(db.Model):
+class Answer(db.Model, models.CreatedBy):
     """An answer to a question.  Answers are submitted by learners and
     evaluated by mentors.
     """
@@ -20,9 +21,6 @@ class Answer(db.Model):
     answer_text = db.Column(db.String, nullable=True)
     answer_upload_url = db.Column(db.String, nullable=True)
 
-    creator_id = db.Column(
-            db.Integer, db.ForeignKey('users.id', ondelete='cascade'),
-            nullable=False, index=True)
     question_id = db.Column(
             db.Integer, db.ForeignKey('questions.id', ondelete='cascade'),
             nullable=False, index=True)
@@ -41,14 +39,8 @@ class Answer(db.Model):
                 backend.question_views.QuestionView,
                 question_id=self.question_id)
 
-    @property
-    def creator_url(self):
-        """Return the URL for this resource."""
-        return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator_id)
 
-
-class Question(db.Model):
+class Question(db.Model, models.CreatedBy):
     """Quests are linked to assessment questions, which learners
     answer to complete quests.
     """
@@ -63,8 +55,6 @@ class Question(db.Model):
     quest_id = db.Column(
             db.Integer, db.ForeignKey('quests.id', ondelete='cascade'),
             nullable=False, index=True)
-    creator_id = db.Column(
-            db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
 
     answers = db.relationship("Answer", backref="question")
     answered_by = db.relationship(
@@ -82,9 +72,3 @@ class Question(db.Model):
         """Return the URL for this resource."""
         return backend.api.url_for(
                 backend.quest_views.Quest, quest_id=self.quest_id)
-
-    @property
-    def creator_url(self):
-        """Return the URL for this resource."""
-        return backend.api.url_for(
-                backend.user_views.User, user_id=self.creator_id)

@@ -79,6 +79,11 @@ The relevant steps are:
       "Effect": "Allow",
       "Action": "s3:*",
       "Resource": ["arn:aws:s3:::<your-bucket-name>/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": ["arn:aws:s3:::<your-bucket-name>"]
     }
   ]
 }
