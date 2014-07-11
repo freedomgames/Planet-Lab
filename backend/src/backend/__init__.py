@@ -42,17 +42,21 @@ flask_user.UserManager(db_adapter, app)
 @app.route('/')
 def index():
     """Return the index page."""
-    return flask.render_template('index.html')
+    return app.send_static_file('index.html')
 
+@app.route('/app')
+@flask_user.login_required
+def app_page():
+    """Return the javascript for the app."""
+    return app.send_static_file('app.html')
 
 @app.route('/logout')
 def logout():
     """Clear the session and return the index page."""
     flask.session.clear()
-    return flask.render_template('index.html')
+    return app.send_static_file('index.html')
 
-
-@app.route('/avatar')
+@app.route('/avatar-example')
 @flask_user.login_required
 def update_avatar():
     """Example showing how to use s3 for uploading avatar images."""
@@ -75,29 +79,6 @@ def update_avatar():
                 email=user_row[1],
                 description=user_row[2],
                 avatar_url=user_row[3],
-                user_url=api.url_for(user_views.User, user_id=user_id))
-
-
-@app.route('/app')
-@flask_user.login_required
-def app_page():
-    """Return the javascript for the app and pass along information
-    on the currently logged-in user.
-    """
-    user_id = auth.current_user_id()
-    user_row = db.session.query(
-            user_models.User.name, user_models.User.email).filter_by(
-                    id=user_id).first()
-    if user_row is None:
-        # this really should not happen -- the user would have had
-        # to have been deleted without killing the session
-        return flask.redirect(flask.url_for('login'))
-    else:
-        return flask.render_template(
-                'app.html',
-                user_id=user_id,
-                user_name=user_row[0],
-                user_email=user_row[1],
                 user_url=api.url_for(user_views.User, user_id=user_id))
 
 
