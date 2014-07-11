@@ -20,7 +20,7 @@ ehthumbs.db
 Thumbs.db
 
 # My local dev_env file
-.dev_env
+#.dev_env
 
 # IntelliJ files
 .idea/
