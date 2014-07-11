@@ -178,6 +178,14 @@ api.add_resource(
         '/v1/questions/<int:parent_id>/answers/')
 
 api.add_resource(
+        question_views.MultipleChoice,
+        '/v1/questions/<int:question_id>/multiple_choices/'
+            '<int:multiple_choice_id>')
+api.add_resource(
+        question_views.MultipleChoiceList,
+        '/v1/questions/<int:parent_id>/multiple_choices/')
+
+api.add_resource(
         organization_views.Organization,
         '/v1/organizations/<int:organization_id>')
 api.add_resource(organization_views.OrganizationList, '/v1/organizations/')

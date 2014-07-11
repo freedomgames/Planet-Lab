@@ -158,6 +158,9 @@ class QuestTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
+        resp = self.app.get("/v1/missions/100/quests/")
+        self.assertEqual(resp.status_code, 404)
+
         # create some links
         resp = self.app.put("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)

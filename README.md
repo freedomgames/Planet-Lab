@@ -1,6 +1,8 @@
-Planet Lab
+Planet Lab 
 ==========
 
 Planet Lab: A gamified citizen science network for youth.
 
-* [Documentation on the application's back end](backend/README.md)
+* [back end documentation](backend/README.md)
+
+[![Build Status](https://travis-ci.org/freedomgames/Planet-Lab.svg?branch=master)](https://travis-ci.org/freedomgames/Planet-Lab)
