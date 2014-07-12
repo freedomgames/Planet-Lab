@@ -637,7 +637,8 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text"
+  "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz" // "review_quiz" | "lab_report" | "closing_questions"
 }
 ```
 
@@ -645,7 +646,9 @@ Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text"
+  "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
+  "multiple_choices": [],
   "id": 2,
   "url": "/v1/quests/1/questions/2",
   "creator_id": 1,
@@ -659,13 +662,48 @@ for manipulating it
 
 ####GET /v1/quests/\<id\>/questions/
 #####Return a list of all questions linked to the given quest
+######Optional Query String Parameters:
+```
+question_group: A comma-seperated list of question groups to restrict
+results to.  If not provided, all question will be returned.
+Valid question groups are 'review_quiz', 'lab_report', and 'closing_questions'
+
+e.g. question_group=review_quiz,lab_report will only return questions
+in the review_quiz or lab_report question groups.
+```
+
 Returns an object in the form:
 ```javascript
 {
   "questions": [
     {
       "description": "What is the moon?",
-      "question_type": "text" // "upload" | "text"
+      "question_type": "text", // "upload" | "text" | "multiple_choice"
+      "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
+      "multiple_choices": [
+        {
+          "answer": "bears",
+          "is_correct": True,
+          "order": 1,
+          "id": 2,
+          "url": "/v1/questions/1/multiple_choices/2",
+          "question_id": 1,
+          "question_url": "/v1/questions/1",
+          "creator_id": 1,
+          "creator_url": "/v1/users/1"
+        },
+        {
+          "answer": "elephants",
+          "is_correct": False,
+          "order": 2,
+          "id": 1,
+          "url": "/v1/questions/1/multiple_choices/1",
+          "question_id": 1,
+          "question_url": "/v1/questions/1",
+          "creator_id": 1,
+          "creator_url": "/v1/users/1"
+        }
+      ],
       "id": 2,
       "url": "/v1/quests/1/questions/2",
       "creator_id": 1,
@@ -683,7 +721,32 @@ Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text"
+  "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
+  "multiple_choices": [
+    {
+      "answer": "bears",
+      "is_correct": True,
+      "order": 1,
+      "id": 2,
+      "url": "/v1/questions/1/multiple_choices/2",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    },
+    {
+      "answer": "elephants",
+      "is_correct": False,
+      "order": 2,
+      "id": 1,
+      "url": "/v1/questions/1/multiple_choices/1",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    }
+  ],
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
@@ -699,7 +762,32 @@ Returns an object in the form:
 ```javascript
 {
   "description": "What is the moon?",
-  "question_type": "text" // "upload" | "text"
+  "question_type": "text", // "upload" | "text" | "multiple_choice"
+  "question_group": "review_quiz", // "review_quiz" | "lab_report" | "closing_questions"
+  "multiple_choices": [
+    {
+      "answer": "bears",
+      "is_correct": True,
+      "order": 1,
+      "id": 2,
+      "url": "/v1/questions/1/multiple_choices/2",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    },
+    {
+      "answer": "elephants",
+      "is_correct": False,
+      "order": 2,
+      "id": 1,
+      "url": "/v1/questions/1/multiple_choices/1",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    }
+  ],
   "id": 1,
   "url": "/v1/quests/1/questions/1",
   "creator_id": 1,
@@ -715,6 +803,7 @@ Accepts an object in the form:
 ```javascript
 {
   "description": "What is cheese?",
+  "question_group": "lab_report" // "review_quiz" | "lab_report" | "closing_questions"
 }
 ```
 Note that the question_type can not be change after resource creation.
@@ -722,6 +811,103 @@ Note that the question_type can not be change after resource creation.
 ####DELETE /v1/quests/\<id\>/questions/\<id\>
 #####Delete the question with the given id
 
+
+Multiple Choice Questions
+-------------------------
+Possible answers for a Question of type 'multiple_choice'
+
+####POST /v1/questions/\<id\>/multiple\_choices/
+#####Create a new multiple choice answer linked to the given question
+Accepts an object in the form:
+```javascript
+{
+  "answer": "bears",
+  "is_correct": True,
+  "order": 1 // sorted order amongst multiple choice answers for this question
+}
+```
+```javascript
+{
+  "answer": "bears",
+  "is_correct": True,
+  "order": 1,
+  "id": 2,
+  "url": "/v1/questions/1/multiple_choices/2",
+  "question_id": 1,
+  "question_url": "/v1/questions/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+most notably containing the id for the newly created resource and the url
+for manipulating it
+
+Returns a 400 if the parent question is not of type 'multiple_choice'
+
+####GET /v1/questions/\<id\>/multiple\_choices/
+#####Return a list of all multiple choice answers linked to the given question
+Returns an object in the form:
+```javascript
+{
+    "multiple_choices": [
+      {
+        "answer": "bears",
+        "is_correct": True,
+        "order": 1,
+        "id": 2,
+        "url": "/v1/questions/1/multiple_choices/2",
+        "question_id": 1,
+        "question_url": "/v1/questions/1",
+        "creator_id": 1,
+        "creator_url": "/v1/users/1"
+      },
+      {
+        "answer": "elephants",
+        "is_correct": False,
+        "order": 2,
+        "id": 1,
+        "url": "/v1/questions/1/multiple_choices/1",
+        "question_id": 1,
+        "question_url": "/v1/questions/1",
+        "creator_id": 1,
+        "creator_url": "/v1/users/1"
+      }
+    ]
+
+}
+```
+where the list is sorted by the 'order' attribute
+
+####GET /v1/questions/\<id\>/multiple\_choices/\<id\>
+#####Retrieve the answer with the given id
+Returns an object in the form:
+```javascript
+{
+  "answer": "elephants",
+  "is_correct": False,
+  "order": 2,
+  "id": 1,
+  "url": "/v1/questions/1/multiple_choices/1",
+  "question_id": 1,
+  "question_url": "/v1/questions/1",
+  "creator_id": 1,
+  "creator_url": "/v1/users/1"
+}
+```
+
+####PUT /v1/questions/\<id\>/multiple\_choices/\<id\>
+#####Update the answer with the given id
+Accepts an object in the form:
+```javascript
+{
+  "answer": "elephants",
+  "is_correct": False,
+  "order": 2 // sorted order amongst multiple choice answers for this question
+}
+```
+
+####DELETE /v1/questions/\<id\>/multiple\_choices/\<id\>
+#####Delete the answer with the given id
 
 Answers
 -------
@@ -735,20 +921,27 @@ Accepts an object in the form:
   "answer_text": "The moon is cheese"
 }
 ```
-for questions with a question_type of "text" and:
+for questions with a question_type of "text"
 ```javascript
 {
   "answer_upload_url": "moon.png"
 }
 ```
-for questions with a question_type of "upload."
+for questions with a question_type of "upload"
+```javascript
+{
+  "answer_multiple_choice": 4 // id of the multiple choice resource selected
+}
+```
+for questions with a question_type of "multiple_choice"
 
 Returns an object in the form:
 ```javascript
 {
-  // Only one of these two fields will ever be populated.
+  // Only one of these three fields will ever be populated.
   "answer_text": "The moon is cheese",
   "answer_upload_url": None,
+  "answer_multiple_choice": None,
   "question_type": "text", // matches the parent's question type
   "id": 1,
   "url": "/v1/questions/1/answers/1",
@@ -766,30 +959,32 @@ for manipulating it
 Returns an object in the form:
 ```javascript
 {
-    "answers": [
-        {
-            "answer_text": "cats",
-            "answer_upload_url": null,
-            "question_type": "text",
-            "id": 1,
-            "url": "/v1/questions/1/answers/1",
-            "question_id": 1,
-            "question_url": "/v1/questions/1",
-            "creator_id": 1,
-            "creator_url": "/v1/users/1"
-        },
-        {
-            "answer_text": "more cats",
-            "answer_upload_url": null,
-            "question_type": "text",
-            "id": 2,
-            "url": "/v1/questions/1/answers/2",
-            "question_id": 1,
-            "question_url": "/v1/questions/1",
-            "creator_id": 1,
-            "creator_url": "/v1/users/1"
-        }
-    ]
+  "answers": [
+    {
+      "answer_text": "cats",
+      "answer_upload_url": null,
+      "answer_multiple_choice": None,
+      "question_type": "text",
+      "id": 1,
+      "url": "/v1/questions/1/answers/1",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    },
+    {
+      "answer_text": "more cats",
+      "answer_upload_url": null,
+      "answer_multiple_choice": None,
+      "question_type": "text",
+      "id": 2,
+      "url": "/v1/questions/1/answers/2",
+      "question_id": 1,
+      "question_url": "/v1/questions/1",
+      "creator_id": 1,
+      "creator_url": "/v1/users/1"
+    }
+  ]
 }
 ```
 
@@ -800,6 +995,7 @@ Returns an object in the form:
 {
     "answer_text": "more cats",
     "answer_upload_url": null,
+    "answer_multiple_choice": None,
     "question_type": "text",
     "id": 2,
     "url": "/v1/questions/1/answers/2",
@@ -818,13 +1014,19 @@ Accepts an object in the form:
   "answer_text": "The moon is cheese"
 }
 ```
-for questions with a question_type of "text" and:
+for questions with a question_type of "text"
 ```javascript
 {
   "answer_upload_url": "moon.png"
 }
 ```
-for questions with a question_type of "upload."
+for questions with a question_type of "upload"
+```javascript
+{
+  "answer_multiple_choice": 4 // id of the multiple choice resource selected
+}
+```
+for questions with a question_type of "multiple_choice"
 
 ####DELETE /v1/questions/\<id\>/answers/\<id\>
 #####Delete the answer with the given id

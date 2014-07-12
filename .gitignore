@@ -19,5 +19,6 @@ nosetests.xml
 ehthumbs.db
 Thumbs.db
 
-# IntelliJ files
+# editor files
+*.swp
 .idea/

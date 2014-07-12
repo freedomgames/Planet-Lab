@@ -1,8 +1,11 @@
 """Views for supporting quest resources."""
 
 
+import flask
 import flask_restful
 import flask_restful.reqparse as reqparse
+import sqlalchemy.exc
+import sqlalchemy.orm as orm
 import werkzeug.exceptions
 
 import backend
@@ -18,6 +21,9 @@ def make_parser(with_question_type=False):
     """
     parser = reqparse.RequestParser()
     parser.add_argument('description', type=str, required=True)
+    parser.add_argument(
+            'question_group', type=str, required=True,
+            choices=question_models.QUESTION_GROUPS)
     if with_question_type:
         parser.add_argument(
                 'question_type', type=str, required=True,
@@ -29,12 +35,19 @@ class QuestionBase(object):
     """Provide an as_dict method."""
 
     view_fields = (
-            'id', 'url', 'description', 'question_type',
+            'id', 'url', 'description', 'question_type', 'question_group',
             'quest_id', 'quest_url', 'creator_id', 'creator_url')
+    multiple_choice_fields = (
+            'id', 'url', 'answer', 'is_correct', 'order',
+            'question_id', 'question_url', 'creator_id', 'creator_url')
 
     def as_dict(self, question):
         """Return a serializable dictionary representing the given quest."""
-        return {field: getattr(question, field) for field in self.view_fields}
+        resp = {field: getattr(question, field) for field in self.view_fields}
+        resp['multiple_choices'] = [{field: getattr(choice, field) for
+            field in self.multiple_choice_fields} for
+            choice in question.multiple_choices]
+        return resp
 
 
 class Question(QuestionBase, resource.SimpleResource):
@@ -51,6 +64,8 @@ class Question(QuestionBase, resource.SimpleResource):
                 id=question_id).filter(
                         question_models.Question.quest_id.in_(
                             quest_query.subquery()))
+        question_query = question_query.options(
+                orm.joinedload('multiple_choices'))
         return question_query
 
 
@@ -73,6 +88,16 @@ class QuestionView(QuestionBase, resource.SimpleResource):
         raise werkzeug.exceptions.MethodNotAllowed
 
 
+def parse_question_groups(arg):
+    """Parse the question_group query string into a list of
+    question_groups and assert that each is a valid group.
+    """
+    question_groups = str(arg).split(',')
+    assert all(question_group in question_models.QUESTION_GROUPS
+                for question_group in question_groups), 'invalid question group'
+    return question_groups
+
+
 class QuestionList(QuestionBase, resource.ManyToOneLink):
     """Resource for working with collections of questions."""
 
@@ -84,6 +109,35 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
     resource_type = question_models.Question
     parent_resource_type = quest_models.Quest
 
+    def get(self, parent_id):
+        """Retrieve all questions linked to the given quest,
+        optionally filtering them by question_group.
+        """
+        parser = reqparse.RequestParser()
+        parser.add_argument('question_group', type=parse_question_groups)
+        question_groups = parser.parse_args()['question_group']
+
+        if question_groups is None:
+            return super(QuestionList, self).get(parent_id)
+        else:
+            parent_count = self.parent_resource_type.query.filter_by(
+                    id=parent_id).count()
+            if not parent_count:
+                return flask.Response('', 404)
+            else:
+                child_query = self.resource_type.query.filter_by(
+                        quest_id=parent_id)
+                if len(question_groups) == 1:
+                    child_query = child_query.filter_by(
+                            question_group=question_groups[0])
+                else:
+                    child_query = child_query.filter(
+                            self.resource_type.question_group.in_(
+                                question_groups))
+                children = child_query.all()
+                return {self.child_link_name: [
+                    self.as_dict(child) for child in children]}
+
 
 class AnswerBase(object):
     """Provide an as_dict method and a parser."""
@@ -91,10 +145,12 @@ class AnswerBase(object):
     parser = reqparse.RequestParser()
     parser.add_argument('answer_text', type=str)
     parser.add_argument('answer_upload_url', type=str)
+    parser.add_argument('answer_multiple_choice', type=int)
 
     view_fields = (
             'id', 'url', 'question_type', 'answer_text', 'answer_upload_url',
-            'question_id', 'question_url', 'creator_id', 'creator_url')
+            'answer_multiple_choice', 'question_id',
+            'question_url', 'creator_id', 'creator_url')
 
     def as_dict(self, answer):
         """Return a serializable dictionary representing the given quest."""
@@ -125,15 +181,21 @@ def assert_answer_matches_question(question_type, answer):
     else:
         has_text = answer['answer_text'] is not None
         has_url = answer['answer_upload_url'] is not None
+        has_mc = answer['answer_multiple_choice'] is not None
 
-        if question_type == 'upload' and (not has_url or has_text):
+        if question_type == 'upload' and (not has_url or has_text or has_mc):
             flask_restful.abort(
                     400, message='If question_type is upload, the '
                     'answer_upload_url field must only be present.')
-        elif question_type == 'text' and (not has_text or has_url):
+        elif question_type == 'text' and (not has_text or has_url or has_mc):
             flask_restful.abort(
                     400, message='If question_type is text, the '
                     'answer_text field must only be present.')
+        elif question_type == 'multiple_choice' and (
+                not has_mc or has_text or has_url):
+            flask_restful.abort(
+                    400, message='If question_type is multiple_choice, the '
+                    'answer_multiple_choice field must only be present.')
 
 
 class Answer(AnswerBase, resource.SimpleResource):
@@ -156,8 +218,12 @@ class Answer(AnswerBase, resource.SimpleResource):
         """
         question_type = get_question_type(question_id)
         assert_answer_matches_question(question_type, self.parser.parse_args())
-        return super(Answer, self).put(
-                question_id=question_id, answer_id=answer_id)
+        try:
+            return super(Answer, self).put(
+                    question_id=question_id, answer_id=answer_id)
+        except sqlalchemy.exc.IntegrityError:
+            # Tried to link a multiple choice answer to a bad choice
+            return flask.Response('', 404)
 
 
 class AnswerList(AnswerBase, resource.ManyToOneLink):
@@ -179,3 +245,64 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
         assert_answer_matches_question(question_type, args)
         args['question_type'] = question_type
         return args
+
+
+class MultipleChoiceBase(object):
+    """Provide an as_dict method and a parser."""
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('answer', type=str, required=True)
+    parser.add_argument('is_correct', type=bool, required=True)
+    parser.add_argument('order', type=int, required=True)
+
+    view_fields = (
+            'id', 'url', 'answer', 'is_correct', 'order',
+            'question_id', 'question_url', 'creator_id', 'creator_url')
+
+    def as_dict(self, answer):
+        """Return a serializable dictionary representing the given quest."""
+        return {field: getattr(answer, field) for field in self.view_fields}
+
+
+class MultipleChoice(MultipleChoiceBase, resource.SimpleResource):
+    """Manipulate answers linked to a question."""
+
+    @staticmethod
+    def query(question_id, multiple_choice_id):
+        """Return the question linked to the given quest."""
+        question_query = backend.db.session.query(
+                question_models.Question.id).filter_by(id=question_id)
+        multiple_choice_query = question_models.MultipleChoice.query.filter_by(
+                id=multiple_choice_id).filter(
+                        question_models.MultipleChoice.question_id.in_(
+                            question_query.subquery()))
+        return multiple_choice_query
+
+
+class MultipleChoiceList(MultipleChoiceBase, resource.ManyToOneLink):
+    """Resource for working with collections of multiple choices."""
+
+    parent_id_name = 'question_id'
+    child_link_name = 'multiple_choices'
+
+    resource_type = question_models.MultipleChoice
+    parent_resource_type = question_models.Question
+
+    def create_resource(self, args):
+        """Make sure the parent question is the correct type to allow
+        for multiple choice answers.
+        """
+        parent_id = args[self.parent_id_name]
+        question_type_row = backend.db.session.query(
+                question_models.Question.question_type).filter_by(
+                        id=parent_id).first()
+        if question_type_row is None:
+            flask_restful.abort(404)
+        else:
+            question_type = question_type_row[0]
+            if question_type != 'multiple_choice':
+                flask_restful.abort(
+                        400, message='Tried to link a multiple choice answer '
+                        'to a non-multiple choice question')
+            else:
+                return super(MultipleChoiceList, self).create_resource(args)
