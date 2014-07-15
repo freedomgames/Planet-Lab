@@ -32,7 +32,7 @@ planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stat
 
     $stateProvider
         .state('quest', {
-            url: '/quest/:id',
+            url: '/quests/:id',
             templateUrl: 'static/quest/view.html',
             controller: 'QuestCtrl'
         })
