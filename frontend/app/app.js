@@ -1,4 +1,4 @@
-var planet_app = angular.module('planet_app', ['ui.router']);
+var planet_app = angular.module('planet_app', ['ui.router', 'ngResource']);
 
 planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', function($controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider){
     /* CODE FOR ASYNC MODULE LOADING */
@@ -31,53 +31,60 @@ planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stat
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-
-        // HOME STATE =========================================================
-        .state('home', {
-            url: '/',
-            views: {
-                '': {
-                    templateUrl: 'static/homepage/homepage.html',
-                    resolve: {
-                        deps: function($q, $rootScope) {
-                            var deferred = $q.defer();
-                            var dependencies = [
-                                'static/homepage/homepagectrl.js'
-                            ];
-
-                            $script(dependencies, function(){
-                                $rootScope.$apply(function(){
-                                    deferred.resolve();
-                                });
-                            });
-
-                            return deferred.promise;
-                        }
-                    },
-                    controller: 'HomepageCtrl as homepage'
-                },
-                'header@home': {
-                    templateUrl: 'static/header/header.html',
-                    resolve: {
-                        deps: function($q, $rootScope) {
-                            var deferred = $q.defer();
-                            var dependencies = [
-                                'static/header/headerctrl.js'
-                            ];
-
-                            $script(dependencies, function(){
-                                $rootScope.$apply(function(){
-                                    deferred.resolve();
-                                });
-                            });
-
-                            return deferred.promise;
-                        }
-                    },
-                    controller: 'HeaderCtrl as header'
-                }
-            }
+        .state('quest', {
+            url: '/quest/:id',
+            templateUrl: 'static/quest/view.html',
+            controller: 'QuestCtrl'
+        })
+        .state('otherwise', {
+            url: '/'
         });
+        // HOME STATE =========================================================
+        // .state('home', {
+        //     url: '/',
+        //     views: {
+        //         '': {
+        //             templateUrl: 'static/homepage/homepage.html',
+        //             resolve: {
+        //                 deps: function($q, $rootScope) {
+        //                     var deferred = $q.defer();
+        //                     var dependencies = [
+        //                         'static/homepage/homepagectrl.js'
+        //                     ];
+
+        //                     $script(dependencies, function(){
+        //                         $rootScope.$apply(function(){
+        //                             deferred.resolve();
+        //                         });
+        //                     });
+
+        //                     return deferred.promise;
+        //                 }
+        //             },
+        //             controller: 'HomepageCtrl as homepage'
+        //         },
+        //         'header@home': {
+        //             templateUrl: 'static/header/header.html',
+        //             resolve: {
+        //                 deps: function($q, $rootScope) {
+        //                     var deferred = $q.defer();
+        //                     var dependencies = [
+        //                         'static/header/headerctrl.js'
+        //                     ];
+
+        //                     $script(dependencies, function(){
+        //                         $rootScope.$apply(function(){
+        //                             deferred.resolve();
+        //                         });
+        //                     });
+
+        //                     return deferred.promise;
+        //                 }
+        //             },
+        //             controller: 'HeaderCtrl as header'
+        //         }
+        //     }
+        // });
 
     // $routeProvider
     //     // route for the home page
@@ -184,11 +191,11 @@ planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stat
     //     .otherwise({ redirectTo: '/' });
 }]);
 
-planet_app.run(function($rootScope, $state){
-    $rootScope.pageLocation = $state.current.name;
-    console.log($state.current)
-    // $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    // $rootScope.$on('$stateChangeSuccess', function(event) {
-    //     $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    // });
-});
+// planet_app.run(function($rootScope, $state){
+//     $rootScope.pageLocation = $state.current.name;
+//     console.log($state.current)
+//     // $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+//     // $rootScope.$on('$stateChangeSuccess', function(event) {
+//     //     $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+//     // });
+// });

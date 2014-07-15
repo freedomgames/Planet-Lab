@@ -1,15 +1,20 @@
 <!doctype html>
-<html>
+<html ng-app="planet_app">
     <head>
+        <base href="/app">
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-resource.min.js"></script>
+
         <title>PlanetLab</title>
-<!--         <link rel="stylesheet" href="css/style.css">
-        <link rel="author" href="humans.txt"> -->
     </head>
     <body>
-        
-        <!--<script src="js/main.js"></script>-->
+        <div ui-view></div>
+        <script src="static/app.js"></script>
+        <script src="static/common/getterfactory.js"></script>
+        <script src="static/quest/controller.js"></script>
     </body>
 </html>
