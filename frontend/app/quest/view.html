@@ -1,5 +1,4 @@
-<form name="questForm">
-  Name: <input type="text" name="name" ng-model="quest.name" required>
-  <span class="error" ng-show="questForm.name.$error.required">Required!</span>
-</form>
-<button ng-click="update()">Save</button>
+<p>Name: <a href="#" editable-text="quest.name">{{ quest.name || "" }}</a></p>
+
+<br/><br/>
+<button ng-click="quest.$put()">Save</button>
