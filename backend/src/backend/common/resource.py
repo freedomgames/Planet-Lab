@@ -3,11 +3,40 @@
 
 import flask
 import flask_restful
+import flask_restful.reqparse
+import functools
 import sqlalchemy
 import sqlalchemy.orm as orm
 
 import backend
 import backend.common.auth as auth
+
+
+class RequestParser(flask_restful.reqparse.RequestParser):
+    """RequestParser subclass which correctly handles nulls in
+    non-required fields.
+    """
+    def add_argument(self, *args, **kwargs):
+        """Replace the 'type' function in-place to ignore None values
+        if the argument is not required.  This avoids errors which come
+        from calling the 'type' function on None values rather than
+        letting them pass by unaltered.
+        """
+        is_required = kwargs.get('required', False)
+        type_func = kwargs.get('type')
+        if not is_required and type_func is not None:
+
+            @functools.wraps(type_func)
+            def new_type_func(arg):
+                """Don't call type_func on None values."""
+                if arg is None:
+                    return arg
+                else:
+                    return type_func(arg)
+
+            kwargs['type'] = new_type_func
+
+        return super(RequestParser, self).add_argument(*args, **kwargs)
 
 
 class SimpleResource(flask_restful.Resource):

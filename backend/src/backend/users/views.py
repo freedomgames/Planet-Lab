@@ -3,7 +3,6 @@
 
 import flask
 import flask_restful
-import flask_restful.reqparse as reqparse
 
 import backend.common.resource as resource
 import backend.common.s3 as s3
@@ -13,7 +12,7 @@ import backend.users.models as user_models
 class UserBase(object):
     """Provide a shared as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('name', type=str)
     parser.add_argument('email', type=str)
     parser.add_argument('description', type=str)
