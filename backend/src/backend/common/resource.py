@@ -17,22 +17,33 @@ class RequestParser(flask_restful.reqparse.RequestParser):
     non-required fields.
     """
     def add_argument(self, *args, **kwargs):
-        """Replace the 'type' function in-place to ignore None values
-        if the argument is not required.  This avoids errors which come
-        from calling the 'type' function on None values rather than
-        letting them pass by unaltered.
+        """Replace the 'type' function in-place to handle null values
+        correctly depending on if the argument is required.
+        If the argument is required, a null values should result in a
+        400 error.  Otherwise, a null value is acceptable input.
+        In the latter case, we avoid errors which come from calling the
+        'type' function on null values.
         """
         is_required = kwargs.get('required', False)
         type_func = kwargs.get('type')
-        if not is_required and type_func is not None:
 
-            @functools.wraps(type_func)
-            def new_type_func(arg):
-                """Don't call type_func on None values."""
-                if arg is None:
-                    return arg
-                else:
-                    return type_func(arg)
+        if type_func is not None:
+            if is_required:
+                @functools.wraps(type_func)
+                def new_type_func(arg):
+                    """Raise an error on None values."""
+                    if arg is None:
+                        raise ValueError("Required value may not be null")
+                    else:
+                        return type_func(arg)
+            else:
+                @functools.wraps(type_func)
+                def new_type_func(arg):
+                    """Don't call type_func on None values."""
+                    if arg is None:
+                        return arg
+                    else:
+                        return type_func(arg)
 
             kwargs['type'] = new_type_func
 
