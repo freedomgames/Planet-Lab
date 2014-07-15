@@ -3,7 +3,8 @@ planet_app.factory('ResourceFactory', [
         return function(resourceName) {
             return $resource(
                 '/v1/:resourceName/:id',
-                {resourceName: resourceName, id: $stateParams.id}
+                {resourceName: resourceName, id: $stateParams.id},
+                {put: {method: 'PUT'}}
             );
         };
 }]);
