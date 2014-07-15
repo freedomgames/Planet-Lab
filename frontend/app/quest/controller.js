@@ -1,3 +1,4 @@
-planet_app.controller('QuestCtrl', ['$scope', '$stateParams', 'GetterFactory', function ($scope, $stateParams, GetterFactory) {
-    $scope.quest = GetterFactory.getItem('quests', $stateParams.id).query();
+planet_app.controller('QuestCtrl', [
+    '$scope', 'ResourceFactory', function ($scope, ResourceFactory) {
+        $scope.quest = ResourceFactory('quests').get();
 }]);

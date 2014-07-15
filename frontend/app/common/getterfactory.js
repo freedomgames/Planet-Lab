@@ -1,14 +1,9 @@
-planet_app.factory('GetterFactory', ['$resource', function ($resource) {
-    return {
-        getItem: function(resource, id) {
-            return $resource('/v1/' + resource + '/:id',  {},  {
-                query: {
-                    method:'GET', 
-                    params: {
-                        id: id
-                    }
-                }
-            })
-        }
-    }
+planet_app.factory('ResourceFactory', [
+    '$resource', '$stateParams', function($resource, $stateParams) {
+        return function(resourceName) {
+            return $resource(
+                '/v1/:resourceName/:id',
+                {resourceName: resourceName, id: $stateParams.id}
+            );
+        };
 }]);
