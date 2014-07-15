@@ -83,18 +83,16 @@ class SimpleResource(flask_restful.Resource):
 
     def put(self, *args, **kwargs):
         """Update a resource."""
-        update = self.parser.parse_args()
-        if not update:
-            return flask.Response('', 400)
+        resource = self.query(*args, **kwargs).first()
+        if resource is None:
+            return flask.Response('', 404)
         else:
-            rows_updated = self.query(*args, **kwargs).update(
-                    update, synchronize_session=False)
+            update = self.parser.parse_args()
+            for key, value in update.iteritems():
+                if value != getattr(resource, key):
+                    setattr(resource, key, value)
             backend.db.session.commit()
-
-            if not rows_updated:
-                return flask.Response('', 404)
-            else:
-                return update
+            return self.as_dict(resource)
 
     def delete(self, *args, **kwargs):
         """Delete a quest."""
