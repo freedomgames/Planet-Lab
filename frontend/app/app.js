@@ -32,6 +32,11 @@ planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stat
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+        .state('newQuest', {
+            url: '/quests/new',
+            templateUrl: 'static/quest/view.html',
+            controller: 'NewQuestCtrl'
+        })
         .state('quest', {
             url: '/quests/:id',
             templateUrl: 'static/quest/view.html',

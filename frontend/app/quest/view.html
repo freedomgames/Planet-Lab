@@ -1,5 +1,5 @@
-<p>Name: <a href="#" editable-text="quest.name">{{ quest.name || "" }}</a></p>
-<p>Summary: <a href="#" editable-textarea="quest.summary">{{ quest.summary || "" }}</a></p>
+<p>Name: <a href="#" editable-text="quest.name">{{ quest.name || "empty" }}</a></p>
+<p>Summary: <a href="#" editable-textarea="quest.summary">{{ quest.summary || "empty" }}</a></p>
 
 <br/><br/>
-<button ng-click="quest.$put()">Save</button>
+<button ng-click="save()">Save</button>
