@@ -1,3 +1,16 @@
+var updateScope = function($scope) {
+    // Set common functions required by views of both controllers
+    $scope.updateArrayItem = function(name, $event, $index) {
+        $scope.quest[name][$index] = $event.target.value;
+    };
+    $scope.deleteArrayItem = function(name, $index) {
+        $scope.quest[name].splice($index, 1);
+    };
+    $scope.newArrayItem = function(name) {
+        $scope.quest[name].push('');
+    };
+};
+
 planet_app.controller('QuestCtrl', [
     '$scope', '$stateParams', 'ResourceFactory',
     function($scope, $stateParams, ResourceFactory) {
@@ -5,6 +18,7 @@ planet_app.controller('QuestCtrl', [
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put
         $scope.save = function() {$scope.quest.$put()};
+        updateScope($scope);
 }]);
 
 planet_app.controller('NewQuestCtrl', [
@@ -14,11 +28,8 @@ planet_app.controller('NewQuestCtrl', [
             if ($scope.quest.id) {
                 $scope.quest.$put();
             } else {
-                // place-holder values for inquiry_questions and video_links
-                // until that part of the UI is supplying them.
-                $scope.quest.inquiry_questions = [];
-                $scope.quest.video_links = [];
                 $scope.quest.$save();
             }
         };
+        updateScope($scope);
 }]);
