@@ -3,7 +3,6 @@
 
 import flask
 import flask_restful
-import flask_restful.reqparse as reqparse
 import sqlalchemy.exc
 import sqlalchemy.orm as orm
 import werkzeug.exceptions
@@ -19,7 +18,7 @@ def make_parser(with_question_type=False):
     Allows question_type to be an argument depending on the
     value of with_question_type.
     """
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('description', type=str, required=True)
     parser.add_argument(
             'question_group', type=str, required=True,
@@ -113,7 +112,7 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
         """Retrieve all questions linked to the given quest,
         optionally filtering them by question_group.
         """
-        parser = reqparse.RequestParser()
+        parser = resource.RequestParser()
         parser.add_argument('question_group', type=parse_question_groups)
         question_groups = parser.parse_args()['question_group']
 
@@ -142,7 +141,7 @@ class QuestionList(QuestionBase, resource.ManyToOneLink):
 class AnswerBase(object):
     """Provide an as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('answer_text', type=str)
     parser.add_argument('answer_upload_url', type=str)
     parser.add_argument('answer_multiple_choice', type=int)
@@ -250,7 +249,7 @@ class AnswerList(AnswerBase, resource.ManyToOneLink):
 class MultipleChoiceBase(object):
     """Provide an as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('answer', type=str, required=True)
     parser.add_argument('is_correct', type=bool, required=True)
     parser.add_argument('order', type=int, required=True)

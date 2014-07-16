@@ -3,11 +3,51 @@
 
 import flask
 import flask_restful
+import flask_restful.reqparse
+import functools
 import sqlalchemy
 import sqlalchemy.orm as orm
 
 import backend
 import backend.common.auth as auth
+
+
+class RequestParser(flask_restful.reqparse.RequestParser):
+    """RequestParser subclass which correctly handles nulls in
+    non-required fields.
+    """
+    def add_argument(self, *args, **kwargs):
+        """Replace the 'type' function in-place to handle null values
+        correctly depending on if the argument is required.
+        If the argument is required, a null value should result in a
+        400 error.  Otherwise, a null value is acceptable input.
+        In the latter case, we avoid errors which come from calling the
+        'type' function on null values.
+        """
+        is_required = kwargs.get('required', False)
+        type_func = kwargs.get('type')
+
+        if type_func is not None:
+            if is_required:
+                @functools.wraps(type_func)
+                def new_type_func(arg):
+                    """Raise an error on None values."""
+                    if arg is None:
+                        raise ValueError("Required value may not be null")
+                    else:
+                        return type_func(arg)
+            else:
+                @functools.wraps(type_func)
+                def new_type_func(arg):
+                    """Don't call type_func on None values."""
+                    if arg is None:
+                        return arg
+                    else:
+                        return type_func(arg)
+
+            kwargs['type'] = new_type_func
+
+        return super(RequestParser, self).add_argument(*args, **kwargs)
 
 
 class SimpleResource(flask_restful.Resource):
@@ -43,18 +83,16 @@ class SimpleResource(flask_restful.Resource):
 
     def put(self, *args, **kwargs):
         """Update a resource."""
-        update = self.parser.parse_args()
-        if not update:
-            return flask.Response('', 400)
+        resource = self.query(*args, **kwargs).first()
+        if resource is None:
+            return flask.Response('', 404)
         else:
-            rows_updated = self.query(*args, **kwargs).update(
-                    update, synchronize_session=False)
+            update = self.parser.parse_args()
+            for key, value in update.iteritems():
+                if value != getattr(resource, key):
+                    setattr(resource, key, value)
             backend.db.session.commit()
-
-            if not rows_updated:
-                return flask.Response('', 404)
-            else:
-                return update
+            return self.as_dict(resource)
 
     def delete(self, *args, **kwargs):
         """Delete a quest."""
