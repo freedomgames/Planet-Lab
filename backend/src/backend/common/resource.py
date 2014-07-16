@@ -107,7 +107,7 @@ class SimpleCreate(flask_restful.Resource):
     """Base class defining the simplest POST for a new resource."""
 
     parser = None
-    resource_type = lambda *args, **kwargs: None
+    resource_type = None
 
     def as_dict(self, resource):
         """Needs to be implemented by child classes.  Given an object,
@@ -120,7 +120,7 @@ class SimpleCreate(flask_restful.Resource):
         """Create a new resource and link it to its creator."""
         args = self.parser.parse_args()
         args['creator_id'] = auth.current_user_id()
-        new_resource = self.resource_type(**args)
+        new_resource = self.resource_type(**args) #pylint: disable=E1102
 
         backend.db.session.add(new_resource)
         backend.db.session.commit()
@@ -134,7 +134,7 @@ class ManyToOneLink(flask_restful.Resource):
     # child classes need to override all of these
     parent_id_name = None
     child_link_name = None
-    resource_type = lambda *args, **kwargs: None
+    resource_type = None
     parent_resource_type = None
     parser = None
 
@@ -165,7 +165,7 @@ class ManyToOneLink(flask_restful.Resource):
         created, insert that new resource into the database and
         return a representation of the created resource.
         """
-        new_resource = self.resource_type(**args)
+        new_resource = self.resource_type(**args) #pylint: disable=E1102
         try:
             backend.db.session.add(new_resource)
             backend.db.session.commit()
