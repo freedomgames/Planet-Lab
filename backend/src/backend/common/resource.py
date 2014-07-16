@@ -19,7 +19,7 @@ class RequestParser(flask_restful.reqparse.RequestParser):
     def add_argument(self, *args, **kwargs):
         """Replace the 'type' function in-place to handle null values
         correctly depending on if the argument is required.
-        If the argument is required, a null values should result in a
+        If the argument is required, a null value should result in a
         400 error.  Otherwise, a null value is acceptable input.
         In the latter case, we avoid errors which come from calling the
         'type' function on null values.
