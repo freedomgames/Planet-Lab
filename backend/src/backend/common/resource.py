@@ -89,8 +89,7 @@ class SimpleResource(flask_restful.Resource):
         else:
             update = self.parser.parse_args()
             for key, value in update.iteritems():
-                if value != getattr(resource, key):
-                    setattr(resource, key, value)
+                setattr(resource, key, value)
             backend.db.session.commit()
             return self.as_dict(resource)
 
