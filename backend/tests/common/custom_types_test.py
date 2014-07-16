@@ -34,3 +34,7 @@ class CustomTypesTest(unittest.TestCase):
                 utc_type.process_result_value(
                     datetime.datetime(2012, 12, 21), None),
                 datetime.datetime(2012, 12, 21, tzinfo=pytz.utc))
+
+        # return None if given None
+        self.assertEqual(utc_type.process_result_value(None, None), None)
+        self.assertEqual(utc_type.process_bind_param(None, None), None)
