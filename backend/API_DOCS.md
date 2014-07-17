@@ -25,23 +25,29 @@ resource via a PUT or POST to the back-end.
 
 These end-points may be used as follows:
 ```javascript
-var s3_upload = function() {
-  var file = document.getElementById('file').files[0];
-  $.ajax({
-    url : '/v1/users/4/avatar/avatar_image',
-    data: {mime_type: file.type},
-    success: function(response) {
-      // get an XMLHttpRequest object in a browser-compatible way
-      var xhr = createCORSRequest('PUT', response.signed_request, true);
-      xhr.setRequestHeader('Content-Type', file.type);
-      xhr.setRequestHeader('x-amz-acl', 'public-read');
-      xhr.onload = function() {
-        // set the user's avatar URL to the URL for the now-uploaded image
-        update_avatar_url(response.url);
-      };
-      xhr.send(file);
+var upload = function($files) {
+    // Request the form data required to upload the file to S3
+    // from the backend and then perform the upload.
+    for (var i=0; i < $files.length; i++) {
+        var file = $files[i];
+        url = S3Factory('quests').get({
+            id: $scope.quest.id,
+            fileName: file.name,
+            uploadName: 'uploads',
+            mime_type: file.type});
+        url.$promise.then(function() {
+            uploadData.form_data.file = file;
+            $upload.upload(uploadData.form_data).then(
+                function(response) {
+                    if (response.status === 201) {
+                        $scope.quest.icon_url = uploadData.s3_url;
+                        alert('Upload Suceeded');
+                    } else {
+                        alert('Upload Failed');
+                    }
+            });
+        });
     }
-  });
 };
 ```
 
@@ -96,10 +102,25 @@ mime_type: the mime type of the file to be uploaded to S3
 Returns an object in the form:
 ```javascript
 {
-  // the URL to use when uploading the file to S3
-  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
-  // the URL at which the uploaded file will be available after upload
-  "url": "https://freedomgames.s3.amazonaws.com/avatars/3/file_name"
+    // key-path of the file
+    "file_name": "avatars/1/science.png",
+    // full S3 URL of the file
+    "s3_url": "https://freedomgames.s3.amazonaws.com/avatars/1/science.png",
+    // arguments to pass to $upload.upload
+    "upload_args": {
+        "method": "POST",
+        "url": "https://freedomgames.s3.amazonaws.com/",
+        // form data for the upload
+        "data": {
+            "AWSAccessKeyId": "AKIAIYQ3PIEHCBKR6BGQ",
+            "Content-Type": "image/png",
+            "Policy": "eyJjb25kaXRpb25zIjogW1siZXEiLCAiJGtleSIsICJhdmF0YXJzLzEvYXBwcm92ZWQucG5nIl0sIHsiYnVja2V0IjogImZyZWVkb21nYW1lcy13YWx0In0sIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sIFsiZXEiLCAiJENvbnRlbnQtVHlwZSIsICJpbWFnZS9wbmciXSwgeyJzdWNjZXNzX2FjdGlvbl9zdGF0dXMiOiAiMjAxIn1dLCAiZXhwaXJhdGlvbiI6ICIyMDE0LTA3LTE3VDIyOjU0OjM2LjAwMFoifQ==",
+            "Signature": "kdrLe/s6AoCNsXCgR/8Yah0Vn7E=",
+            "acl": "public-read",
+            "key": "avatars/1/science.png",
+            "success_action_status": "201"
+        }
+    }
 }
 ```
 
@@ -374,10 +395,25 @@ mime_type: the mime type of the file to be uploaded to S3
 Returns an object in the form:
 ```javascript
 {
-  // the URL to use when uploading the file to S3
-  "signed_request": "https://freedomgames.s3.amazonaws.com/avatars/1/avatar?Signature=0nY%2B1WL638WZBwOnxZ3LbKehqQw%3D&Expires=1404321203&AWSAccessKeyId=AKIAJX6VRPXCET57OFSQ&x-amz-acl=public-read", 
-  // the URL at which the uploaded file will be available after upload
-  "url": "https://freedomgames.s3.amazonaws.com/quests/6/file_name"
+    // key-path of the file
+    "file_name": "quests/1/science.png",
+    // full S3 URL of the file
+    "s3_url": "https://freedomgames.s3.amazonaws.com/quests/1/science.png",
+    // arguments to pass to $upload.upload
+    "upload_args": {
+        "method": "POST",
+        "url": "https://freedomgames.s3.amazonaws.com/",
+        // form data for the upload
+        "data": {
+            "AWSAccessKeyId": "AKIAIYQ3PIEHCBKR6BGQ",
+            "Content-Type": "image/png",
+            "Policy": "eyJjb25kaXRpb25zIjogW1siZXEiLCAiJGtleSIsICJhdmF0YXJzLzEvYXBwcm92ZWQucG5nIl0sIHsiYnVja2V0IjogImZyZWVkb21nYW1lcy13YWx0In0sIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sIFsiZXEiLCAiJENvbnRlbnQtVHlwZSIsICJpbWFnZS9wbmciXSwgeyJzdWNjZXNzX2FjdGlvbl9zdGF0dXMiOiAiMjAxIn1dLCAiZXhwaXJhdGlvbiI6ICIyMDE0LTA3LTE3VDIyOjU0OjM2LjAwMFoifQ==",
+            "Signature": "kdrLe/s6AoCNsXCgR/8Yah0Vn7E=",
+            "acl": "public-read",
+            "key": "quests/1/science.png",
+            "success_action_status": "201"
+        }
+    }
 }
 ```
 
