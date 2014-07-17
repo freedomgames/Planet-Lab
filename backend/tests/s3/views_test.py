@@ -31,7 +31,7 @@ class S3Test(harness.TestHarness):
         self.assertEqual(signature, {
             'file_name': 'snake.png',
             's3_url': 'https://bucket.s3.amazonaws.com/snake.png',
-            'form_data': {
+            'upload_args': {
                 'url': 'https://bucket.s3.amazonaws.com/',
                 'method': 'POST',
                 'data': {

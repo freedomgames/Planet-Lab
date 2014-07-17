@@ -58,7 +58,7 @@ def s3_upload_signature(key, mime_type):
     return {
             'file_name': key,
             's3_url': base_url + key,
-            'form_data' : {
+            'upload_args' : {
                 'url': base_url,
                 'method': 'POST',
                 'data': {

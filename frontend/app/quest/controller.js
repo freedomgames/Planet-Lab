@@ -14,8 +14,8 @@ var updateScope = function($scope, $upload, S3Factory) {
         // Given the file to upload an an object containing the form
         // data needed to upload the file to S3, perform the upload.
         // Then set the quest's icon URL to the just-uploaded file.
-        uploadData.form_data.file = file;
-        $upload.upload(uploadData.form_data).then(
+        uploadData.upload_args.file = file;
+        $upload.upload(uploadData.upload_args).then(
             function(response) {
                 if (response.status === 201) {
                     $scope.quest.icon_url = uploadData.s3_url;
