@@ -21,7 +21,7 @@ planet_app.factory('S3Factory', ['$resource', function($resource) {
             {
                 query: {
                     method: 'GET',
-                    url: '/v1/:resourceName/:id/:uploadName\/.'
+                    url: '/v1/:resourceName/:id/:uploadName\/.',
                     isArray: false
                 }
             }
