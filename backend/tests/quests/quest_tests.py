@@ -75,16 +75,6 @@ class QuestTest(harness.TestHarness):
             'inquiry_questions': ['b', 'c', 'd']})
         self.assertEqual(resp.status_code, 200)
 
-        # 'name' can't be None
-        resp = self.put_json('/v1/quests/1', {
-            'summary': 'nip', 'name': None, 'icon_url': 'rubber',
-            "pbl_description": 'p', "mentor_guide": 'g',
-            "min_grade_level": 1, "max_grade_level": 2,
-            "hours_required": 3, "minutes_required": 4,
-            "video_links": ['snakes.mp4', 'ladders.mp4'], 'tags': [],
-            'inquiry_questions': ['b', 'c', 'd']})
-        self.assertEqual(resp.status_code, 400)
-
         # non-required values may be None
         resp = self.put_json('/v1/quests/1', {
             'summary': 'nip', 'name': 'mouse', 'icon_url': 'rubber',

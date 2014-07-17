@@ -18,8 +18,8 @@ class QuestBase(object):
     """Provide a common as_dict method and a parser."""
 
     parser = resource.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('summary', type=str, required=True)
+    parser.add_argument('name', type=str)
+    parser.add_argument('summary', type=str)
 
     parser.add_argument(
             'inquiry_questions', type=lambda x: map(str, list(x)))
