@@ -13,3 +13,18 @@ planet_app.factory('ResourceFactory', ['$resource', function($resource) {
         );
     };
 }]);
+planet_app.factory('S3Factory', ['$resource', function($resource) {
+    return function(resourceName) {
+        return $resource(
+            '/v1/:resourceName/:id/:uploadName/:fileName',
+            {resourceName: resourceName, id: '@id'},
+            {
+                query: {
+                    method: 'GET',
+                    url: '/v1/:resourceName/:id/:uploadName\/.'
+                    isArray: false
+                }
+            }
+        );
+    };
+}]);

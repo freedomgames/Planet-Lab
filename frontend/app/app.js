@@ -1,5 +1,5 @@
-var planet_app = angular.module(
-        'planet_app', ['ui.router', 'ngResource', 'xeditable']);
+var planet_app = angular.module('planet_app', [
+        'ui.router', 'ngResource', 'xeditable', 'angularFileUpload']);
 
 planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', function($controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider){
     /* CODE FOR ASYNC MODULE LOADING */
