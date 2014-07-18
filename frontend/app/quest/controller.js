@@ -1,7 +1,8 @@
 var questCtrlUtil = {
     upload: function($files, quest, S3) {
         S3.upload($files[0], 'quests', quest.id, 'uploads').then(
-            function(icon_url) {quest.icon_url = icon_url;
+            function(iconUrl) {
+                quest.icon_url = iconUrl;
         });
     }
 };
