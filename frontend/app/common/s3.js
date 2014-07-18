@@ -22,8 +22,8 @@ planet_app.factory('S3', [
                 fileName: file.name,
                 uploadName: uploadName,
                 mime_type: file.type
-            }).$promise.then(function(url) {
-                s3Upload(file, url, uploadUrlPromise);
+            }).$promise.then(function(uploadData) {
+                s3Upload(file, uploadData, uploadUrlPromise);
             });
             return uploadUrlPromise.promise;
         };
