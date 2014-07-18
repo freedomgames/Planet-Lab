@@ -1,14 +1,5 @@
 var updateScope = function($scope, $upload, S3Factory) {
     // Set common functions required by views of both controllers
-    $scope.updateArrayItem = function(name, $event, $index) {
-        $scope.quest[name][$index] = $event.target.value;
-    };
-    $scope.deleteArrayItem = function(name, $index) {
-        $scope.quest[name].splice($index, 1);
-    };
-    $scope.newArrayItem = function(name) {
-        $scope.quest[name].push('');
-    };
 
     var s3Upload = function(file, uploadData) {
         // Given the file to upload an an object containing the form

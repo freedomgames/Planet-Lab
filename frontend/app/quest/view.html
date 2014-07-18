@@ -19,25 +19,11 @@
 </p>
 
 <p>Inquiry Questions:
-<div ng-repeat="question in quest.inquiry_questions track by $index">
-  <input type="text" ng-value="question"
-    ng-blur="updateArrayItem('inquiry_questions', $event, $index)">
-  <button ng-click="deleteArrayItem('inquiry_questions', $index)">
-    Delete
-  </button>
-</div>
-<button ng-click="newArrayItem('inquiry_questions')">New Inquiry Question</button>
+<pl-edit-list list="quest.inquiry_questions"></pl-edit-list>
 </p>
 
 <p>Video Links:
-<div ng-repeat="videoLink in quest.video_links track by $index">
-  <input type="text" ng-value="videoLink"
-    ng-blur="updateArrayItem('video_links', $event, $index)">
-  <button ng-click="deleteArrayItem('video_links', $index)">
-    Delete
-  </button>
-</div>
-<button ng-click="newArrayItem('video_links')">New Video Link</button>
+<pl-edit-list list="quest.video_links"></pl-edit-list>
 </p>
 
 <p>Time Required:
