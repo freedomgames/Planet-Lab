@@ -16,38 +16,27 @@ Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
 The front-end is responsible for uploading files to S3, but it must use the
 back-end to authorize upload requests.
 
-The back-end provides several end-points which return a signed URL that the
-front-end may use to upload files.
-The front-end must request a signed URL from the back-end using one of these
-end-points and then initiate the upload.
+The back-end provides several end-points which return prepared POST form data
+that the front-end may use to upload files.
+The front-end must request the form data from the back-end using one of these
+end-points and then initiate the upload to S3 by POSTing the file along
+with the given form data.
 Once complete, the front-end must set the uploaded file's url on the affected
-resource via a PUT or POST to the back-end.
+resource via a PUT to the back-end.
 
-These end-points may be used as follows:
+These end-points may be used as follows (psuedo-code):
 ```javascript
-var upload = function($files) {
-    // Request the form data required to upload the file to S3
-    // from the backend and then perform the upload.
-    for (var i=0; i < $files.length; i++) {
-        var file = $files[i];
-        url = S3Factory('quests').get({
-            id: $scope.quest.id,
-            fileName: file.name,
-            uploadName: 'uploads',
-            mime_type: file.type});
-        url.$promise.then(function() {
-            uploadData.form_data.file = file;
-            $upload.upload(uploadData.form_data).then(
-                function(response) {
-                    if (response.status === 201) {
-                        $scope.quest.icon_url = uploadData.s3_url;
-                        alert('Upload Suceeded');
-                    } else {
-                        alert('Upload Failed');
-                    }
-            });
-        });
-    }
+var upload = function(file, resource) {
+    // upload a file as an asset for the given resource
+    var uploadData = $hhtp.get("s3-request-url");
+    uploadData.upload_args.file = file;
+    $upload.upload(uploadData.upload_args).then(function(response) {
+        if (response.status === 201) {
+            resource.asset_url = uploadData.s3_url;
+        } else {
+            alert('upload failed');
+        }
+    };
 };
 ```
 
