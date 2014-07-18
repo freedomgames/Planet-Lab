@@ -2,6 +2,7 @@
 
 import boto.s3.bucket
 import boto.s3.key
+import datetime
 import json
 import mock
 import unittest
@@ -12,8 +13,41 @@ import backend.quests.views as quest_views
 import harness
 
 
+class FakeDateTime(datetime.datetime):
+    """Mock object to return a constant 'now' time."""
+    @staticmethod
+    def utcnow():
+        """Return a constant 'now' time."""
+        return FakeDateTime(2012, 12, 21)
+
+
 class S3Test(harness.TestHarness):
     """Tests for handling s3."""
+
+    @mock.patch.object(s3.datetime, 'datetime', FakeDateTime)
+    def test_s3_upload_signature(self):
+        """Test the s3_upload_signature function."""
+        signature = s3.s3_upload_signature('snake.png', 'image/png')
+        self.assertEqual(signature, {
+            'file_name': 'snake.png',
+            's3_url': 'https://bucket.s3.amazonaws.com/snake.png',
+            'upload_args': {
+                'url': 'https://bucket.s3.amazonaws.com/',
+                'method': 'POST',
+                'data': {
+                    'AWSAccessKeyId': 'key',
+                    'success_action_status': '201',
+                    'acl': 'public-read',
+                    'key': 'snake.png',
+                    'Content-Type': 'image/png',
+                    'Signature': 'kETEObkncWe3ZPmvevjVxVNvojQ=',
+                    'Policy': "eyJjb25kaXRpb25zIjogW1siZXEiLCAiJGtleSIsICJz"
+                              "bmFrZS5wbmciXSwgeyJidWNrZXQiOiAiYnVja2V0In0s"
+                              "IHsiYWNsIjogInB1YmxpYy1yZWFkIn0sIFsiZXEiLCAi"
+                              "JENvbnRlbnQtVHlwZSIsICJpbWFnZS9wbmciXSwgeyJzd"
+                              "WNjZXNzX2FjdGlvbl9zdGF0dXMiOiAiMjAxIn1dLCAiZX"
+                              "hwaXJhdGlvbiI6ICIyMDEyLTEyLTIxVDAxOjAwOjAwLjA"
+                              "wMFoifQ=="}}})
 
     @harness.with_sess(user_id=1)
     def test_sign_avatar_upload(self):
@@ -26,7 +60,7 @@ class S3Test(harness.TestHarness):
                     file_name='a.png',
                     mime_type='image/png'))
         self.assertEqual(
-                json.loads(resp.data)['url'],
+                json.loads(resp.data)['s3_url'],
                 "https://bucket.s3.amazonaws.com/avatars/1/a.png")
 
     @harness.with_sess(user_id=1)
@@ -39,7 +73,7 @@ class S3Test(harness.TestHarness):
                     file_name='b.png',
                     mime_type='image/png'))
         self.assertEqual(
-                json.loads(resp.data)['url'],
+                json.loads(resp.data)['s3_url'],
                 "https://bucket.s3.amazonaws.com/quests/4/b.png")
 
     @harness.with_sess(user_id=1)
