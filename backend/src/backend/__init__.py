@@ -56,31 +56,6 @@ def logout():
     flask.session.clear()
     return app.send_static_file('index.html')
 
-@app.route('/avatar-example')
-@flask_user.login_required
-def update_avatar():
-    """Example showing how to use s3 for uploading avatar images."""
-    user_id = auth.current_user_id()
-    user_row = db.session.query(
-            user_models.User.name,
-            user_models.User.email,
-            user_models.User.description,
-            user_models.User.avatar_url).filter_by(
-                    id=user_id).first()
-    if user_row is None:
-        # this really should not happen -- the user would have had
-        # to have been deleted without killing the session
-        return flask.redirect(flask.url_for('login'))
-    else:
-        return flask.render_template(
-                'avatar_example.html',
-                user_id=user_id,
-                name=user_row[0],
-                email=user_row[1],
-                description=user_row[2],
-                avatar_url=user_row[3],
-                user_url=api.url_for(user_views.User, user_id=user_id))
-
 
 def error_handler(error, status_code=500, payload=None, debug=app.debug):
     """Generic handler to return an exception as a json response."""
