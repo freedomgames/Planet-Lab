@@ -16,9 +16,7 @@ If you are unfamiliar with any of these projects, I highly recommend a good Goog
 
 To get started working with the frontend, please review the User Stories document we will provide, and select a task. (Ideally, we will be updating this frequently.) This will offer a very specific description of what technologies you will need to integrate, what you will need to build, and what (if any) database calls will be required.
 
-Once you have selected a task, please make sure you have forked the repo. Pull down this fork to your local machine. Follow all of Walt's instructions in the backend/README file to get the webserver and local db up and running. Make a user on the login screen, then login && view the app!
-
-_With regards to your fork: I loosely follow (and I'm pretty sure Walt also follows) the [git-flow](https://github.com/nvie/gitflow) method of feature development. No matter how you slice it, you should probably be developing in branches. If you don't want to, that's  your choice, however. Whatever blows your hair back, I suppose._
+Once you have selected a task, please make sure you have forked the repo. Pull down this fork to your local machine. Follow the instructions in the [backend/README file](backend/README.md) to get the webserver and local db up and running. Make a user on the login screen, then login && view the app!
 
 ## File Structure
 
