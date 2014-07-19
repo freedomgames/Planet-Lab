@@ -1,0 +1,5 @@
+<div ng-repeat="item in list track by $index">
+  <input type="text" ng-value="item" ng-blur="updateArrayItem($event, $index)">
+  <button ng-click="deleteArrayItem($index)">Delete</button>
+</div>
+<button ng-click="newArrayItem()">Add Another</button>

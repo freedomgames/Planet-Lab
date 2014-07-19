@@ -55,8 +55,8 @@ class Quest(db.Model, models.CreatedBy):
     __tablename__ = 'quests'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    name = db.Column(db.String, nullable=False)
-    summary = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=True)
+    summary = db.Column(db.String, nullable=True)
 
     inquiry_questions = db.Column(
             postgresql.ARRAY(db.String), nullable=False, default=[])

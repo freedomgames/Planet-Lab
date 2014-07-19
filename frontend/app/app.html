@@ -5,16 +5,23 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+        <!--support file upload in non-html5 browsers-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/1.4.0/angular-file-upload-shim.min.js"></script>
+        <!--angular and its dependent packages-->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/1.4.0/angular-file-upload.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-resource.min.js"></script>
-
+        <script src="//d19d7ovrypufff.cloudfront.net/js/xeditable.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://d19d7ovrypufff.cloudfront.net/css/xeditable.css">
+        <script src="static/app.js"></script>
+        <script src="static/common/resource.js"></script>
+        <script src="static/common/s3.js"></script>
+        <script src="static/common/widgets.js"></script>
+        <script src="static/quest/controller.js"></script>
         <title>PlanetLab</title>
     </head>
     <body>
         <div ui-view></div>
-        <script src="static/app.js"></script>
-        <script src="static/common/getterfactory.js"></script>
-        <script src="static/quest/controller.js"></script>
     </body>
 </html>

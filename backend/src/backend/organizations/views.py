@@ -1,7 +1,6 @@
 """Views for supporting organization resources."""
 
 
-import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 
 import backend.common.resource as resource
@@ -11,7 +10,7 @@ import backend.organizations.models as organization_models
 class OrganizationBase(object):
     """Provide a common as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('name', type=str, required=True)
     parser.add_argument('description', type=str, required=True)
     parser.add_argument('icon_url', type=str)

@@ -3,7 +3,6 @@
 
 import flask
 import flask_restful
-import flask_restful.reqparse as reqparse
 import sqlalchemy.orm as orm
 import sqlalchemy.exc
 
@@ -18,9 +17,9 @@ DUPE_TAG_MSG = 'A tag with this name already exists.'
 class QuestBase(object):
     """Provide a common as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str, required=True)
-    parser.add_argument('summary', type=str, required=True)
+    parser = resource.RequestParser()
+    parser.add_argument('name', type=str)
+    parser.add_argument('summary', type=str)
 
     parser.add_argument(
             'inquiry_questions', type=lambda x: map(str, list(x)))
@@ -144,7 +143,7 @@ class QuestStaticAssets(flask_restful.Resource):
 class TagBase(object):
     """Provide a common as_dict method and a parser."""
 
-    parser = reqparse.RequestParser()
+    parser = resource.RequestParser()
     parser.add_argument('name', type=str, required=True)
 
     view_fields = ('id', 'url', 'name', 'creator_id', 'creator_url')

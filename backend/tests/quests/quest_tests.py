@@ -75,14 +75,24 @@ class QuestTest(harness.TestHarness):
             'inquiry_questions': ['b', 'c', 'd']})
         self.assertEqual(resp.status_code, 200)
 
+        # non-required values may be None
+        resp = self.put_json('/v1/quests/1', {
+            'summary': 'nip', 'name': 'mouse', 'icon_url': 'rubber',
+            "pbl_description": 'p', "mentor_guide": None,
+            "min_grade_level": 1, "max_grade_level": None,
+            "hours_required": 3, "minutes_required": 4,
+            "video_links": ['snakes.mp4', 'ladders.mp4'], 'tags': [],
+            'inquiry_questions': ['b', 'c', 'd']})
+        self.assertEqual(resp.status_code, 200)
+
         # and get it back
         resp = self.app.get("/v1/quests/1")
         self.assertEqual(json.loads(resp.data), {
             'creator_id': 1,
             'creator_url': '/v1/users/1',
             'summary': 'nip',
-            "pbl_description": 'p', "mentor_guide": 'g',
-            "min_grade_level": 1, "max_grade_level": 2,
+            "pbl_description": 'p', "mentor_guide": None,
+            "min_grade_level": 1, "max_grade_level": None,
             "hours_required": 3, "minutes_required": 4,
             'icon_url': 'rubber',
             "video_links": ['snakes.mp4', 'ladders.mp4'],
@@ -97,8 +107,8 @@ class QuestTest(harness.TestHarness):
             {'creator_id': 1, 'summary': 'nip', 'icon_url': 'rubber',
                 'creator_url': '/v1/users/1',
                 "inquiry_questions": ["b", "c", "d"], 'tags': [],
-                "pbl_description": 'p', "mentor_guide": 'g',
-                "min_grade_level": 1, "max_grade_level": 2,
+                "pbl_description": 'p', "mentor_guide": None,
+                "min_grade_level": 1, "max_grade_level": None,
                 "hours_required": 3, "minutes_required": 4,
                 "video_links": ['snakes.mp4', 'ladders.mp4'],
                 'url': '/v1/quests/1', 'id': 1, 'name': 'mouse'},
