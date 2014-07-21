@@ -4,13 +4,18 @@ Welcome to PlanetLab's frontend folder! Here, you'll find all the code and docum
 
 ## Basics
 
-PlanetLab is being built as a single-page application. This means that there are no hard refreshes, and all content is served through AJAX. This allows the application to be faster and more responsive. PlanetLab is being built mostly as a _content management system_ with user-facing gamification, and so requires a great amount of control over HTTP requests.
+PlanetLab is being built as a single-page application. This means that there are no hard refreshes, and all content is served through AJAX. This allows the application to be faster and more responsive. PlanetLab is being built mostly as a _content management system_ with user-facing gamification.
+
+## Current Maintainers
+
+* @maiamcguinness
+* @waltaskew
 
 ## Technologies
 
-This is an **AngularJS**-based project. We are using the **UI-Router** to handle states and nested views. **TinyMCE** is our current choice of WYSIWYG. We may, at some point, integrate a library like Underscore (or Lo-Dash, if that's  your jam), but that's only if there's a need. (There could be. They have some shiny filters over there...)
+This is an **AngularJS**-based project. We are using the **UI-Router** to handle states and nested views. **TinyMCE** is our current choice of WYSIWYG. We may, at some point, integrate a library like Underscore or Lo-Dash if need be.
 
-If you are unfamiliar with any of these projects, I highly recommend a good Google search for each and any. They are all fairly well documented, and you should have no trouble picking it up! However, if you do, please talk to Maia.
+If you are unfamiliar with any of these projects, I highly recommend a good Google search for each and any. They are all fairly well documented, and you should have no trouble picking it up! However, if you do, please talk to a maintainer.
 
 ## Getting Started
 
@@ -40,28 +45,38 @@ The file structure for the frontend chunk of this repo is currently as follows:
            |
            |--- vendors (includes)
 
-If you have any questions about this file structure, ask Maia.
+If you have any questions about this file structure, ask a maintainer.
 Please read [this doc](app/README.md) to understand how to reference
 assets with src links during development and in production.
 
 ## Contributing
 
-Some notes on contributing to the frontend:
+* Use four-space tabs and follow this style guide for JavaScript coding guidelines: http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml
 
-* Please follow this style guide as much as possible, save for the file structure (see above): https://github.com/mgechev/angularjs-style-guide
+* Follow this style guide for best Angular practives, save for the file structure (see above): https://github.com/mgechev/angularjs-style-guide
 
-* When you have completed a feature and you'd like it to be included in the main repo for everyone to pull into their versions, please create a pull request on the main repo (freedomgames/Planet-Lab). (**Make sure you are pulling FROM your repo TO the main one!** Not that it truly matters, but the other way around simply won't work. Double-check before you submit the pull request that changes are flowing the right way!)
+* Your code will be minified later, so please be generous with whitespace and comments to aid readability.
 
-* If you have time, please comment on other people's pull requests. (However, I am *extremely* terrible at this. So.)
+* Fork https://github.com/freedomgames/Planet-Lab and send pull requests for your new features against the master branch of this repo.
 
-* Re: code style, please use four spaces (not tabs) for consistency's sake. I don't care what code editor you use, however, but if you're going to use a code editor that injects strange folders (lovingly side-eyeing _you_, JetBrains), please add those folders to your personal .gitignore before you commit any of those shenanigans. If someone else opens up the repo with your strange files in them, things could get weird. Real weird.
-
-* Please be kind about your whitespace. Don't overdo it, but don't try to minify it, either. We'll take care of that in the end. Just make it legible. Please?
-
-* Comment when you can. This is especially important for your brilliantly-written, extremely-lean piece of code that does mysterious things with only a few keystrokes. If the coder you were two years ago would have no freaking clue what's happening (aside from most [basic] Angular things... we'll let that slide, or we'd be writing novels), you should probably type a quick note. Even if everyone else gets it immediately, it can't hurt.
+* If you have time, please comment on other people's pull requests.
 
 ## Important Notes
 
-**PLEASE MAKE SURE YOU'RE PULLING INTO YOUR FORK OFTEN!** Seriously, work with the latest code! Before you do anything, merge the main repo into yours, and then pull down to your local. This will seriously reduce the risk of conflicts. (And once there are multiple people working frequently on the front or the backend, this will greatly aid development! Don't want you to hotfix a bug that's already squashed, for example.)
+Be sure to pull from the upstream repo frequently.
+You want to add the upstream repo as a remote:
+```
+git remote add upstream git@github.com:freedomgames/Planet-Lab.git
+```
+and frequently pull from upstream to work with the latest code:
+```
+git pull upstream master
+```
 
-If you have any questions, PLEASE ask Maia! She will do her best to answer them.
+New backend development may necessitate updating your database schema.
+The simplest way to apply the new schema is to run:
+```
+foreman run flush_db -e .dev_env
+```
+However, this will result in an emtpy database
+(deleting any users, quests or other resources you may have created.)
