@@ -1,0 +1,15 @@
+{
+  "name": "PlanetLab",
+  "description": "A gamified citizen science network for youth",
+  "version": "0.0.0",
+  "homepage": "https://github.com/freedomgames/Planet-Lab",
+  "license": "BSD3",
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "danialfarid-angular-file-upload": "~1.4.x",
+    "angular-ui-router": "~0.2.x",
+    "angular-resource": "~1.2.x",
+    "angular-xeditable": "~0.1.x"
+  }
+}
