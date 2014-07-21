@@ -8,8 +8,8 @@ PlanetLab is being built as a single-page application. This means that there are
 
 ## Current Maintainers
 
-* @maiamcguinness
-* @waltaskew
+* [maiamcguinness](https://github.com/maiamcguinness)
+* [waltaskew](https://github.com/waltaskew)
 
 ## Technologies
 
