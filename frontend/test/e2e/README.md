@@ -8,7 +8,7 @@ for local development.
 
 Once configured, you can start the server by running:
 ```
-source venv/bin/activate && foreman start dev_server -e .dev_env
+source venv/bin/activate && foreman start dev_server -e .test_env
 ```
 or alternatively from the frontend directory:
 ```

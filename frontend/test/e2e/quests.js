@@ -9,7 +9,7 @@ describe('Quest CRUD', function() {
         var statusCode = sh.run([
             'cd .. &&',
             'source venv/bin/activate &&',
-            'foreman run flush_db -e .dev_env'].join(' '));
+            'foreman run flush_db -e .test_env'].join(' '));
         expect(statusCode).toBe(0);
 
         // the sign-in page is not angular, so we have to use the
