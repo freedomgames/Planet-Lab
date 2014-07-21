@@ -1,4 +1,4 @@
-planet_app.factory('S3', [
+planetApp.factory('S3', [
     '$q', '$upload', 'S3ResourceFactory',
     function($q, $upload, S3ResourceFactory) {
         var s3Upload = function(file, uploadData, uploadUrlPromise) {

@@ -1,4 +1,4 @@
-planet_app.directive('plEditList', function() {
+planetApp.directive('plEditList', function() {
     return {
         restrict: 'E',
         scope: {list: '='},

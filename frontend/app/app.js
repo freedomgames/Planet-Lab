@@ -1,29 +1,29 @@
-var planet_app = angular.module('planet_app', [
+var planetApp = angular.module('planetApp', [
         'ui.router', 'ngResource', 'xeditable', 'angularFileUpload']);
 
-planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', function($controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider){
+planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', function($controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider){
     /* CODE FOR ASYNC MODULE LOADING */
-    planet_app._controller = planet_app.controller;
-    planet_app._service = planet_app.service;
-    planet_app._factory = planet_app.factory;
-    planet_app._directive = planet_app.directive;
+    planetApp._controller = planetApp.controller;
+    planetApp._service = planetApp.service;
+    planetApp._factory = planetApp.factory;
+    planetApp._directive = planetApp.directive;
 
-    planet_app.controller = function( name, constructor ) {
+    planetApp.controller = function( name, constructor ) {
         $controllerProvider.register( name, constructor );
         return( this );
     };
 
-    planet_app.service = function( name, constructor ) {
+    planetApp.service = function( name, constructor ) {
         $provide.service( name, constructor );
         return( this );
     };
 
-    planet_app.factory = function( name, factory ) {
+    planetApp.factory = function( name, factory ) {
         $provide.factory( name, factory );
         return( this );
     };
 
-    planet_app.directive = function( name, factory ) {
+    planetApp.directive = function( name, factory ) {
         $compileProvider.directive( name, factory );
         return( this );
     };
@@ -197,7 +197,7 @@ planet_app.config(['$controllerProvider', '$provide', '$compileProvider', '$stat
     //     .otherwise({ redirectTo: '/' });
 }]);
 
-// planet_app.run(function($rootScope, $state){
+// planetApp.run(function($rootScope, $state){
 //     $rootScope.pageLocation = $state.current.name;
 //     console.log($state.current)
 //     // $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);

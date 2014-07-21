@@ -7,7 +7,7 @@ var questCtrlUtil = {
     }
 };
 
-planet_app.controller('QuestCtrl', [
+planetApp.controller('QuestCtrl', [
     '$scope', '$stateParams', 'ResourceFactory', 'S3',
     function($scope, $stateParams, ResourceFactory, S3) {
         $scope.quest = ResourceFactory('quests').get({id: $stateParams.id})
@@ -19,7 +19,7 @@ planet_app.controller('QuestCtrl', [
         };
 }]);
 
-planet_app.controller('NewQuestCtrl', [
+planetApp.controller('NewQuestCtrl', [
     '$scope', 'ResourceFactory', 'S3',
     function($scope, ResourceFactory, S3) {
         $scope.quest = new (ResourceFactory('quests'));

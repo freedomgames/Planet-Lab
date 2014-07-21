@@ -1,4 +1,4 @@
-planet_app.factory('ResourceFactory', ['$resource', function($resource) {
+planetApp.factory('ResourceFactory', ['$resource', function($resource) {
     return function(resourceName) {
         return $resource(
             '/v1/:resourceName/:id',
@@ -13,7 +13,7 @@ planet_app.factory('ResourceFactory', ['$resource', function($resource) {
         );
     };
 }]);
-planet_app.factory('S3ResourceFactory', ['$resource', function($resource) {
+planetApp.factory('S3ResourceFactory', ['$resource', function($resource) {
     return function(resourceName) {
         return $resource(
             '/v1/:resourceName/:id/:uploadName/:fileName',
