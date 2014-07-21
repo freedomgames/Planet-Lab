@@ -1,6 +1,5 @@
 'use strict';
 
-/* jasmine specs for controllers go here */
 describe('quest controllers', function() {
 
   beforeEach(function(){
