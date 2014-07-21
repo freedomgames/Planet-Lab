@@ -11,7 +11,6 @@ module.exports = function(config){
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-xeditable/dist/js/xeditable.js',
-      'app/app.js',
       'app/**/*.js',
       'test/unit/**/*.js'
     ],
