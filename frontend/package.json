@@ -6,6 +6,7 @@
   "repository": "https://github.com/freedomgames/Planet-Lab",
   "license": "BSD3",
   "devDependencies": {
+    "execSync": "^1.0.1",
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.4",
     "karma-firefox-launcher": "^0.1.3",
