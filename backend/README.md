@@ -108,8 +108,9 @@ where 'your-bucket-name' is the bucket you created above
   AWS\_SECRET\_ACCESS\_KEY
 
 #####NEVER COMMIT YOUR KEYS INTO THE REPO
+######issue this command to prevent you from accidentally doing so: git update-index --assume-unchanged .dev\_env
 
-* foreman start create\_db -e .dev\_env
+* foreman run create\_db -e .dev\_env
 * foreman start dev\_server -e .dev\_env
 
 The REST service is now available at [http://localhost:5000](http://localhost:5000)
