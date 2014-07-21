@@ -12,7 +12,7 @@ source venv/bin/activate && foreman start dev_server -e .test_env
 ```
 or alternatively from the frontend directory:
 ```
-npm start
+npm run test-server
 ```
 which is an alias for the above command.
 
