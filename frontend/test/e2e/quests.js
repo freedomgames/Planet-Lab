@@ -7,9 +7,9 @@ describe('Quest CRUD', function() {
     beforeEach(function() {
         // flush the database between tests
         var statusCode = sh.run([
-            'cd "$(git rev-parse --show-toplevel)"',
+            'cd "$(git rev-parse --show-toplevel)" &&',
             'source venv/bin/activate &&',
-            'foreman run flush_db -e .test_env'].join(' '));
+            'bin/flush_db'].join(' '));
         expect(statusCode).toBe(0);
 
         // the sign-in page is not angular, so we have to use the
