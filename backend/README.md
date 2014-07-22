@@ -127,7 +127,7 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
 * foreman start dev\_server -e .dev\_env
 
 ###Other Utilities:
-* "foreman run tests -e .test\_env"
+* "foreman run be_tests -e .test\_env"
   runs the unit tests and outputs coverage information (the -e .test\_env bit is important!)
 * "foreman run bash -e .dev\_env"
   gives you a shell session with your environment set up to run the REST service
