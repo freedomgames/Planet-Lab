@@ -1,12 +1,29 @@
 language: python
 python:
   - "2.7"
+
 addons:
   postgresql: "9.3"
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq nodejs npm
+
 install:
   - "pip install -r backend/requirements.txt"
   - "pip install -r backend/test-requirements.txt"
+  - "cd frontend && npm install"
+  - "cd frontend && npm run update-webdriver"
+
 before_script:
   - psql -c 'create database parklabtest;' -U postgres
-script: nosetests backend/tests --with-coverage --cover-package backend --cover-branches
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - foreman run dev_server -e .test_env &
+
+script:
+  - nosetests backend/tests --with-coverage --cover-package backend --cover-branches
+  - frontend/node_modules/karma/bin/karma start frontend/test/karma.conf.js --single-run --browsers=firefox
+  - frontend/node_modules/.bin/protractor frontend/test/protractor-conf.js --browser=Firefox
+
 env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
