@@ -6,10 +6,8 @@ var sh = require('execSync');
 describe('Quest CRUD', function() {
     beforeEach(function() {
         // flush the database between tests
-        var statusCode = sh.run([
-            'cd "$(git rev-parse --show-toplevel)" &&',
-            'source venv/bin/activate &&',
-            'bin/flush_db'].join(' '));
+        var statusCode = sh.run(
+            'cd "$(git rev-parse --show-toplevel)" && bin/flush_db');
         expect(statusCode).toBe(0);
 
         // the sign-in page is not angular, so we have to use the
