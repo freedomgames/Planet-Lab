@@ -7,7 +7,7 @@ describe('Quest CRUD', function() {
     beforeEach(function() {
         // flush the database between tests
         var statusCode = sh.run([
-            'cd .. &&',
+            'cd "$(git rev-parse --show-toplevel)"',
             'source venv/bin/activate &&',
             'foreman run flush_db -e .test_env'].join(' '));
         expect(statusCode).toBe(0);
