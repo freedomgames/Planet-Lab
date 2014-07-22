@@ -12,8 +12,10 @@ before_install:
 install:
   - "pip install -r backend/requirements.txt"
   - "pip install -r backend/test-requirements.txt"
-  - "cd frontend && npm install"
-  - "cd frontend && npm run update-webdriver"
+  - "cd frontend"
+  - "npm install"
+  - "npm run update-webdriver"
+  - "cd .."
 
 before_script:
   - psql -c 'create database parklabtest;' -U postgres
