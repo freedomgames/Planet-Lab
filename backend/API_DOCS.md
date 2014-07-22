@@ -10,6 +10,16 @@ sessions attempt to access resources which require authorization.
 The log-in flow takes care of creating user resources, obviating
 the need for a POST /users end-point.
 
+The currently logged-in user may be retrieved using the following end-point:
+####GET /current-user
+#####Return basic info about the currently logged-in user
+Returns an object in the form:
+```javascript
+{
+  "user_id": 5
+}
+```
+
 Static Content
 --------------
 Static content is stored in Amazon S3 and distributed via Amazon CloudFront.

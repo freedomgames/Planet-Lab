@@ -50,6 +50,11 @@ def app_page():
     """Return the javascript for the app."""
     return app.send_static_file('app.html')
 
+@app.route('/current-user')
+def user_info():
+    """Return basic info about the currently logged-in user."""
+    return flask.jsonify({'user_id': flask.session.get('user_id')})
+
 @app.route('/logout')
 def logout():
     """Clear the session and return the index page."""
