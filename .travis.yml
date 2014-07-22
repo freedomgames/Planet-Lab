@@ -25,7 +25,7 @@ before_script:
 
 script:
   - nosetests backend/tests --with-coverage --cover-package backend --cover-branches
-  - frontend/node_modules/karma/bin/karma start frontend/test/karma.conf.js --single-run --browsers=firefox
-  - frontend/node_modules/.bin/protractor frontend/test/protractor-conf.js --browser=Firefox
+  - frontend/node_modules/karma/bin/karma start frontend/test/karma.conf.js --single-run --browsers=Firefox
+  - frontend/node_modules/.bin/protractor frontend/test/protractor-conf.js --browser=firefox
 
 env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
