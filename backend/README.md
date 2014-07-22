@@ -1,6 +1,7 @@
 The Backend
 ===========
-This is the REST service which supports the front-end application.
+This is a REST service written in Python, Flask and SQLAlchemy
+which supports the front-end PlanetLab application.
 
 The full API spec is [available here.](API_DOCS.md)
 
@@ -67,7 +68,7 @@ The relevant steps are:
     </CORSRule>
 </CORSConfiguration>
 ```
-* Upload a file called 'default-avatar.jpg' into the bucket
+* Upload an image of your choice named 'default-avatar.jpg' into the bucket
 * Right click 'default-avatar.jpg' and click the 'Make Public' button
 * On the security credentials tab: https://console.aws.amazon.com/iam/#users
   create an IAM user with permissions to access S3 using a policy like:
