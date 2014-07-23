@@ -1,3 +1,5 @@
+'use strict';
+
 planetApp.factory('ResourceFactory', ['$resource', function($resource) {
     return function(resourceName) {
         return $resource(
@@ -11,6 +13,31 @@ planetApp.factory('ResourceFactory', ['$resource', function($resource) {
                 }
             }
         );
+    };
+}]);
+planetApp.factory('ManyToOneResourceFactory', [
+    '$resource', function($resource) {
+        return function(childName, parentName, parentLink) {
+            return $resource(
+                '/v1/:parentName/:parentId/:childName/:childId',
+                {
+                    parentName: parentName,
+                    childName: childName,
+                    parentId: '@' + parentLink,
+                    childId: '@id'
+                },
+                {
+                    query: {
+                        method: 'GET',
+                        url: '/v1/:parentName/:parentId/:childName\/.',
+                        isArray: false
+                    },
+                    save: {
+                        method: 'POST',
+                        url: '/v1/:parentName/:parentId/:childName\/.',
+                    }
+                }
+            );
     };
 }]);
 planetApp.factory('S3ResourceFactory', ['$resource', function($resource) {

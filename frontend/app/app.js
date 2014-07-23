@@ -29,7 +29,7 @@ planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$state
     };
 
     /* ROUTING */
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/user/quests');
 
     $stateProvider
         .state('newQuest', {
@@ -42,8 +42,10 @@ planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$state
             templateUrl: 'static/quest/view.html',
             controller: 'QuestCtrl'
         })
-        .state('otherwise', {
-            url: '/'
+        .state('userQuests', {
+            url: '/user/quests',
+            templateUrl: 'static/quest/list_view.html',
+            controller: 'UsersQuestsCtrl'
         });
         // HOME STATE =========================================================
         // .state('home', {
