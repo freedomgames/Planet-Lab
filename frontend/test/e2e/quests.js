@@ -28,7 +28,7 @@ describe('Quest CRUD', function() {
     it('should create and retrieve quests', function() {
         // user's quest page should initially be empty
         browser.get('/app#/user/quests');
-        expect(element.all(by.repeater('quest in quests.quests')).count()).toEqual(0);
+        expect(element.all(by.repeater('quest in quests')).count()).toEqual(0);
 
         // save a new quest
         browser.get('/app#/quests/new');
@@ -44,6 +44,6 @@ describe('Quest CRUD', function() {
 
         // user's quest page should have the new quest
         browser.get('/app#/user/quests');
-        expect(element.all(by.repeater('quest in quests.quests')).count()).toEqual(1);
+        expect(element.all(by.repeater('quest in quests')).count()).toEqual(1);
     });
 });
