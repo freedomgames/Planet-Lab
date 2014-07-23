@@ -4,6 +4,7 @@
 import json
 import unittest
 
+import backend
 import harness
 
 
@@ -20,11 +21,11 @@ class MissionTest(harness.TestHarness):
         # create a user and some missions
         harness.create_user(name='snakes')
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "snakes", "description": "ladders", "points": 3})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "happy", "description": "socks", "points": 1})
         self.assertEqual(json.loads(resp.data), {
             "description": "socks",
@@ -67,7 +68,8 @@ class MissionTest(harness.TestHarness):
             'id': 1})
 
         # list them
-        resp = self.app.get("/v1/users/1/missions/")
+        resp = self.app.get(self.url_for(
+            backend.mission_views.MissionUserList, user_id=1))
         self.assertItemsEqual(json.loads(resp.data)['missions'], [
             {'points': 3, 'creator_id': 1, 'description': 'hat', 'quests': [],
                 "creator_url": "/v1/users/1",
@@ -98,22 +100,22 @@ class MissionTest(harness.TestHarness):
         harness.create_user(name='snakes')
 
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "blouse", "summary": "blip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "hat", "description": "snap", "points": 2})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "cat", "description": "map", "points": 1})
         self.assertEqual(resp.status_code, 200)
 
