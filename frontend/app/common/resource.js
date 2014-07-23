@@ -7,10 +7,7 @@ planetApp.factory('ResourceFactory', ['$resource', function($resource) {
             {resourceName: resourceName, id: '@id'},
             {
                 put: {method: 'PUT'},
-                save: {
-                    method: 'POST',
-                    url: '/v1/:resourceName\/.' // escape the trailing slash
-                }
+                query: { method: 'GET', isArray: false}
             }
         );
     };
@@ -27,15 +24,8 @@ planetApp.factory('ManyToOneResourceFactory', [
                     childId: '@id'
                 },
                 {
-                    query: {
-                        method: 'GET',
-                        url: '/v1/:parentName/:parentId/:childName\/.',
-                        isArray: false
-                    },
-                    save: {
-                        method: 'POST',
-                        url: '/v1/:parentName/:parentId/:childName\/.',
-                    }
+                    put: {method: 'PUT'},
+                    query: {method: 'GET', isArray: false}
                 }
             );
     };

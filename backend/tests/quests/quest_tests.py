@@ -27,6 +27,7 @@ class QuestTest(harness.TestHarness):
                 "/v1/quests/",
                 {"name": "mouse", "summary": "nip",
                     "inquiry_questions": ['a', 'b']})
+        self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.data), {
             "name": "mouse", "summary": "nip", "inquiry_questions": ["a", "b"],
             "icon_url": None, "video_links": [],

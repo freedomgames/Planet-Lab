@@ -94,29 +94,29 @@ api.add_resource(
         user_views.UserAvatar, '/v1/users/<int:user_id>/avatar/<file_name>')
 
 api.add_resource(mission_views.Mission, '/v1/missions/<int:mission_id>')
-api.add_resource(mission_views.MissionList, '/v1/missions/')
+api.add_resource(mission_views.MissionList, '/v1/missions')
 api.add_resource(
-        mission_views.MissionUserList, '/v1/users/<int:user_id>/missions/')
+        mission_views.MissionUserList, '/v1/users/<int:user_id>/missions')
 
 api.add_resource(quest_views.Quest, '/v1/quests/<int:quest_id>')
-api.add_resource(quest_views.QuestList, '/v1/quests/')
+api.add_resource(quest_views.QuestList, '/v1/quests')
 
 api.add_resource(
         quest_views.QuestStaticAsset,
         '/v1/quests/<int:quest_id>/uploads/<file_name>')
 api.add_resource(
-        quest_views.QuestStaticAssets, '/v1/quests/<int:quest_id>/uploads/')
+        quest_views.QuestStaticAssets, '/v1/quests/<int:quest_id>/uploads')
 
-api.add_resource(quest_views.QuestUserList, '/v1/users/<int:user_id>/quests/')
+api.add_resource(quest_views.QuestUserList, '/v1/users/<int:user_id>/quests')
 api.add_resource(
         quest_views.QuestMissionLink,
         '/v1/missions/<int:left_id>/quests/<int:right_id>')
 api.add_resource(
         quest_views.QuestMissionLinkList,
-        '/v1/missions/<int:mission_id>/quests/')
+        '/v1/missions/<int:mission_id>/quests')
 
 api.add_resource(quest_views.Tag, '/v1/quest-tags/<int:tag_id>')
-api.add_resource(quest_views.TagList, '/v1/quest-tags/')
+api.add_resource(quest_views.TagList, '/v1/quest-tags')
 api.add_resource(
         quest_views.QuestTagLink,
         '/v1/quests/<int:left_id>/tags/<int:right_id>')
@@ -126,7 +126,7 @@ api.add_resource(
         '/v1/quests/<int:quest_id>/questions/<int:question_id>')
 api.add_resource(
         question_views.QuestionList,
-        '/v1/quests/<int:parent_id>/questions/')
+        '/v1/quests/<int:parent_id>/questions')
 api.add_resource(
         question_views.QuestionView,
         '/v1/questions/<int:question_id>')
@@ -136,7 +136,7 @@ api.add_resource(
         '/v1/questions/<int:question_id>/answers/<int:answer_id>')
 api.add_resource(
         question_views.AnswerList,
-        '/v1/questions/<int:parent_id>/answers/')
+        '/v1/questions/<int:parent_id>/answers')
 
 api.add_resource(
         question_views.MultipleChoice,
@@ -144,12 +144,12 @@ api.add_resource(
             '<int:multiple_choice_id>')
 api.add_resource(
         question_views.MultipleChoiceList,
-        '/v1/questions/<int:parent_id>/multiple_choices/')
+        '/v1/questions/<int:parent_id>/multiple_choices')
 
 api.add_resource(
         organization_views.Organization,
         '/v1/organizations/<int:organization_id>')
-api.add_resource(organization_views.OrganizationList, '/v1/organizations/')
+api.add_resource(organization_views.OrganizationList, '/v1/organizations')
 api.add_resource(
         organization_views.OrganizationUserLink,
         '/v1/organizations/<int:left_id>/users/<int:right_id>')
