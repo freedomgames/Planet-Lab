@@ -129,7 +129,7 @@ Missions are groups of quests.
 Mentors chose how to group quests into missions and learners complete
 missions quest by quest.
 
-####POST /v1/missions/
+####POST /v1/missions
 #####Create a new mission
 Accepts an object in the form:
 ```javascript
@@ -156,7 +156,7 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it
 
-####GET /api/users/\<id\>/missions/
+####GET /api/users/\<id\>/missions
 #####Return missions created by the user with the given id
 Returns an object in the form:
 ```javascript
@@ -243,7 +243,7 @@ Quests are activities within a mission.
 Mentors create quests and link them to missions.
 Learners complete quests.
 
-####POST /v1/quests/
+####POST /v1/quests
 #####Create a new quest
 Accepts an object in the form:
 ```javascript
@@ -286,7 +286,7 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it
 
-####GET /api/users/\<id\>/quests/
+####GET /api/users/\<id\>/quests
 #####Return quests created by the user with the given id
 Returns an object in the form:
 ```javascript
@@ -419,7 +419,7 @@ Returns an object in the form:
 ####DELETE /v1/quests/\<id\>/uploads/\<file_name\>
 #####Delete the given static asset for the given quest
 
-####GET /v1/quests/\<id\>/uploads/
+####GET /v1/quests/\<id\>/uploads
 #####List uploaded static assets for the given quest
 Returns an object in the form:
 ```javascript
@@ -441,7 +441,7 @@ Quest Tags
 ----------
 Tags linked to quests to make them more searchable.
 
-####POST /v1/quest-tags/
+####POST /v1/quest-tags
 #####Create a new quest tag
 Accepts an object in the form:
 ```javascript
@@ -464,7 +464,7 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it.
 
-####GET /v1/quest-tags/
+####GET /v1/quest-tags
 #####Retrieve all available tags
 Returns an object in the form:
 ```javascript
@@ -535,7 +535,7 @@ The many-to-many links used to group quests into missions.
 ####DELETE /v1/missions/\<id\>/quests/\<id\>
 #####Un-link the quest from the mission with the given ids
 
-####GET /v1/missions/\<id\>/quests/
+####GET /v1/missions/\<id\>/quests
 #####List the quests linked to a mission with the given id
 Returns an object in the form:
 ```javascript
@@ -586,7 +586,7 @@ Organizations
 -------------
 An organization is a collection of users.
 
-####POST /v1/organizations/
+####POST /v1/organizations
 #####Create a new organization
 Accepts an object in the form:
 ```javascript
@@ -666,7 +666,7 @@ Questions
 ---------
 Evaluations questions linked to quests.
 
-####POST /v1/quests/\<id\>/questions/
+####POST /v1/quests/\<id\>/questions
 #####Create a new question linked to the given quest
 Accepts an object in the form:
 ```javascript
@@ -695,7 +695,7 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it
 
-####GET /v1/quests/\<id\>/questions/
+####GET /v1/quests/\<id\>/questions
 #####Return a list of all questions linked to the given quest
 ######Optional Query String Parameters:
 ```
@@ -851,7 +851,7 @@ Multiple Choice Questions
 -------------------------
 Possible answers for a Question of type 'multiple_choice'
 
-####POST /v1/questions/\<id\>/multiple\_choices/
+####POST /v1/questions/\<id\>/multiple\_choices
 #####Create a new multiple choice answer linked to the given question
 Accepts an object in the form:
 ```javascript
@@ -879,7 +879,7 @@ for manipulating it
 
 Returns a 400 if the parent question is not of type 'multiple_choice'
 
-####GET /v1/questions/\<id\>/multiple\_choices/
+####GET /v1/questions/\<id\>/multiple\_choices
 #####Return a list of all multiple choice answers linked to the given question
 Returns an object in the form:
 ```javascript
@@ -948,7 +948,7 @@ Answers
 -------
 Answers to questions provided by learners.
 
-####POST /v1/questions/\<id\>/answers/
+####POST /v1/questions/\<id\>/answers
 #####Create a new answer linked to the given question
 Accepts an object in the form:
 ```javascript
@@ -989,7 +989,7 @@ Returns an object in the form:
 most notably containing the id for the newly created resource and the url
 for manipulating it
 
-####GET /v1/questions/\<id\>/answers/
+####GET /v1/questions/\<id\>/answers
 #####Return a list of all answers linked to the given question
 Returns an object in the form:
 ```javascript
