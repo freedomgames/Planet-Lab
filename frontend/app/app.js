@@ -1,7 +1,11 @@
 var planetApp = angular.module('planetApp', [
         'ui.router', 'ngResource', 'xeditable', 'angularFileUpload']);
 
-planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$stateProvider', '$urlRouterProvider', function($controllerProvider, $provide, $compileProvider, $stateProvider, $urlRouterProvider){
+planetApp.config([
+    '$controllerProvider', '$provide', '$compileProvider', '$stateProvider',
+    '$urlRouterProvider', function($controllerProvider, $provide,
+    $compileProvider, $stateProvider, $urlRouterProvider) {
+
     /* CODE FOR ASYNC MODULE LOADING */
     planetApp._controller = planetApp.controller;
     planetApp._service = planetApp.service;
@@ -10,22 +14,22 @@ planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$state
 
     planetApp.controller = function( name, constructor ) {
         $controllerProvider.register( name, constructor );
-        return( this );
+        return(this);
     };
 
     planetApp.service = function( name, constructor ) {
         $provide.service( name, constructor );
-        return( this );
+        return(this);
     };
 
     planetApp.factory = function( name, factory ) {
         $provide.factory( name, factory );
-        return( this );
+        return(this);
     };
 
     planetApp.directive = function( name, factory ) {
         $compileProvider.directive( name, factory );
-        return( this );
+        return(this);
     };
 
     /* ROUTING */
@@ -48,12 +52,3 @@ planetApp.config(['$controllerProvider', '$provide', '$compileProvider', '$state
             controller: 'UsersQuestsCtrl'
         });
 }]);
-
-// planetApp.run(function($rootScope, $state){
-//     $rootScope.pageLocation = $state.current.name;
-//     console.log($state.current)
-//     // $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-//     // $rootScope.$on('$stateChangeSuccess', function(event) {
-//     //     $rootScope.pageLocation = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-//     // });
-// });
