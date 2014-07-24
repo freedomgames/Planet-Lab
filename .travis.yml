@@ -29,7 +29,7 @@ script:
   - frontend/node_modules/karma/bin/karma start frontend/test/karma.conf.js --single-run --browsers=Firefox
   - frontend/node_modules/.bin/protractor frontend/test/protractor-conf.js --browser=firefox
 
-env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
+env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret CLOUDFRONT_URL=http://clouds.cloudfront.net
 
 before_deploy: git fetch --unshallow
 deploy:
