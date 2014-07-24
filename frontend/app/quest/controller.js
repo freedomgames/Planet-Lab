@@ -41,3 +41,12 @@ planetApp.controller('NewQuestCtrl', [
             }
         };
 }]);
+
+planetApp.controller('UsersQuestsCtrl', [
+    '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory',
+    function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory) {
+        CurrentUser.getCurrentUserId().then(function(userId) {
+            $scope.quests = ManyToOneResourceFactory('quests', 'users').query(
+                {parentId: userId});
+        });
+}]);

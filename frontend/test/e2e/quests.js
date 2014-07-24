@@ -25,7 +25,11 @@ describe('Quest CRUD', function() {
         browser.driver.findElement(by.css('input[type="submit"]')).click()
     });
 
-    it('should save name field', function() {
+    it('should create and retrieve quests', function() {
+        // user's quest page should initially be empty
+        browser.get('/app#/user/quests');
+        expect(element.all(by.repeater('quest in quests.quests')).count()).toEqual(0);
+
         // save a new quest
         browser.get('/app#/quests/new');
         element(by.binding('quest.name')).click();
@@ -37,5 +41,9 @@ describe('Quest CRUD', function() {
         // make sure our fields are present
         browser.get('/app#/quests/1');
         expect(element(by.binding('quest.name')).getText()).toEqual('snakes');
+
+        // user's quest page should have the new quest
+        browser.get('/app#/user/quests');
+        expect(element.all(by.repeater('quest in quests.quests')).count()).toEqual(1);
     });
 });

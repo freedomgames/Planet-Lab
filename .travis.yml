@@ -30,3 +30,13 @@ script:
   - frontend/node_modules/.bin/protractor frontend/test/protractor-conf.js --browser=firefox
 
 env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: eiGXRTp3BeGZZDjsIRctk5R7m46yGSzbt9JlON+62XkZY38weyqWsFLGEijtpWnYfjUus+mos8ESLPHsJBgmX3MoDBlUbAzVbBnuE+2MUyBdVkDpWSpQAsaKuVJ4weWDRBpppD4VJiFgIYLZNFA/+Ny4qxGeBkBC9o9S0Oq+DLc=
+  app:
+    master: parklab
+  on:
+    repo: freedomgames/Planet-Lab
+after_deploy: ./bin/flush_db
