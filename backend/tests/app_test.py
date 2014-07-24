@@ -24,7 +24,7 @@ class AppTest(harness.TestHarness):
     @harness.with_sess(user_id=3)
     def test_logout(self):
         """Test the logout endpoint."""
-        resp = self.app.get("/logout")
+        resp = self.app.put("/logout")
         self.assertEqual(resp.status_code, 200)
 
         resp = self.app.get("/current-user")

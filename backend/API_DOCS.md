@@ -20,6 +20,11 @@ Returns an object in the form:
 }
 ```
 
+Users may be logged out of the app with this end-point:
+####PUT /logout
+#####Destroys the user's session, logging them out
+
+
 Static Content
 --------------
 Static content is stored in Amazon S3 and distributed via Amazon CloudFront.
