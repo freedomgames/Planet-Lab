@@ -33,7 +33,6 @@ env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@loc
 
 deploy:
   provider: heroku
-  strategy: git
   api_key:
     secure: "UW5m0+bhVSKjkefB3mXQPttuU2bIn4f645Ho68cl5e/twZyvH9VsRTkCBEKFO4RCwvnyY60XXw1Gi53Mt9rzuhPDOTD01U+JCIYYdwLFPsNG06G+6ON6ZtMKBp+tDLmgK7ahXWAtEv4zFOSXKTjPpgH10HzFqqW0cvyUJX5AD7s="
   app:
