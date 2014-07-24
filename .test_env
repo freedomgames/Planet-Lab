@@ -1,5 +1,6 @@
 PYTHONPATH=backend/src:backend/tests
 DATABASE_URL=postgresql:///parklabtest
+CLOUDFRONT_URL=http://clouds.cloudfront.net
 SECRET_KEY=snakes
 DEBUG=1
 USER_ENABLE_EMAIL=''
