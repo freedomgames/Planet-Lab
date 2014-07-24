@@ -20,9 +20,13 @@
         <script src="static/common/s3.js"></script>
         <script src="static/common/widgets.js"></script>
         <script src="static/quest/controller.js"></script>
+        <script src="static/user/controller.js"></script>
         <title>PlanetLab</title>
     </head>
     <body>
         <div ui-view></div>
+        <p ng-controller="LogOutCtrl">
+          <a href="#" ng-click="logOut()">Log Out</a>
+        </p>
     </body>
 </html>
