@@ -20,6 +20,10 @@ nosetests.xml
 ehthumbs.db
 Thumbs.db
 
+# vendor
+bower_components
+node_modules
+
 # editor files
 *.swp
 .idea/
