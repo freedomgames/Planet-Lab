@@ -41,4 +41,4 @@ deploy:
     master: parklab
   on:
     repo: freedomgames/Planet-Lab
-after_deploy: ./bin/flush_db
+  run: ./bin/flush_db
