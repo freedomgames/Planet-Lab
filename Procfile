@@ -1,4 +1,4 @@
-web: gunicorn backend:app --log-file=-
+web: gunicorn backend:app --log-file=- --error-logfile=-
 dev_server: bin/dev_server
 create_db: bin/create_db
 flush_db: bin/flush_db
