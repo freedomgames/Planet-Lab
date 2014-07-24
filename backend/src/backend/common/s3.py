@@ -7,6 +7,7 @@ import json
 import hashlib
 import hmac
 import pytz
+import urlparse
 
 import backend
 
@@ -29,7 +30,8 @@ def get_bucket():
 def s3_upload_signature(key, mime_type):
     """Return the form data used to POST a file to S3 from the browser."""
     bucket = backend.app.config['S3_BUCKET']
-    base_url = 'https://%s.s3.amazonaws.com/' % bucket
+    s3_base_url = 'https://%s.s3.amazonaws.com/' % bucket
+    cdn_base_url = backend.app.config['CLOUDFRONT_URL']
 
     now = datetime.datetime.utcnow().replace(tzinfo=pytz.utc, microsecond=0)
     expires = (now + datetime.timedelta(hours=1)).isoformat()
@@ -57,9 +59,10 @@ def s3_upload_signature(key, mime_type):
 
     return {
             'file_name': key,
-            's3_url': base_url + key,
+            's3_url': s3_base_url + key,
+            'cdn_url': urlparse.urljoin(cdn_base_url, key),
             'upload_args' : {
-                'url': base_url,
+                'url': s3_base_url,
                 'method': 'POST',
                 'data': {
                     'key' : key,
