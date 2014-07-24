@@ -34,7 +34,7 @@ env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@loc
 deploy:
   provider: heroku
   api_key:
-    secure: eiGXRTp3BeGZZDjsIRctk5R7m46yGSzbt9JlON+62XkZY38weyqWsFLGEijtpWnYfjUus+mos8ESLPHsJBgmX3MoDBlUbAzVbBnuE+2MUyBdVkDpWSpQAsaKuVJ4weWDRBpppD4VJiFgIYLZNFA/+Ny4qxGeBkBC9o9S0Oq+DLc=
+    secure: bYFuTWRT+lAy2fqHQykXl+FSQ7YfXF2Z+tUpSWJCtktvghn6wXnCiF/htGyQ6t7LyOIyxJDnf3dLXrH82nsl9KoCnnAabh0+/EZq/kWfNHuY8e78ETuM8IqZlr8pG7IFl8Cvb4f25PMVU+cx7YY/Nt8ds94B4wUX6LM1UAWZ31g=
   app:
     master: parklab
   on:
