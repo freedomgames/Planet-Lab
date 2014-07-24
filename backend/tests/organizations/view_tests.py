@@ -4,6 +4,7 @@
 import json
 import unittest
 
+import backend
 import harness
 
 
@@ -22,7 +23,7 @@ class OrganizationTest(harness.TestHarness):
 
         # create an org
         resp = self.post_json(
-                "/v1/organizations/",
+                self.url_for(backend.organization_views.OrganizationList),
                 {"name": "hotel", "description": "cat hotel house"})
         self.assertEqual(resp.status_code, 200)
 
@@ -81,12 +82,12 @@ class OrganizationTest(harness.TestHarness):
         harness.create_user(name='rakes', avatar_url='rakes.png')
 
         resp = self.post_json(
-                "/v1/organizations/",
+                self.url_for(backend.organization_views.OrganizationList),
                 {"name": "mouse", "description": "nip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/organizations/",
+                self.url_for(backend.organization_views.OrganizationList),
                 {"name": "blouse", "description": "blip"})
         self.assertEqual(resp.status_code, 200)
 

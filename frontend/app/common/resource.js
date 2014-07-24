@@ -7,9 +7,17 @@ planetApp.factory('ResourceFactory', ['$resource', function($resource) {
             {resourceName: resourceName, id: '@id'},
             {
                 put: {method: 'PUT'},
-                save: {
-                    method: 'POST',
-                    url: '/v1/:resourceName\/.' // escape the trailing slash
+                query: {
+                    method: 'GET',
+                    isArray: true,
+                    transformResponse: function(data) {
+                        // The backend returns a response like:
+                        // {quests: [{name: ...}, {...}]}
+                        // due to security issues with returning top-level
+                        // JSON Arrays in a callabck.  We flatten the
+                        // object into an array here for convenience.
+                        return angular.fromJson(data)[resourceName];
+                    }
                 }
             }
         );
@@ -27,14 +35,18 @@ planetApp.factory('ManyToOneResourceFactory', [
                     childId: '@id'
                 },
                 {
+                    put: {method: 'PUT'},
                     query: {
                         method: 'GET',
-                        url: '/v1/:parentName/:parentId/:childName\/.',
-                        isArray: false
-                    },
-                    save: {
-                        method: 'POST',
-                        url: '/v1/:parentName/:parentId/:childName\/.',
+                        isArray: true,
+                        transformResponse: function(data) {
+                            // The backend returns a response like:
+                            // {quests: [{name: ...}, {...}]}
+                            // due to security issues with returning top-level
+                            // JSON Arrays in a callabck.  We flatten the
+                            // object into an array here for convenience.
+                            return angular.fromJson(data)[childName];
+                        }
                     }
                 }
             );
@@ -48,8 +60,15 @@ planetApp.factory('S3ResourceFactory', ['$resource', function($resource) {
             {
                 query: {
                     method: 'GET',
-                    url: '/v1/:resourceName/:id/:uploadName\/.',
-                    isArray: false
+                    isArray: true,
+                    transformResponse: function(data) {
+                        // The backend returns a response like:
+                        // {quests: [{name: ...}, {...}]}
+                        // due to security issues with returning top-level
+                        // JSON Arrays in a callabck.  We flatten the
+                        // object into an array here for convenience.
+                        return angular.fromJson(data).assets;
+                    }
                 }
             }
         );

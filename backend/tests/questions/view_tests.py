@@ -18,7 +18,7 @@ class QuestionTest(harness.TestHarness):
         harness.create_user(name='snakes')
         # create a quest
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
 
@@ -26,12 +26,13 @@ class QuestionTest(harness.TestHarness):
         resp = self.app.get("/v1/quests/1/questions/1")
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.app.get("/v1/quests/1/questions/")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList, parent_id=1))
         self.assertEqual(json.loads(resp.data)['questions'], [])
 
         # create a resource
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "text", "description": "cat hotel",
                     'question_group': 'lab_report'})
         self.assertEqual(json.loads(resp.data), {
@@ -43,7 +44,7 @@ class QuestionTest(harness.TestHarness):
 
         # or two
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "upload", "description": "snake farm",
                     'question_group': 'review_quiz'})
         self.assertEqual(json.loads(resp.data), {
@@ -55,19 +56,19 @@ class QuestionTest(harness.TestHarness):
 
         # and one more linked to a different quest
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/quests/2/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=2),
                 {"question_type": "upload", "description": "snake farm",
                     'question_group': 'closing_questions'})
         self.assertEqual(resp.status_code, 200)
 
         # can't create a question with a bad question_group
         resp = self.post_json(
-                "/v1/quests/2/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=2),
                 {"question_type": "upload", "description": "snake farm",
                     'question_group': 'snakes'})
         self.assertEqual(resp.status_code, 400)
@@ -84,7 +85,8 @@ class QuestionTest(harness.TestHarness):
         resp = self.app.get("/v1/quests/1/questions/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/quests/1/questions/")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList, parent_id=1))
         self.assertEqual(json.loads(resp.data)['questions'], [
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
@@ -97,12 +99,14 @@ class QuestionTest(harness.TestHarness):
                 "multiple_choices": [], 'question_group': 'review_quiz',
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
-        resp = self.app.get("/v1/quests/100/questions/")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList, parent_id=100))
         self.assertEqual(resp.status_code, 404)
 
         # filter by question_group
-        resp = self.app.get(
-                "/v1/quests/1/questions/?question_group=lab_report")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList,
+            parent_id=1, question_group='lab_report'))
         self.assertEqual(json.loads(resp.data)['questions'], [
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
@@ -110,9 +114,9 @@ class QuestionTest(harness.TestHarness):
                 "multiple_choices": [], 'question_group': 'lab_report',
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
-        resp = self.app.get(
-                "/v1/quests/1/questions/"
-                "?question_group=lab_report,closing_questions")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList,
+            parent_id=1, question_group='lab_report,closing_questions'))
         self.assertEqual(json.loads(resp.data)['questions'], [
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
@@ -120,9 +124,9 @@ class QuestionTest(harness.TestHarness):
                 "multiple_choices": [], 'question_group': 'lab_report',
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
-        resp = self.app.get(
-                "/v1/quests/1/questions/"
-                "?question_group=lab_report,review_quiz")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList,
+            parent_id=1, question_group='lab_report,review_quiz'))
         self.assertEqual(json.loads(resp.data)['questions'], [
             {"description": "cat hotel", "question_type": "text",
                 "id": 1, "url": "/v1/quests/1/questions/1",
@@ -135,15 +139,16 @@ class QuestionTest(harness.TestHarness):
                 "multiple_choices": [], 'question_group': 'review_quiz',
                 "quest_id": 1, "quest_url": "/v1/quests/1"}])
 
-        resp = self.app.get(
-                "/v1/quests/100/questions/?question_group=lab_report")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList,
+            parent_id=100, question_group='lab_report'))
         self.assertEqual(resp.status_code, 404)
 
 
         # error on bad question group
-        resp = self.app.get(
-                "/v1/quests/1/questions/"
-                "?question_group=lab_report,snakes")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList,
+            parent_id=1, question_group='lab_report,snakes'))
         self.assertEqual(resp.status_code, 400)
 
         # and get them back with just the id
@@ -203,8 +208,9 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         # make sure we can't create invalid question types
-        resp = self.post_json('/v1/quests/1/questions/', {
-            "question_type": "snakes", 'description': 'a blue house'})
+        resp = self.post_json(self.url_for(
+            backend.question_views.QuestionList, parent_id=1),
+            {"question_type": "snakes", 'description': 'a blue house'})
         self.assertEqual(resp.status_code, 400)
 
         # and 404 on bad quest ids
@@ -215,12 +221,13 @@ class QuestionTest(harness.TestHarness):
         self.assertEqual(resp.status_code, 404)
 
         resp = self.post_json(
-                "/v1/quests/20/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=20),
                 {"question_type": "upload", "description": "snake farm",
                     'question_group': 'review_quiz'})
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.app.get("/v1/quests/20/questions/")
+        resp = self.app.get(self.url_for(
+            backend.question_views.QuestionList, parent_id=20))
         self.assertEqual(resp.status_code, 404)
 
         # cascade delete on quests to linked questions
@@ -240,28 +247,28 @@ class QuestionTest(harness.TestHarness):
         harness.create_user(name='snakes')
         # create a quest
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nap"})
         self.assertEqual(resp.status_code, 200)
         # create some questions
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "text", "description": "cat hotel",
                     'question_group': 'review_quiz'})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "upload", "description": "cat upload",
                     'question_group': 'review_quiz'})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "multiple_choice", "description": "a choice",
                     'question_group': 'review_quiz'})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/quests/1/questions/",
+                self.url_for(backend.question_views.QuestionList, parent_id=1),
                 {"question_type": "multiple_choice", "description": "b choice",
                     'question_group': 'review_quiz'})
         self.assertEqual(resp.status_code, 200)
@@ -286,7 +293,8 @@ class QuestionTest(harness.TestHarness):
 
         # link some answers
         resp = self.post_json(
-                "/v1/questions/1/answers/", {"answer_text": "cats"})
+                self.url_for(backend.question_views.AnswerList, parent_id=1),
+                {"answer_text": "cats"})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "cats",
             "answer_multiple_choice": None,
@@ -296,7 +304,7 @@ class QuestionTest(harness.TestHarness):
             "question_id": 1, "question_url": "/v1/questions/1"})
 
         resp = self.post_json(
-                "/v1/questions/1/answers/",
+                self.url_for(backend.question_views.AnswerList, parent_id=1),
                 {"answer_text": "more cats"})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "text", "answer_text": "more cats",
@@ -306,7 +314,7 @@ class QuestionTest(harness.TestHarness):
             "question_id": 1, "question_url": "/v1/questions/1"})
 
         resp = self.post_json(
-                "/v1/questions/3/answers/",
+                self.url_for(backend.question_views.AnswerList, parent_id=3),
                 {"answer_multiple_choice": 1})
         self.assertEqual(json.loads(resp.data), {
             "question_type": "multiple_choice", "answer_text": None,
@@ -317,12 +325,12 @@ class QuestionTest(harness.TestHarness):
 
         # multiple choice id 1 is linked to question 3, not 4
         resp = self.post_json(
-                "/v1/questions/4/answers/",
+                self.url_for(backend.question_views.AnswerList, parent_id=4),
                 {"answer_multiple_choice": 3})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/questions/4/answers/",
+                self.url_for(backend.question_views.AnswerList, parent_id=4),
                 {"answer_multiple_choice": 1})
         self.assertEqual(resp.status_code, 404)
 
@@ -333,30 +341,36 @@ class QuestionTest(harness.TestHarness):
 
         # non-existant multiple choice id 70
         resp = self.post_json(
-                "/v1/questions/3/answers/",
+                self.url_for(backend.question_views.AnswerList, parent_id=3),
                 {"answer_multiple_choice": 70})
         self.assertEqual(resp.status_code, 404)
 
         # 400 on invalid combinations of question_type and answer fields
         resp = self.post_json(
-                "/v1/questions/1/answers/", {"answer_upload_url": "cats.html"})
+                self.url_for(backend.question_views.AnswerList, parent_id=1),
+                {"answer_upload_url": "cats.html"})
         self.assertEqual(resp.status_code, 400)
         resp = self.post_json(
-                "/v1/questions/1/answers/", {"answer_multiple_choice": "cats"})
-        self.assertEqual(resp.status_code, 400)
-
-        resp = self.post_json(
-                "/v1/questions/2/answers/", {"answer_text": "cats"})
-        self.assertEqual(resp.status_code, 400)
-        resp = self.post_json(
-                "/v1/questions/2/answers/", {"answer_multiple_choice": "cats"})
+                self.url_for(backend.question_views.AnswerList, parent_id=1),
+                {"answer_multiple_choice": "cats"})
         self.assertEqual(resp.status_code, 400)
 
         resp = self.post_json(
-                "/v1/questions/3/answers/", {"answer_text": "cats"})
+                self.url_for(backend.question_views.AnswerList, parent_id=2),
+                {"answer_text": "cats"})
         self.assertEqual(resp.status_code, 400)
         resp = self.post_json(
-                "/v1/questions/3/answers/", {"answer_upload_url": "cats"})
+                self.url_for(backend.question_views.AnswerList, parent_id=2),
+                {"answer_multiple_choice": "cats"})
+        self.assertEqual(resp.status_code, 400)
+
+        resp = self.post_json(
+                self.url_for(backend.question_views.AnswerList, parent_id=3),
+                {"answer_text": "cats"})
+        self.assertEqual(resp.status_code, 400)
+        resp = self.post_json(
+                self.url_for(backend.question_views.AnswerList, parent_id=3),
+                {"answer_upload_url": "cats"})
         self.assertEqual(resp.status_code, 400)
 
         # get them back
@@ -369,7 +383,8 @@ class QuestionTest(harness.TestHarness):
             "creator_id": 1, "creator_url": "/v1/users/1",
             "question_id": 1, "question_url": "/v1/questions/1"})
 
-        resp = self.app.get('/v1/questions/1/answers/')
+        resp = self.app.get(self.url_for(
+            backend.question_views.AnswerList, parent_id=1))
         self.assertEqual(json.loads(resp.data)['answers'], [
             {"answer_text": "cats", "answer_upload_url": None,
                 "creator_id": 1, "creator_url": "/v1/users/1",
@@ -418,7 +433,8 @@ class QuestionTest(harness.TestHarness):
         resp = self.app.delete('/v1/questions/100/answers/1')
         self.assertEqual(resp.status_code, 404)
 
-        resp = self.app.post('/v1/questions/100/answers/')
+        resp = self.app.get(self.url_for(
+            backend.question_views.AnswerList, parent_id=100))
         self.assertEqual(resp.status_code, 404)
 
     @harness.with_sess(user_id=1)

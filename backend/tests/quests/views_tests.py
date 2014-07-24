@@ -24,9 +24,10 @@ class QuestTest(harness.TestHarness):
         harness.create_user(name="rakes")
 
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nip",
                     "inquiry_questions": ['a', 'b']})
+        self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.data), {
             "name": "mouse", "summary": "nip", "inquiry_questions": ["a", "b"],
             "icon_url": None, "video_links": [],
@@ -37,14 +38,14 @@ class QuestTest(harness.TestHarness):
             "creator_id": 1, "creator_url": "/v1/users/1"})
         self.assertEqual(resp.status_code, 200)
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "blouse", "summary": "blip"})
         self.assertEqual(resp.status_code, 200)
 
         # create this one as a different user
         self.update_session(user_id=2)
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "house", "summary": "snip", "icon_url": "blue"})
         self.assertEqual(resp.status_code, 200)
         self.update_session(user_id=1)
@@ -102,7 +103,8 @@ class QuestTest(harness.TestHarness):
             'name': 'mouse'})
 
         # list them
-        resp = self.app.get("/v1/users/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestUserList, user_id=1))
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {'creator_id': 1, 'summary': 'nip', 'icon_url': 'rubber',
                 'creator_url': '/v1/users/1',
@@ -144,38 +146,41 @@ class QuestTest(harness.TestHarness):
         harness.create_user(name='snakes')
 
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "mouse", "summary": "nip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/quests/",
+                self.url_for(backend.quest_views.QuestList),
                 {"name": "blouse", "summary": "blip"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "hat", "description": "snap", "points": 2})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/missions/",
+                self.url_for(backend.mission_views.MissionList),
                 {"name": "cat", "description": "map", "points": 1})
         self.assertEqual(resp.status_code, 200)
 
         # no links yet
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
-        resp = self.app.get("/v1/missions/100/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=100))
         self.assertEqual(resp.status_code, 404)
 
         # create some links
         resp = self.app.put("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
@@ -188,7 +193,8 @@ class QuestTest(harness.TestHarness):
         resp = self.app.put("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
@@ -207,14 +213,16 @@ class QuestTest(harness.TestHarness):
                 'id': 2, 'name': 'blouse'}])
 
         # still nothing linked to this mission
-        resp = self.app.get("/v1/missions/2/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=2))
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
         # check for idempotency
         resp = self.app.put("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertItemsEqual(json.loads(resp.data)['quests'], [
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
@@ -236,7 +244,8 @@ class QuestTest(harness.TestHarness):
         resp = self.app.delete("/v1/missions/1/quests/2")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertEqual(json.loads(resp.data)['quests'], [
             {"summary": "nip", "icon_url": None, "id": 1,
                 "name": "mouse", "url": "/v1/quests/1", 'video_links': [],
@@ -249,7 +258,8 @@ class QuestTest(harness.TestHarness):
         resp = self.app.delete("/v1/missions/1/quests/1")
         self.assertEqual(resp.status_code, 200)
 
-        resp = self.app.get("/v1/missions/1/quests/")
+        resp = self.app.get(self.url_for(
+            backend.quest_views.QuestMissionLinkList, mission_id=1))
         self.assertEqual(json.loads(resp.data)['quests'], [])
 
         # 404 on non-existent resources
@@ -270,11 +280,13 @@ class QuestTest(harness.TestHarness):
         harness.create_user(name="snakes")
 
         resp = self.post_json(
-                "/v1/quests/", {"name": "mouse", "summary": "hat"})
+                self.url_for(backend.quest_views.QuestList),
+                {"name": "mouse", "summary": "hat"})
         self.assertEqual(resp.status_code, 200)
 
         resp = self.post_json(
-                "/v1/quests/", {"name": "cat", "summary": "derby"})
+                self.url_for(backend.quest_views.QuestList),
+                {"name": "cat", "summary": "derby"})
         self.assertEqual(resp.status_code, 200)
 
         # create some resources
