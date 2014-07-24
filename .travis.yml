@@ -31,8 +31,10 @@ script:
 
 env: PYTHONPATH=backend/src:backend/tests DATABASE_URL=postgresql://postgres@localhost/parklabtest SECRET_KEY=snakes DEBUG=1 USER_ENABLE_EMAIL='' S3_BUCKET=bucket AWS_ACCESS_KEY_ID=key AWS_SECRET_ACCESS_KEY=secret
 
+before_deploy: git fetch --unshallow
 deploy:
   provider: heroku
+  strategy: git
   api_key:
     secure: "UW5m0+bhVSKjkefB3mXQPttuU2bIn4f645Ho68cl5e/twZyvH9VsRTkCBEKFO4RCwvnyY60XXw1Gi53Mt9rzuhPDOTD01U+JCIYYdwLFPsNG06G+6ON6ZtMKBp+tDLmgK7ahXWAtEv4zFOSXKTjPpgH10HzFqqW0cvyUJX5AD7s="
   app:
