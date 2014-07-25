@@ -6,6 +6,7 @@ import os
 
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+CLOUDFRONT_URL = os.environ['CLOUDFRONT_URL']
 DEBUG = bool(os.environ.get('DEBUG', False))
 S3_BUCKET = os.environ['S3_BUCKET']
 SECRET_KEY = os.environ['SECRET_KEY']

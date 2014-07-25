@@ -7,7 +7,7 @@ planetApp.factory('S3', [
             uploadData.upload_args.file = file;
             $upload.upload(uploadData.upload_args).then(function(response) {
                 if (response.status === 201) {
-                    uploadUrlPromise.resolve(uploadData.s3_url);
+                    uploadUrlPromise.resolve(uploadData.cdn_url);
                 } else {
                     uploadUrlPromise.reject('upload failed');
                 }

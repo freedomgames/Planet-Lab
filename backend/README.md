@@ -16,7 +16,8 @@ Quick Start for Development
 * pip: https://pypi.python.org/pypi/pip 
 * Foreman: https://github.com/ddollar/foreman
 * PostgreSQL 9.3: http://www.postgresql.org
-* An AWS account and S3 bucket for hosting static content: http://aws.amazon.com
+* An AWS account, S3 bucket and CloudFront distribution for
+hosting static content: http://aws.amazon.com
 
 ###Fulfilling the Requirements on a Mac
 * Install the package manager Homebrew: http://brew.sh
@@ -93,6 +94,16 @@ where 'your-bucket-name' is the bucket you created above
 * Hold onto the access and secret keys for this IAM user --
   you'll need them soon
 
+###Creating your CloudFront Distribution
+* Go to https://console.aws.amazon.com/cloudfront/home
+* Click 'Create Distribution'
+* Click 'Continue'
+* Click the 'Origin Domain Name' input box, a drop-down should appear.
+Select the S3 bucket you just created.
+* The default options are all fine, click 'Create Distribution' at the bottom.
+* Take note of your distribution's domain name, you will need it soon.
+It should be something like r5cqxy3728842.cloudfront.net
+
 ###First Run:
 * pip install virtualenv
 * git clone \<your fork of the repo\>
@@ -102,8 +113,9 @@ where 'your-bucket-name' is the bucket you created above
 * pip install -r backend/requirements.txt
 * pip install -r backend/test-requirements.txt
 * createdb parklab
-* edit the .dev\_env file so that it contains your correct bucket name and
-  credentials in the fields
+* edit the .dev\_env file so that it contains your correct CloudFront domain,
+  bucket name and AWS credentials in the fields
+  CLOUDFRONT\_URL,
   S3\_BUCKET,
   AWS\_ACCESS\_KEY\_ID and
   AWS\_SECRET\_ACCESS\_KEY

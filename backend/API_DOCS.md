@@ -47,7 +47,7 @@ var upload = function(file, resource) {
     uploadData.upload_args.file = file;
     $upload.upload(uploadData.upload_args).then(function(response) {
         if (response.status === 201) {
-            resource.asset_url = uploadData.s3_url;
+            resource.asset_url = uploadData.cdn_url;
         } else {
             alert('upload failed');
         }
@@ -110,6 +110,8 @@ Returns an object in the form:
     "file_name": "avatars/1/science.png",
     // full S3 URL of the file
     "s3_url": "https://freedomgames.s3.amazonaws.com/avatars/1/science.png",
+    // full CDN URL of the file
+    "cdn_url": "http://clouds.cloudfront.net/avatars/1/science.png",
     // arguments to pass to $upload.upload
     "upload_args": {
         "method": "POST",
@@ -403,6 +405,8 @@ Returns an object in the form:
     "file_name": "quests/1/science.png",
     // full S3 URL of the file
     "s3_url": "https://freedomgames.s3.amazonaws.com/quests/1/science.png",
+    // full CDN URL of the file
+    "cdn_url": "http://clouds.cloudfront.net/quests/1/science.png",
     // arguments to pass to $upload.upload
     "upload_args": {
         "method": "POST",
