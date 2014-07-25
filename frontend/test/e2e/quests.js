@@ -31,16 +31,33 @@ describe('Quest CRUD', function() {
         expect(element.all(by.repeater('quest in quests')).count()).toEqual(0);
 
         // save a new quest
+	var textFields = [
+	    ['quest.name', 'snakes'],
+	    ['quest.summary', 'ladders'],
+	    ['quest.pbl_description', 'monads mo problems'],
+	    ['quest.mentor_guide', 'be cool to kids'],
+	    ['quest.hours_required', '4'],
+	    ['quest.minutes_required', '7'],
+	    ['quest.max_grade_level', '6'],
+	    ['quest.min_grade_level', '3']
+	]
         browser.get('/app#/quests/new');
-        element(by.binding('quest.name')).click();
-        element(by.css('input[type="text"]')).sendKeys('snakes');
-        element(by.css('button[type="submit"]')).click();
-
+	for (var i=0; i < textFields.length; i++) {
+            var modelName = textFields[i][0];
+            var text = textFields[i][1];
+            element(by.binding(modelName)).click();
+            element(by.css('.editable-input')).sendKeys(text);
+            element(by.css('button[type="submit"]')).click();
+	}
         element(by.id('save-button')).click();
 
         // make sure our fields are present
         browser.get('/app#/quests/1');
-        expect(element(by.binding('quest.name')).getText()).toEqual('snakes');
+        for (var i=0; i < textFields.length; i++) {
+            var modelName = textFields[i][0];
+            var text = textFields[i][1];
+            expect(element(by.binding(modelName)).getText()).toEqual(text);
+	}
 
         // user's quest page should have the new quest
         browser.get('/app#/user/quests');
