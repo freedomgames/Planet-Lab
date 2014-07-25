@@ -3,11 +3,11 @@
 
 import flask
 import flask_babel
+import flask_login
 import flask_restful
 import flask_sqlalchemy
 import flask_user
 import logging
-import traceback
 
 
 app = flask.Flask(__name__)
@@ -27,6 +27,7 @@ if not app.debug:
 # We have to import these after defining app, api and db as these
 # imports will be looking for those variables.
 import backend.common.auth as auth
+import backend.common.response as response
 import backend.missions.views as mission_views
 import backend.organizations.views as organization_views
 import backend.quests.views as quest_views
@@ -46,6 +47,7 @@ def index():
 
 @app.route('/app')
 @flask_user.login_required
+@response.no_cache
 def app_page():
     """Return the javascript for the app."""
     return app.send_static_file('app.html')
@@ -55,29 +57,12 @@ def user_info():
     """Return basic info about the currently logged-in user."""
     return flask.jsonify({'user_id': flask.session.get('user_id')})
 
-@app.route('/logout')
+@app.route('/logout', methods=('PUT',))
 def logout():
     """Clear the session and return the index page."""
+    flask_login.logout_user()
     flask.session.clear()
-    return app.send_static_file('index.html')
-
-
-def error_handler(error, status_code=500, payload=None, debug=app.debug):
-    """Generic handler to return an exception as a json response."""
-    app.logger.exception(error)
-
-    if debug:
-        response = {'message': error.message,
-                'traceback': traceback.format_exc()}
-    else:
-        response = {'message': 'server error'}
-
-    if payload is not None:
-        response.update(payload)
-
-    response = flask.jsonify(response)
-    response.status_code = status_code
-    return response
+    return flask.make_response()
 
 @app.errorhandler(Exception)
 def other_error(error):
@@ -86,7 +71,7 @@ def other_error(error):
     This must be the last declared errorhandler or else it will
     swallow up other errorhandlers.
     """
-    return error_handler(error, payload={'type': 'general error'})
+    return response.error_handler(error, payload={'type': 'general error'})
 
 
 api.add_resource(user_views.User, '/v1/users/<int:user_id>')

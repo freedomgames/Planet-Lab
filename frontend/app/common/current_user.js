@@ -22,7 +22,10 @@ planetApp.factory('CurrentUser', ['$http', '$q', function($http, $q) {
     };
 
     var logOut = function() {
-        currentUserId = null;
+        $http.put('/logout').then(function() {
+            currentUserId = null;
+            window.location = '/';
+        });
     };
 
     return {getCurrentUserId: getCurrentUserId, logOut: logOut};
