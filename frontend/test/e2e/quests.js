@@ -30,19 +30,19 @@ describe('Quest CRUD', function() {
         browser.get('/app#/user/quests');
         expect(element.all(by.repeater('quest in quests')).count()).toEqual(0);
 
-        // save a new quest
-	var textFields = [
-	    ['quest.name', 'snakes'],
-	    ['quest.summary', 'ladders'],
-	    ['quest.pbl_description', 'monads mo problems'],
-	    ['quest.mentor_guide', 'be cool to kids'],
-	    ['quest.hours_required', '4'],
-	    ['quest.minutes_required', '7'],
-	    ['quest.max_grade_level', '6'],
-	    ['quest.min_grade_level', '3']
-	]
+        // enter text in the text fields
+        var textFields = [
+            ['quest.name', 'snakes'],
+            ['quest.summary', 'ladders'],
+            ['quest.pbl_description', 'monads mo problems'],
+            ['quest.mentor_guide', 'be cool to kids'],
+            ['quest.hours_required', '4'],
+            ['quest.minutes_required', '7'],
+            ['quest.max_grade_level', '6'],
+            ['quest.min_grade_level', '3']
+        ]
         browser.get('/app#/quests/new');
-	for (var i=0; i < textFields.length; i++) {
+        for (var i=0; i < textFields.length; i++) {
             var modelName = textFields[i][0];
             var text = textFields[i][1];
             element(by.binding(modelName)).click();
