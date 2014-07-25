@@ -1,7 +1,7 @@
 planetApp.directive('plEditList', function() {
     return {
         restrict: 'E',
-        scope: {list: '='},
+        scope: {list: '=list', listName: '@list'},
         templateUrl: 'static/common/edit_list_widget.html',
         link: function(scope) {
             if (scope.list === undefined) {
