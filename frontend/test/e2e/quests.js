@@ -48,16 +48,41 @@ describe('Quest CRUD', function() {
             element(by.binding(modelName)).click();
             element(by.css('.editable-input')).sendKeys(text);
             element(by.css('button[type="submit"]')).click();
-	}
+        }
+        // Play with the list editor widget for inquiry questions
+        // and video links, playing with the add and delete buttons
+        element(by.id('quest.inquiry_questions-add-another-btn')).click();
+        element(by.id('quest.inquiry_questions-add-another-btn')).click();
+        element(by.id('quest.inquiry_questions-0-input')).sendKeys('a');
+        element(by.id('quest.inquiry_questions-1-input')).sendKeys('b');
+
+        element(by.id('quest.video_links-add-another-btn')).click();
+        element(by.id('quest.video_links-add-another-btn')).click();
+        element(by.id('quest.video_links-0-input')).sendKeys('v1');
+        element(by.id('quest.video_links-1-input')).sendKeys('v2');
+        element(by.id('quest.video_links-1-delete-btn')).click();
+
         element(by.id('save-button')).click();
 
-        // make sure our fields are present
+        // check out the quest we just saved
         browser.get('/app#/quests/1');
+        // make sure our text fields are present
         for (var i=0; i < textFields.length; i++) {
             var modelName = textFields[i][0];
             var text = textFields[i][1];
             expect(element(by.binding(modelName)).getText()).toEqual(text);
-	}
+        }
+        // make sure the list editor fields are present
+        expect(element(by.id('quest.inquiry_questions-0-input'))
+               .getAttribute('value')).toEqual('a');
+        expect(element(by.id('quest.inquiry_questions-1-input'))
+               .getAttribute('value')).toEqual('b');
+
+        expect(element(by.id('quest.video_links-0-input'))
+               .getAttribute('value')).toEqual('v1');
+        // the one we deleted should be gone
+        expect(element.all(
+            by.id('quest.video_links-1-input')).count()).toEqual(0);
 
         // user's quest page should have the new quest
         browser.get('/app#/user/quests');
