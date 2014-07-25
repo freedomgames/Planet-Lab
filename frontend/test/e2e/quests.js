@@ -41,13 +41,19 @@ describe('Quest CRUD', function() {
             ['quest.max_grade_level', '6'],
             ['quest.min_grade_level', '3']
         ]
+        var editText = function(modelName, text) {
+            element(by.binding(modelName)).click();
+            var input = element(by.css('.editable-input'));
+            input.clear();
+            input.sendKeys(text);
+            element(by.css('button[type="submit"]')).click();
+        };
+
         browser.get('/app#/quests/new');
         for (var i=0; i < textFields.length; i++) {
             var modelName = textFields[i][0];
             var text = textFields[i][1];
-            element(by.binding(modelName)).click();
-            element(by.css('.editable-input')).sendKeys(text);
-            element(by.css('button[type="submit"]')).click();
+            editText(modelName, text);
         }
         // Play with the list editor widget for inquiry questions
         // and video links, playing with the add and delete buttons
@@ -84,8 +90,20 @@ describe('Quest CRUD', function() {
         expect(element.all(
             by.id('quest.video_links-1-input')).count()).toEqual(0);
 
-        // user's quest page should have the new quest
+        // user's quest page should have a link to the new quest
         browser.get('/app#/user/quests');
         expect(element.all(by.repeater('quest in quests')).count()).toEqual(1);
+
+        // let's click on it and do some editing
+        element.all(by.repeater('quest in quests')).then(function(quests) {
+            expect(quests[0].getText()).toEqual('snakes');
+            quests[0].element(by.tagName('a')).click();
+        })
+        expect(element(by.binding('quest.summary')).getText()).toEqual('ladders');
+        editText('quest.summary', 'magic');
+        element(by.id('save-button')).click()
+        // make sure our edit stuck
+        browser.get('/app#/quests/1');
+        expect(element(by.binding('quest.summary')).getText()).toEqual('magic');
     });
 });
