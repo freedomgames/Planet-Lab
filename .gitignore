@@ -27,3 +27,4 @@ node_modules
 # editor files
 *.swp
 .idea/
+\#*#
