@@ -28,3 +28,7 @@ node_modules
 *.swp
 .idea/
 \#*#
+
+# db schema images
+/schema.dot
+/schema.png

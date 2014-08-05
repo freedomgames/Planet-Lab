@@ -18,6 +18,7 @@ Quick Start for Development
 * PostgreSQL 9.3: http://www.postgresql.org
 * An AWS account, S3 bucket and CloudFront distribution for
 hosting static content: http://aws.amazon.com
+* (optional) graphviz for generating database schema diagrams
 
 ###Fulfilling the Requirements on a Mac
 * Install the package manager Homebrew: http://brew.sh
@@ -30,6 +31,7 @@ hosting static content: http://aws.amazon.com
   ~/Library/LaunchAgents/
 * Start PostgreSQL now:
   launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+* (optional) Install graphviz: brew install graphviz
 
 ###Fulfilling the Requirements on Ubuntu
 * Install Python: sudo apt-get install python
@@ -47,6 +49,7 @@ http://www.postgresql.org/download/linux/ubuntu/
 where 'your username' is your linux username (whatever pops out from a whoami)
 * Install PostgreSQL and Python dev headers:
   sudo apt-get install libpq-dev postgresql-server-dev-9.3 python-dev
+* (optional) Install graphviz: sudo apt-get install graphviz
 
 ###Creating your S3 Bucket
 Please read https://devcenter.heroku.com/articles/s3 for an overview of
@@ -145,3 +148,6 @@ The REST service is now available at [http://localhost:5000](http://localhost:50
 * "foreman run bash -e .dev\_env"
   gives you a shell session with your environment set up to run the REST service
 * "foreman run flush\_db -e .dev\_env" drops and recreates the db schema
+* "bin/db\_diagram" generates database schema diagrams in PNG and
+  graphviz's .dot formats in the current directory named
+  'schema.png' and 'schema.dot' respectively

@@ -1,0 +1,15 @@
+#! /usr/bin/env python
+
+import backend
+import sadisplay
+import subprocess
+
+
+def main():
+    desc = sadisplay.describe(backend.db.metadata.tables.values())
+    open('schema.dot', 'w').write(sadisplay.dot(desc))
+    subprocess.call('dot -Tpng schema.dot > schema.png', shell=True)
+
+
+if __name__ == '__main__':
+    main()
