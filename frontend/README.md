@@ -64,14 +64,6 @@ assets with src links during development and in production.
 ## Important Notes
 
 Be sure to pull from the upstream repo frequently.
-You want to add the upstream repo as a remote:
-```
-git remote add upstream git@github.com:freedomgames/Planet-Lab.git
-```
-and frequently pull from upstream to work with the latest code:
-```
-git pull upstream master
-```
 
 New backend development may necessitate updating your database schema.
 The simplest way to apply the new schema is to run:
