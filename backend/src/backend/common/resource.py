@@ -94,7 +94,7 @@ class SimpleResource(flask_restful.Resource):
             return self.as_dict(resource)
 
     def delete(self, *args, **kwargs):
-        """Delete a quest."""
+        """Delete a resource."""
         rows_deleted = self.query(*args, **kwargs).delete(
                 synchronize_session=False)
         backend.db.session.commit()
