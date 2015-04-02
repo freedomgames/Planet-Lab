@@ -1,0 +1,69 @@
+<html >
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Hello">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="shortcut icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
+        <link rel="icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
+        <title>PlanetLAB> Quest Builder</title>
+        <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" type="type/css">
+        </head>
+
+<img  src="https://s3-us-west-2.amazonaws.com/itreeware/PL--Header.png" alt="PlanetLAB |Freedom Games"   >
+        <ol class="controlNav"   >
+            <li class="questControlNav"  >
+                <a  href="Quest_Basic.html"
+                   >Basic Info</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="./Quest_Activity.html">Activity Details</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="./Quest_for_teachers.html">For Teachers</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="./Quest_Review.html">Review</a>
+            </li>
+        </ol>
+        <h1>Quest Builder Form </h1>
+        <div style="padding=5%;">
+
+<p>Name:
+<a href="#" editable-text="quest.name">{{ quest.name || "empty" }}</a>
+</p>
+<p>Summary:
+<a href="#" editable-textarea="quest.summary">{{ quest.summary || "empty" }}</a>
+</p>
+<p>Icon:
+<img ng-src="{{ quest.icon_url }}">
+<br/>
+<input type="file" ng-file-select="onFileSelect($files)">
+</p>
+<p>Problem Based Learning Description:
+<a href="#" editable-textarea="quest.pbl_description">{{ quest.pbl_description || "empty" }}</a>
+</p>
+<p>Mentor Guide:
+<a href="#" editable-textarea="quest.mentor_guide">{{ quest.mentor_guide || "empty" }}</a>
+</p>
+
+<p>Inquiry Questions:
+<pl-edit-list list="quest.inquiry_questions"></pl-edit-list>
+</p>
+
+<p>Video Links:
+<pl-edit-list list="quest.video_links"></pl-edit-list>
+</p>
+
+<p>Time Required:
+<a href="#" editable-text="quest.hours_required">{{ quest.hours_required || "empty" }}</a> Hours(s) and
+<a href="#" editable-text="quest.minutes_required">{{ quest.minutes_required || "empty" }}</a> Minutes
+</p>
+<p>Max Grade Level:
+<a href="#" editable-text="quest.max_grade_level">{{ quest.max_grade_level || "empty" }}</a>
+</p>
+<p>Min Grade Level:
+<a href="#" editable-text="quest.min_grade_level">{{ quest.min_grade_level || "empty" }}</a>
+</p>
+
+<br/><br/>
+<button id="save-button" ng-click="save()">Save</button>

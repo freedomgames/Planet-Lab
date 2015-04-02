@@ -38,7 +38,7 @@ planetApp.config([
     $stateProvider
         .state('newQuest', {
             url: '/quests/new',
-            templateUrl: 'static/quest/view.html',
+            templateUrl: 'static/quest/view3.html',
             controller: 'NewQuestCtrl'
         })
         .state('quest', {

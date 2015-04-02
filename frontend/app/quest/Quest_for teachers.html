@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+    <!-- to do:  update central stylesheet to this style sheet code.-->
+    
+<html ng-app="quest_builder">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Hello">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="shortcut icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
+        <link rel="icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
+        <title>PlanetLAB> Quest Builder</title>
+        <link rel="stylesheet" href="css/style.css" type="type/css" />
+        </head>
+
+    <body>
+    <div ng-view></div>
+        <img src="https://s3-us-west-2.amazonaws.com/itreeware/PL--Header.png" alt="PlanetLAB |Freedom Games">
+        <ol class="controlNav" >
+            <li class="questControlNav"> 
+                <a  href="Quest_Basic.html">Basic Info</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="Quest_Activity.html">Activity Details</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="Quest_for teachers.html">For Teachers</a>
+            </li>
+            <li class="questControlNav"> 
+                <a  href="Quest_Review.html">Review</a>
+            </li>
+        </ol>
+  <h1>Quest: For Teachers</h1>         
+<form>
+<fieldset>
+Facilitation TIPS<br><br>
+
+<pre>Intro</pre><br>
+
+<input type="text" intro="intro" > <!-- big para/ add more *-->
+<pre>Tip #1</pre><br>
+<input type="text" tip1="tip1" ><br>
+<pre>Tip #2</pre><br>
+<input type="text" tip2="tip2" ><br><br>
+
+
+Curriculum Standards   <!-- right side of page?-->
+
+<pre>Common Core State Standards (CCSS)</pre><br>
+<select>
+  <option CCSS="1">1</option>
+  </select>
+
+<pre>Next Gen Science Standards (NGSS)</pre><br>
+
+<select>
+   <option NGSS="1"> 1 standard </option>
+  </select>
+
+<section>
+<br>Assesment Rubrics <br>
+Weight<br> <!-- right align-->
+<input type="text" Rubric="rubric1" >  <input type="text" Rubric.wt ="rubric1.wt" > % <br>
+</section>
+
+</fieldset>
+</form>
+
+    <nav>
+
+      <ul>
+          <button class="navbtn" id="btn1">Back</a></button>
+          <button class="navbtn" id="btn2">Save/Exit</a></button>
+          <button class="navbtn" id="btn3">Next</a></button>
+      </ul>
+    </nav>
+
+    <h3 id="ars" > Confirm Action </h3>
+ 
+    
+    <script type="text/javascript" src="jquery.js"></script>
+<script>
+
+  $(function () {
+
+
+  $('.navbtn').on('mouseover', function(){
+    $('#ars').fadeToggle(200);
+  })
+
+$('#btn1').on('click', function(){
+    window.location = "Quest_Activity.html";
+  })
+   $('#btn2').on('click', function(){
+    window.location = "index.html";
+  
+  })
+$('#btn3').on('click', function(){
+    window.location = "Quest_Review.html";
+  
+  })
+});
+
+</script>
+</body>
+</html>
