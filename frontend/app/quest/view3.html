@@ -1,32 +1,41 @@
-<html >
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="Hello">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="shortcut icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
-        <link rel="icon" href="https://s3-us-west-2.amazonaws.com/itreeware/PL_Favicon.png" type="image/x-icon">
-        <title>PlanetLAB> Quest Builder</title>
-        <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" type="type/css">
-        </head>
+<h1> Create a New Quest </h1>
+<p> please fill out the requested information to author a new quest </p>
 
-<img  src="https://s3-us-west-2.amazonaws.com/itreeware/PL--Header.png" alt="PlanetLAB |Freedom Games"   >
-        <ol class="controlNav"   >
-            <li class="questControlNav"  >
-                <a  href="Quest_Basic.html"
-                   >Basic Info</a>
-            </li>
-            <li class="questControlNav"> 
-                <a  href="./Quest_Activity.html">Activity Details</a>
-            </li>
-            <li class="questControlNav"> 
-                <a  href="./Quest_for_teachers.html">For Teachers</a>
-            </li>
-            <li class="questControlNav"> 
-                <a  href="./Quest_Review.html">Review</a>
-            </li>
-        </ol>
-        <h1>Quest Builder Form </h1>
-        <div style="padding=5%;">
+ <!-- <form editable-form name="questEditableForm" onaftersave="save()">
+    <div>
+      <span class="title">Quest Name: </span>
+      <span editable-text="quest.name" e-name="name" onbeforesave="checkName($data)" e-required>{{ quest.name || 'empty' }}</span>
+    </div> 
+
+    <div>
+      <span class="title">Quest Summary: </span>
+      <span editable-textarea="quest.summary" e-name="summary" onbeforesave="checkName($data)" e-required>{{ (quest.summary || 'empty' }}
+      </span>
+    </div>  
+
+    <div>
+
+      <span class="title">Group: </span>
+      <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+        {{ showGroup() }}
+      </span>
+    </div>
+
+    <div>
+      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+        Edit
+      </button>
+      <span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>   --> 
+
 
 <p>Name:
 <a href="#" editable-text="quest.name">{{ quest.name || "empty" }}</a>

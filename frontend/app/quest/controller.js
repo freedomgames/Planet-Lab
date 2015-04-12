@@ -8,8 +8,8 @@ var questCtrlUtil = {
 };
 
 planetApp.controller('QuestCtrl', [
-    '$scope', '$stateParams', 'ResourceFactory', 'S3',
-    function($scope, $stateParams, ResourceFactory, S3) {
+    '$scope', '$stateParams', 'ResourceFactory', 'S3', 
+    function($scope, $stateParams, ResourceFactory, S3 ) {
         $scope.quest = ResourceFactory('quests').get({id: $stateParams.id})
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put

@@ -10,16 +10,14 @@
     <title>PlanetLab</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> 
     <link href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" rel="stylesheet"> 
-
-
   </head>
   <body class="planetlab-color">  
 
     
     {% block body %}
+        <img  style="margin-left:10%" src="https://s3-us-west-2.amazonaws.com/itreeware/PL--Header.png" alt="PlanetLAB |Freedom Games"   >
     <div class="container">
         <div class="row">
-    
                  <div class="col-sm-8 col-md-7 col-lg-6 col-centered ">
                 {% block flash_messages %}
                     {%- with messages = get_flashed_messages(with_categories=true) -%}
@@ -36,6 +34,7 @@
 
                 {% block content %}
                 {% endblock %}
+                <br>
                 <div style="height:40px; "> FreedomGames.org. All Rights Reserved. (c) 2013 </div>
                 </div>
                

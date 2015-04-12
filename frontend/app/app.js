@@ -51,4 +51,7 @@ planetApp.config([
             templateUrl: 'static/quest/list_view.html',
             controller: 'UsersQuestsCtrl'
         });
+       
 }]);
+
+
