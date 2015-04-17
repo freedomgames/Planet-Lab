@@ -1,0 +1,258 @@
+<div class="wizard">
+    <a><span class="badge" ng->1</span> Basic Info</a>
+    <a><span class="badge">2</span> Activity Details</a>
+    <a class="current"><span class="badge badge-inverse">3</span> For Teachers</a>
+    <a><span class="badge">4</span> Review</a> 
+</div>
+
+<h1> Create a New User </h1>
+<p> Please fill out the requested information to register as an author for PlanetLAB! </p>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <h2>Invest in the Future!</h2>
+      <h5>Tell us more about yourself.
+      <form class="form-horizontal" role="form">
+      <table cellspacing="1" cellpadding="5"  style="text-align:left;   padding-top:2%; -webkit-box-shadow:inset;" width="90%" >        
+          <tr>   <!--row1 -->
+          <th 
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">First Name</label>
+          <div class="col-sm-10">
+            <input type="text"  id="email" placeholder="Enter Name">
+          </div> 
+          </th>
+        <th>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="pwd">Organization</label>
+          <div class="col-sm-10">          
+            <input type="text"  id="pwd" placeholder="Enter Organization">
+          </div>
+        </div>
+        </th>
+      </tr> 
+      <tr>  <!-- row2 -->
+        <th>
+          <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Quest Title</label>
+          <div class="col-sm-10">
+            <input ng-model="quest.name"  type="text"  id="email" placeholder="Enter Title">
+          </div>
+        </div>
+      </th>
+      <th>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="pwd">Quest Summary</label>
+          <div class="col-sm-10">          
+            <input type="text"  id="pwd" placeholder="Enter Summary">
+          </div>
+        </div>
+      </th>
+    </tr>
+  </table>
+
+                <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Keywords (used for searching)</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" placeholder="Enter Keywords">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="pwd">Quest Identifiers</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="pwd" placeholder="this is radio button field with images">
+          </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox"> Remember me</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+
+</html>
+
+
+
+  <form>
+<div class="container" >
+      <h2>Your Quest: </h2>
+      <form role="form">
+  <div class="form-group">
+    <h4>Author's Name: {{users.username}}</h4>
+            <table cellspacing="2" cellpadding="10" border="0" style="text-align:center; vertical-align:middle; font-size:large; padding-top:2%; -webkit-box-shadow:inset; "
+                   width="70%" align="center">
+            
+                <tr>   <!--row1 -->
+                <th <h3>Author's Name: {{user.username}}</th> <!--r1, col1 -->
+                <th style=" font-size:large;">Organization<input type="text" org= "org"></th> <!--r1, col2 -->
+              </tr>  
+              <tr>   <!--row2 -->
+                <th style="font-size:large; color:#85AEDF; ">Author<input type="text" author="author" ></th> <!--r1, col1 -->
+                <th style=" font-size:large;">Organization<input type="text" org= "org"></th> <!--r1, col2 -->
+              </tr>
+             
+  
+    </table>
+         </form>     
+            
+
+<section class="row">
+<pre>Quest title:               Quest Summary: </pre>
+<input type="text" Q.title="Q.titl" >
+<input type="text" Q.summar="Q.summar" >    <!--word count-->
+<br><br>
+Quest cover image:<input type="img" Q.title="Q.title" >    <!--image upload button*-->
+
+
+
+<!-- show simulataneously add/check image upload *-->
+</section>
+<section class="row" > Keywords <input type="text" Q.key="Q.key" > 
+</section> <br><br>
+<section class="row" >
+Quest Identifiers<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="3"  >
+      <img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/chemistry.png"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="11" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/team.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="4"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/faces.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="1"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/book.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="9"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/play.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="2"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/builder.png" ></div>
+  </div>  <div class="row">
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="5"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/hand.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="6"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/home.png" ></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="7"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/man.png"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="8"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/math.png"></div>
+    <div class="col-sm-2" >
+    <input type="radio" QI="QI" value="10" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/question.png" ></div>
+    <div class="col-sm-2" >
+    <input type="radio" QI="QI" value="12" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/trees.png"></div>
+  </div>
+</div>
+
+
+</section>
+
+Other Attributes <br>
+
+<pre>Grade level: Sphere of Science: Season: Reqion: </pre>
+<select>
+  <option grade="1">Choose</option>
+  
+  <option grade="1">1</option>
+  <option grade="2">2</option>
+  <option grade="3">3</option>
+  <option grade="4">4</option>
+  <option grade="5">5</option>
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select>
+  <option sphere="physics">Choose</option>
+  
+  <option sphere="physics">physics</option>
+  <option sphere="chemistry">chemistry</option>
+  <option sphere="biology">biology</option>
+  <option sphere="other">Other</option>
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<select>
+  <option seasons="fall">Choose</option>
+  <option seasons="fall">Fall</option>
+  <option seasons="summer">summer</option>
+  <option seasons="spring">spring</option>
+  <option seasons="winter">winter</option>
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="text" Region="region" > <!--ENTER ZIPCODE-->
+
+</form>
+
+    
+    </section>
+
+     <!-- Call the Angular pieces -->
+        <script src="public/js/lib/angular/1.0.3/angular.js"></script>
+        <script src="public/js/lib/angular/1.0.3/angular-resource.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.js"></script>
+        <script src="//'test/lib/angular/angular-mocks.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+        <!-- Call the app.js file -- our Angular code -->
+        <script src="app.js"></script>
+        <br>      
+    </body>
+</html>
+
+<p>Name:
+<a href="#" editable-text="quest.name">{{ quest.name || "empty" }}</a>
+</p>
+<p>Summary:
+<a href="#" editable-textarea="quest.summary">{{ quest.summary || "empty" }}</a>
+</p>
+<p>Icon:
+<img ng-src="{{ quest.icon_url }}">
+<br/>
+<input type="file" ng-file-select="onFileSelect($files)">
+</p>
+<p>Problem Based Learning Description:
+<a href="#" editable-textarea="quest.pbl_description">{{ quest.pbl_description || "empty" }}</a>
+</p>
+<p>Mentor Guide:
+<a href="#" editable-textarea="quest.mentor_guide">{{ quest.mentor_guide || "empty" }}</a>
+</p>
+
+<p>Inquiry Questions:
+<pl-edit-list list="quest.inquiry_questions"></pl-edit-list>
+</p>
+
+<p>Video Links:
+<pl-edit-list list="quest.video_links"></pl-edit-list>
+</p>
+
+<p>Time Required:
+<a href="#" editable-text="quest.hours_required">{{ quest.hours_required || "empty" }}</a> Hours(s) and
+<a href="#" editable-text="quest.minutes_required">{{ quest.minutes_required || "empty" }}</a> Minutes
+</p>
+<p>Max Grade Level:
+<a href="#" editable-text="quest.max_grade_level">{{ quest.max_grade_level || "empty" }}</a>
+</p>
+<p>Min Grade Level:
+<a href="#" editable-text="quest.min_grade_level">{{ quest.min_grade_level || "empty" }}</a>
+</p>
+
+<br/><br/>
+<button id="save-button" ng-click="save()">Save</button>
