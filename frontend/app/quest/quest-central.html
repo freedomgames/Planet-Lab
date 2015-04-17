@@ -1,25 +1,32 @@
 
-<a style="margin:2%" href="/app#/quests/new" class="btn btn-default"  role="button" > <h3>Create New Quest</h3></a> </p>
+<div class="container" >
+  <a style="margin:2%" href="/app#/quests/new" class="btn btn-default"  role="button" >
+ <h3>Create New Quest</h3></a> 
+ <a style="margin:2%" href="/app#/quests/new" class="btn btn-default"  role="button" >
+ <h3>Create New Mission</h3></a>
 
 <h5 style="color:gray" >Quest Authorship:</h5>  <h3>You've authored {{ quests.length }} quests!</h3>
-
-<div  ng-repeat="quest in quests">
-  <div class="container">
-  <div class="row">
-  <div class="col-lg-3 col-md-4">
-    <div class="thumbnail" style="float:left;">
-      <a ui-sref="quest({id: {{quest.id}}})">
-      <img class="thumb-img" src="{{quest.icon_url}}"  alt="...">
-      <div class="caption">
-        <h3>Quest #{{quest.id}} </h3>
-        <a ui-sref="quest({id: {{quest.id}}})">{{ quest.name }}</a>
-        <p>This includes the summary detail for the quest. + {{quest.summary}}</p>
-        <p><a href="#" class="btn btn-primary" role="button">Link to Mission</a> <a href="#" class="btn btn-default" role="button">Edit</a></p>
-      </div> </a>
+<ul>
+<li  class="thumbnails" ng-repeat="quest in quests">
+ <div class="thumbnail" style="width:20%; background-color:#cce0f3;">
+    <a ui-sref="quest({id: {{quest.id}}})">
+        <img class="img-rounded" src="{{quest.icon_url}}"  alt="...">
+    <div class="caption">
+      <p style="float:right;">Quest #{{quest.id}} </p>
+     <h5> <a ui-sref="quest({id: {{quest.id}}})">{{ quest.name }}</a> </h5>
+        <p style="font-size:.8em">{{quest.summary}}</p>
+        <p><a href="#" class="btn btn-primary" role="button">Link to Mission</a> 
+          <a ui-sref="quest({id: {{quest.id}}})" class="btn btn-default" role="button">Edit</a>
+        </p>
+      </div> 
     </div>
-  </div>
-</div> 
+</li>
+  </ul>
+
+</div>
 </div>
 
 <h3 ng-show="!quests.length">No Quests!</h3>
+
+
 

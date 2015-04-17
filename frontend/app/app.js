@@ -57,7 +57,7 @@ planetApp.config([
        .state('questReview', {
             url: '/newQuest/review',
             templateUrl: 'static/quest/review-quest.html',
-            controller: 'NewQuestCtrl'
+            controller: 'QuestCtrl'
         })
 
 
@@ -75,7 +75,7 @@ planetApp.config([
 
         .state('userProfile', {
             url: '/user/profile',
-            templateUrl: 'static/user/user-profile.html', 
+            templateUrl: 'static/user/user-profile.html' 
            
         })
         .state('newMission', {
