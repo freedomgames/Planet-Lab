@@ -9,10 +9,12 @@
     </div>
     <br>
 
+
   <div class="row">
+    <h4> More about You </h4>
     <div class="col-sm-5" >
             <label>First Name</label>
-            <input class="form-control " type="text"  ng-model="users.name" placeholder="Enter Nickname"></div>
+            <input class="form-control " type="text"  ng-model="users.name" placeholder="Enter First Name"></div>
 
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
@@ -30,7 +32,17 @@
           <span align="right"> {{300-(users.description).length}} left </span>
         </div> 
   </div>
+  <br/><br/>
+ <div class="row">
+        <div class="col-sm-6" >       
+          <p>Change Your Avatar:
+            <img class="quarter-img" ng-src="{{ mission.avatar_url }}">
+            <br/>
+            <input type="file" ng-file-select="onFileSelect($files)">
+            </p>
 
+        </div> 
+  </div>
   <br>
    <br/><br/>
 <button id="save-button" ng-click="save()">Save</button>
