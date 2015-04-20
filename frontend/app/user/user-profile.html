@@ -1,0 +1,37 @@
+
+    <div class="container">
+      <h1> Invest in the Future! </h1>
+        <h5> Please fill out the requested information to personalize your authorship experience on PlanetLAB. </h5>
+       <div  style="background-color:#cce0f3; padding-left:10px; margin-right:40px;"> 
+      <h3>User Name: {{users.username}}</h3>
+      <h3>User ID: {{users.id}}</h3>
+      <img style="float:right" class="img-circle" ng-src="{{users.avatar_url}}"> 
+    </div>
+    <br>
+
+  <div class="row">
+    <div class="col-sm-5" >
+            <label>First Name</label>
+            <input class="form-control " type="text"  ng-model="users.name" placeholder="Enter Nickname"></div>
+
+        <div class="col-sm-1" ></div>
+    <div class="col-sm-5" >       
+            <label>Email</label>
+           <input type="email" class="form-control" ng-model="users.email" placeholder="Enter Email" 
+           > 
+        </div>
+      </div>
+  <br>
+  <br>
+  <div class="row">
+        <div class="col-sm-12" >       
+          <label> What is your vision for PlanetLAB?</label> <br>
+          <textarea class="form-control" id="plTextArea" ng-model="users.description" ng-trim="false" maxlength="300" placeholder="Inspire Us @  PlanetLAB" rows="5"></textarea>
+          <span align="right"> {{300-(users.description).length}} left </span>
+        </div> 
+  </div>
+
+  <br>
+   <br/><br/>
+<button id="save-button" ng-click="save()">Save</button>
+</div>

@@ -1,5 +1,5 @@
 var planetApp = angular.module('planetApp', [
-        'ui.router', 'ngResource', 'xeditable', 'angularFileUpload']);
+        'ui.router', 'ngResource', 'angularFileUpload']);
 
 planetApp.config([
     '$controllerProvider', '$provide', '$compileProvider', '$stateProvider',
@@ -38,17 +38,60 @@ planetApp.config([
     $stateProvider
         .state('newQuest', {
             url: '/quests/new',
-            templateUrl: 'static/quest/view.html',
+            templateUrl: 'static/quest/new-quest.html',
             controller: 'NewQuestCtrl'
         })
-        .state('quest', {
+
+       .state('questActivity', {
+            url: '/newQuest/activity',
+            templateUrl: 'static/quest/activity-details.html', 
+            controller: 'NewQuestCtrl'
+        })
+
+       .state('questTeachers', {
+            url: '/newQuest/teacher',
+            templateUrl: 'static/quest/for-teachers.html',
+            controller: 'NewQuestCtrl'
+        })
+
+       .state('questReview', {
+            url: '/newQuest/review',
+            templateUrl: 'static/quest/review-quest.html',
+            controller: 'QuestCtrl'
+        })
+
+
+       .state('quest', {
             url: '/quests/:id',
             templateUrl: 'static/quest/view.html',
             controller: 'QuestCtrl'
-        })
+        }) 
+
         .state('userQuests', {
             url: '/user/quests',
-            templateUrl: 'static/quest/list_view.html',
+            templateUrl: 'static/quest/quest-central.html',
             controller: 'UsersQuestsCtrl'
-        });
+        })
+
+        .state('userProfile', {
+            url: '/user/profile',
+            templateUrl: 'static/user/user-profile.html' 
+           
+        })
+        .state('newMission', {
+            url: '/missions/new',
+            template:'new Mission'
+            /* templateUrl: 'static/mission/new_mission.html',
+            controller: 'NewMissionCtrl' */
+        })
+
+ 
+
+        .state('testPlEditList', {
+            url: '/test',
+            templateUrl: 'static/common/edit_list_widget.html',
+            controller: 'QuestCtrl' 
+        }); 
 }]);
+
+

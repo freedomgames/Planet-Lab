@@ -1,6 +1,0 @@
-<h1>Your Quests:</h1>
-<a href="/app#/quests/new"><h3>Create New Quest</h3></a>
-<ul ng-repeat="quest in quests">
-  <li><a ui-sref="quest({id: {{quest.id}}})">{{ quest.name }}</a></li>
-</ul>
-<h3 ng-show="!quests.length">No Quests!</h3>

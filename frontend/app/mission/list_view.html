@@ -1,0 +1,25 @@
+
+<a style="margin:2%" href="/app#/quests/new" class="btn btn-default"  role="button" > <h3>Create New Quest</h3></a> </p>
+
+<h5 style="color:gray" >Quest Authorship:</h5>  <h3>You've authored {{ quests.length }} quests!</h3>
+
+<div  ng-repeat="quest in quests">
+  <div class="container">
+  <div class="row">
+  <div class="col-lg-3 col-md-4">
+    <div class="thumbnail">
+      <a ui-sref="quest({id: {{quest.id}}})">
+      <img class="tinyImg" src="{{quest.icon_url}}"  alt="...">
+      <div class="caption">
+        <h3>Quest #{{quest.id}} </h3>
+        <a ui-sref="quest({id: {{quest.id}}})">{{ quest.name }}</a>
+        <p>This includes the summary detail for the quest. + {{quest.summary}}</p>
+        <p><a href="#" class="btn btn-primary" role="button">Link to Mission</a> <a href="#" class="btn btn-default" role="button">Edit</a></p>
+      </div> </a>
+    </div>
+  </div>
+</div> 
+</div>
+
+<h3 ng-show="!quests.length">No Quests!</h3>
+
