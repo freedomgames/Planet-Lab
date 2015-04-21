@@ -57,7 +57,7 @@ planetApp.config([
        .state('questReview', {
             url: '/newQuest/review',
             templateUrl: 'static/quest/review-quest.html',
-            controller: 'QuestCtrl'
+            controller: 'NewQuestCtrl'
         })
 
 
@@ -73,24 +73,23 @@ planetApp.config([
             controller: 'UsersQuestsCtrl'
         })
 
+        .state('userMissions', {
+            url: '/user/missions',
+            templateUrl: 'static/mission/mission-central.html'
+            /* controller:'  ' */
+            
+        })
+
         .state('userProfile', {
             url: '/user/profile',
-            templateUrl: 'static/user/user-profile.html' 
+            templateUrl: 'static/user/user-profile.html'
            
         })
         .state('newMission', {
             url: '/missions/new',
-            template:'new Mission'
-            /* templateUrl: 'static/mission/new_mission.html',
-            controller: 'NewMissionCtrl' */
-        })
+            templateUrl: 'static/mission/new-mission.html',
+           controller: 'NewMissionCtrl'
 
- 
-
-        .state('testPlEditList', {
-            url: '/test',
-            templateUrl: 'static/common/edit_list_widget.html',
-            controller: 'QuestCtrl' 
         }); 
 }]);
 

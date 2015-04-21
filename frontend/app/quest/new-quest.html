@@ -19,7 +19,7 @@
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
             <label>Organization Name</label>
-            <input class="form-control " type="text"  ng-model="organization.name" placeholder="Enter Organization"></div>
+            <input class="form-control " type="text"  ng-model="quests.organization" placeholder="Enter Organization"></div>
 
   </div>
   <br>
@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-sm-5" >
             <label> Quest Title</label>
-            <input class="form-control" type="text" ng-model="quest.name" placeholder="Enter Quest Title">
+            <input class="form-control" type="text" ng-model="quests.name" placeholder="Enter Quest Title">
     </div>
         <div class="col-sm-1" ></div>
 
@@ -174,11 +174,11 @@
 </div>
 
 
-
-
-
 <br/><br/>
-<button id="save-button" ng-click="save()">Save</button>
+<button ng-click="save()">Save</button> 
+
+<a ui-sref="questActivity" class="btn btn-default" role="button">Continue to Next Step</a>
+
 </div>
 
 

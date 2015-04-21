@@ -1,13 +1,15 @@
+
+<p>Icon:
+<img class="quarter-img" ng-src="{{ quest.icon_url }}">
+<br/>
+<input type="file" ng-file-select="onFileSelect($files)">
+</p>
+<br>
 <p>Name:
 <a href="#" editable-text="quest.name">{{ quest.name || "empty" }}</a>
 </p>
 <p>Summary:
 <a href="#" editable-textarea="quest.summary">{{ quest.summary || "empty" }}</a>
-</p>
-<p>Icon:
-<img ng-src="{{ quest.icon_url }}">
-<br/>
-<input type="file" ng-file-select="onFileSelect($files)">
 </p>
 <p>Problem Based Learning Description:
 <a href="#" editable-textarea="quest.pbl_description">{{ quest.pbl_description || "empty" }}</a>

@@ -1,43 +1,40 @@
-var questCtrlUtil = {
-    upload: function($files, quest, S3) {
-        S3.upload($files[0], 'quests', quest.id, 'uploads').then(
-            function(iconUrl) {
-                quest.icon_url = iconUrl;
-        });
+var missionCtrlUtil = {
+    upload: function($files, mission, S3) {
+        S3.upload($files[0], 'missions', mission.id, 'uploads');
     }
 };
 
-planetApp.controller('QuestCtrl', [
+planetApp.controller('MissionCtrl', [
     '$scope', '$stateParams', 'ResourceFactory', 'S3', 
     function($scope, $stateParams, ResourceFactory, S3 ) {
-        $scope.quest = ResourceFactory('quests').get({id: $stateParams.id})
+        $scope.mission = ResourceFactory('missions').get({id: $stateParams.id})
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put
-        $scope.save = function() {$scope.quest.$put()};
+        $scope.save = function() {$scope.mission.$put()};
         $scope.onFileSelect = function($files) {
-            questCtrlUtil.upload($files, $scope.quest, S3);
+            questCtrlUtil.upload($files, $scope.mission, S3);
         };
 }]);
 
-planetApp.controller('NewQuestCtrl', [
+planetApp.controller('NewMissionCtrl', [
     '$scope', 'ResourceFactory', 'S3',
     function($scope, ResourceFactory, S3) {
-        $scope.quest = new (ResourceFactory('quests'));
+        $scope.missions = new (ResourceFactory('missions'));
         $scope.save = function() {
-            if ($scope.quest.id) {
-                $scope.quest.$put();
+            if ($scope.missions.id) {
+                $scope.missions.$put();
             } else {
-                $scope.quest.$save();
+                $scope.missions.$save();
             }
         };
         $scope.onFileSelect = function($files) {
-            if (! $scope.quest.id) {
+            if (! $scope.missions.id) {
                 // We need an id to upload quest assets to S3
-                $scope.quest.$save().then(function() {
-                    questCtrlUtil.upload($files, $scope.quest, S3);
+                $scope.missions.$save().then(function() {
+                    missionCtrlUtil.upload($files, $scope.missions, S3);
                 });
             } else {
-                questCtrlUtil.upload($files, $scope.quest, S3);
+                missionCtrlUtil.upload($files, $scope.missions, S3);
             }
         };
 }]);
@@ -46,7 +43,7 @@ planetApp.controller('UsersQuestsCtrl', [
     '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory',
     function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory) {
         CurrentUser.getCurrentUserId().then(function(userId) {
-            $scope.quests = ManyToOneResourceFactory('quests', 'users').query(
+            $scope.missions = ManyToOneResourceFactory('missions', 'users').query(
                 {parentId: userId});
         });
 }]);
