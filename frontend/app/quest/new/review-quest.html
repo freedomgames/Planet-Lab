@@ -1,0 +1,30 @@
+<h1>Review Your Quest</h1>
+<p> Please verify the following details are correct.  </p>
+
+<div class="container">
+  <label> Quest ID: </label> {{questNew.quest.id}} <br>
+  <label> Quest Title: </label> {{questNew.quest.name}} <br>
+  <label> Quest Summary: </label> {{questNew.quest.summary}} <br>
+  <label> Quest Icon: </label> {{questNew.quest.icon_url}} <br>
+  <label> Quest Max Grade Level: </label> {{questNew.quest.max_grade_level}} <br>
+  <label> Quest Min Grade Level: </label> {{questNew.quest.min_grade_level}} <br>
+  <label> Quest Enquiry Questions: </label> {{questNew.quest.inquiry_questions}} 
+
+  <label> Quest Problem Based Learning Description: </label> {{questNew.quest.pbl_description}} <br>
+  <label> Quest Mentor Guide: </label> {{questNew.quest.mentor_guide}} <br>
+  <label> Quest Hours Required: </label> {{questNew.quest.hours_required}} <br>
+  <label> Quest Minutes Required: </label> {{questNew.quest.minutes_required}} <br>
+  <label> Quest Video Links: </label> {{questNew.quest.video_links}} 
+
+  <label> Questions: </label> {{questNew.quest.questions}} <br>
+  <label> Missions: </label> {{questNew.quest.missions}} <br>
+  <label> Tags: </label> {{questNew.quest.tags}} 
+
+
+  </div>  <!-- end of container element -->
+
+<button id="save-button" ng-click="questNew.save()">Publish</button>
+</div>
+
+
+

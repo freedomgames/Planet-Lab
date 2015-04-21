@@ -1,0 +1,24 @@
+<h1> Create a New Organization </h1>
+<p> Please fill out the requested information to author a new organization.</p>
+
+    <div class="container">
+  <div class="row">
+    <div class="col-sm-5" >
+            <label>Organization Name</label>
+            <input class="form-control" type="text"   ng-model="organizationNew.organizations.name" placeholder="Enter Name"> </div>
+    <div class="col-sm-1" ></div>
+
+    <div class="col-sm-5" >       
+          <label> Organization Description</label> <br>
+          <textarea class="form-control" id="plTextAreaMission" ng-model="organizationNew.organizations.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
+          <span align="right"> {{200-(organizationNew.organizations.description).length}} left </span>
+        </div> 
+
+  <br> <br>
+  
+<br/><br/>
+<button  ng-click="organizationNew.save()">Save</button>
+</div>
+</div>
+
+
