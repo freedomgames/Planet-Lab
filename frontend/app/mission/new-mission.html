@@ -1,38 +1,8 @@
-
-
-<h1> Create a New Mission </h1>
-<p> Please fill out the requested information to author a new mission. Keep in mind that in PlanetLAB- Missions combine many quests to form a complete learning experience.</p>
-
-    <div class="container">
-  <div class="row">
-    <div class="col-sm-5" >
-            <label>Mission Name</label>
-            <input class="form-control" type="text"   ng-model="missions.name" placeholder="Enter Name"> </div>
-    <div class="col-sm-1" ></div>
-
-    <div class="col-sm-5" >       
-          <label> Mission Description</label> <br>
-          <textarea class="form-control" id="plTextAreaMission" ng-model="missions.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
-          <span align="right"> {{200-(missions.description).length}} left </span>
-        </div> 
-
-  <br> <br>
-  
-  <div class="row">
-    <div class="col-sm-3" >
-            <label> Mission Points</label>
-            <input class="form-control" type="text" ng-model="missions.points" placeholder="Enter Points">
-    </div>
-        <div class="col-sm-1" ></div>
-         <div class="col-sm-3" >
-            <label> Mission Creator</label>
-            <input class="form-control" type="text" ng-model="missions.creator_id" placeholder="Enter Creator ID">
-    </div>
-  </div>
-
-<br/><br/>
-<button  ng-click="save()">Save</button>
-</div>
+<div class="wizard">
+    <a ui-sref="missions.new.basic" ui-sref-active="current"><span class="badge" ui-sref-active="badge-inverse">1</span> Basic Info</a>
+    <a ui-sref="missions.new.quests" ui-sref-active="current"><span class="badge" ui-sref-active="badge-inverse">2</span> Add Quests</a>
+    <a ui-sref="missions.new.badges" ui-sref-active="current"><span class="badge" ui-sref-active="badge-inverse">3</span> Badges</a>
+    <a ui-sref="missions.new.review" ui-sref-active="current"><span class="badge" ui-sref-active="badge-inverse">4</span> Review</a> 
 </div>
 
-
+<div ui-view></div>

@@ -7,43 +7,28 @@ var missionCtrlUtil = {
 planetApp.controller('MissionCtrl', [
     '$scope', '$stateParams', 'ResourceFactory', 'S3', 
     function($scope, $stateParams, ResourceFactory, S3 ) {
-        $scope.mission = ResourceFactory('missions').get({id: $stateParams.id})
-        // have to wrap $scope.quest.$put in a new function as the promise
-        // won't be back in time to do a $scope.save = $scope.quest.$put
-        $scope.save = function() {$scope.mission.$put()};
-        $scope.onFileSelect = function($files) {
-            questCtrlUtil.upload($files, $scope.mission, S3);
-        };
+        this.mission = ResourceFactory('missions').get({id: $stateParams.id})
 }]);
 
 planetApp.controller('NewMissionCtrl', [
     '$scope', 'ResourceFactory', 'S3',
     function($scope, ResourceFactory, S3) {
-        $scope.missions = new (ResourceFactory('missions'));
-        $scope.save = function() {
-            if ($scope.missions.id) {
-                $scope.missions.$put();
+        this.missions = new (ResourceFactory('missions'));
+        this.save = function() {
+            if (this.missions.id) {
+                this.missions.$put();
             } else {
-                $scope.missions.$save();
+                this.missions.$save();
             }
         };
-        $scope.onFileSelect = function($files) {
-            if (! $scope.missions.id) {
+        this.onFileSelect = function($files) {
+            if (! this.missions.id) {
                 // We need an id to upload quest assets to S3
-                $scope.missions.$save().then(function() {
-                    missionCtrlUtil.upload($files, $scope.missions, S3);
+                this.missions.$save().then(function() {
+                    missionCtrlUtil.upload($files, this.missions, S3);
                 });
             } else {
-                missionCtrlUtil.upload($files, $scope.missions, S3);
+                missionCtrlUtil.upload($files, this.missions, S3);
             }
         };
-}]);
-
-planetApp.controller('UsersQuestsCtrl', [
-    '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory',
-    function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory) {
-        CurrentUser.getCurrentUserId().then(function(userId) {
-            $scope.missions = ManyToOneResourceFactory('missions', 'users').query(
-                {parentId: userId});
-        });
 }]);
