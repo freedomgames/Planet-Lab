@@ -7,15 +7,16 @@
   <div class="row">
     <div class="col-sm-5" >
             <label>Mission Name</label>
-            <input class="form-control" type="text"   ng-model="missions.name" placeholder="Enter Name">
-    </div>
-        <div class="col-sm-1" ></div>
-    <div class="col-sm-5" >       
-          <label> Mission Description</label>
-         <textarea cols="40" rows="2" type="textarea"  ng-model="missions.description" placeholder="Enter Description"></div> 
+            <input class="form-control" type="text"   ng-model="missions.name" placeholder="Enter Name"> </div>
+    <div class="col-sm-1" ></div>
 
-  </div>
-  <br>
+    <div class="col-sm-5" >       
+          <label> Mission Description</label> <br>
+          <textarea class="form-control" id="plTextAreaMission" ng-model="missions.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
+          <span align="right"> {{200-(missions.description).length}} left </span>
+        </div> 
+
+  <br> <br>
   
   <div class="row">
     <div class="col-sm-3" >
@@ -27,18 +28,11 @@
             <label> Mission Creator</label>
             <input class="form-control" type="text" ng-model="missions.creator_id" placeholder="Enter Creator ID">
     </div>
-
- <!-- <div class="col-sm-5" >       
-            <label> Quest Summary</label>
-         <textarea cols="40" rows="2" type="textarea"  ng-model="quest.summary" placeholder="Enter Summary"></div> 
-    </div> -->
-
-
-
-
-
+  </div>
 
 <br/><br/>
-<button id="save-button" ng-click="save()">Save</button>
+<button  ng-click="save()">Save</button>
 </div>
+</div>
+
 

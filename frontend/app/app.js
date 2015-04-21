@@ -88,7 +88,7 @@ planetApp.config([
         .state('newMission', {
             url: '/missions/new',
             templateUrl: 'static/mission/new-mission.html',
-           controller: 'NewQuestCtrl'
+           controller: 'NewMissionCtrl'
 
         }); 
 }]);

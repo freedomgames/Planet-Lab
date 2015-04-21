@@ -27,6 +27,30 @@
 </div>
 
 <h3 ng-show="!quests.length">No Quests!</h3>
+<h3>====================================================================</h3>
+
+<h5 style="color:gray" >Mission Authorship:</h5>  <h3>You've authored {{ missions.length }} missions!</h3>
+
+<div  ng-repeat="mission in missions">
+  <div class="container">
+  <div class="row">
+  <div class="col-lg-3 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>Mission #{{missions.id}} </h3>
+        <a ui-sref="mission({id: {{mission.id}}})">{{ missions.name }}</a>
+        <p> {{missions.description}}</p>
+        <p>
+          <a href="#" class="btn btn-primary" role="button">See Quests</a> 
+          <a ui-sref="mission({id: {{missions.id}}})" class="btn btn-default" role="button">Edit Mission</a></p>
+      </div> </a>
+    </div>
+  </div>
+</div> 
+</div>
+
+<h3 ng-show="!missions.length">No Missions!</h3>
+
 
 
 
