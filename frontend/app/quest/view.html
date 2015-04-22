@@ -1,0 +1,41 @@
+
+<p>Icon:
+<img class="quarter-img" ng-src="{{ questNew.quest.icon_url }}">
+<br/>
+<input type="file" ng-file-select="onFileSelect($files)">
+</p>
+<br>
+<p>Name:
+<a href="#" editable-text="questNew.quest.name">{{ quest.name || "empty" }}</a>
+</p>
+<p>Summary:
+<a href="#" editable-textarea="questNew.quest.summary">{{ quest.summary || "empty" }}</a>
+</p>
+<p>Problem Based Learning Description:
+<a href="#" editable-textarea="questNew.quest.pbl_description">{{ quest.pbl_description || "empty" }}</a>
+</p>
+<p>Mentor Guide:
+<a href="#" editable-textarea="questNew.quest.mentor_guide">{{ quest.mentor_guide || "empty" }}</a>
+</p>
+
+<p>Inquiry Questions:
+<pl-edit-list list="questNew.quest.inquiry_questions"></pl-edit-list>
+</p>
+
+<p>Video Links:
+<pl-edit-list list="questNew.quest.video_links"></pl-edit-list>
+</p>
+
+<p>Time Required:
+<a href="#" editable-text="questNew.quest.hours_required">{{ quest.hours_required || "empty" }}</a> Hours(s) and
+<a href="#" editable-text="questNew.quest.minutes_required">{{ quest.minutes_required || "empty" }}</a> Minutes
+</p>
+<p>Max Grade Level:
+<a href="#" editable-text="questNew.quest.max_grade_level">{{ quest.max_grade_level || "empty" }}</a>
+</p>
+<p>Min Grade Level:
+<a href="#" editable-text="questNew.quest.min_grade_level">{{ quest.min_grade_level || "empty" }}</a>
+</p>
+
+<br/><br/>
+<button id="save-button" ng-click="save()">Save</button>
