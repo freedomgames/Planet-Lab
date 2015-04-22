@@ -6,8 +6,8 @@
     <div class="col-sm-5" >
       <h3>Facilitation Tips</h3>
         <label>Introduction</label> 
-         <textarea class="form-control" id="plTextArea"  ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
-          <span align="right"> {{300-(quest.facilitation-intro).length}} left </span>
+         <textarea class="form-control" id="plTextArea"  ng-model="questNew.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
+          <span align="right"> {{300-(questNew.quest.mentor_guide).length}} left </span>
     </div>
 
       <div class="col-sm-1" ></div>
@@ -95,10 +95,7 @@
           </div> 
   </div>
   </div>  <!-- end of container element -->
-
-<!-- <button ng-click="save()">Save</button>
-<a ui-sref="questActivity" class="btn btn-default" role="button">Continue to Next Page</a> 
-<button >Continue</button>-->
+<br>
 <a ui-sref="quests.new.review" class="btn btn-default" role="button">Finalize Quest</a>
 </div>
 
