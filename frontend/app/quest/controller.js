@@ -34,7 +34,7 @@ planetApp.controller('NewQuestCtrl', [
         this.onFileSelect = function($files) {
             if (! this.quest.id) {
                 // We need an id to upload quest assets to S3
-                $this.quest.$save().then(function() {
+                this.quest.$save().then(function() {
                     questCtrlUtil.upload($files, this.quest, S3);
                 });
             } else {

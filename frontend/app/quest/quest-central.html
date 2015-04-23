@@ -11,7 +11,7 @@
 <li  class="thumbnails" ng-repeat="quest in userQuests.quests">
  <div class="thumbnail" style="width:20%; background-color:#cce0f3;">
     <a ui-sref="quests.quest({id: {{quest.id}}})">
-        <img class="img-rounded" src="{{quest.icon_url}}"  alt="...">
+        <img class="img-rounded" ng-src="{{quest.icon_url}}"  alt="...">
     <div class="caption">
       <p style="float:right;">Quest #{{quest.id}} </p>
      <h5> <a ui-sref="quests.quest({id: {{quest.id}}})">{{ quest.name }}</a> </h5>

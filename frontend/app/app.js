@@ -125,7 +125,12 @@ planetApp.config([
                 url: '/new',
                 templateUrl: 'static/mission/new-mission.html',
                 controller: 'NewMissionCtrl',
-                controllerAs: 'missionNew'
+                controllerAs: 'missionNew',
+                resolve: {
+                    curr: function (CurrentUser) {
+                       return CurrentUser.getCurrentUserId();
+                    }
+                }
             })
                 .state('missions.new.basic', {
                     url: '/basic-info',
