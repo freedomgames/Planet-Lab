@@ -3,7 +3,7 @@
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
 <br>
-<h1 >{%trans%}Sign in{%endtrans%}</h1>
+<h1 >{%trans%} Sign in {%endtrans%}</h1>
 
 <form action="" method="POST" class="form" role="form">
     {{ form.hidden_tag() }}
@@ -18,7 +18,7 @@
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.enable_register and not user_manager.require_invitation %}
-                    <a href="{{ url_for('user.register') }}" tabindex='190'>
+                    <a href="{{ url_for('user.register') }}" >
                         {%trans%}New here? Register.{%endtrans%}</a>
                 {% endif %}
             </div>
@@ -56,7 +56,7 @@
 
     {# Submit button #}
     {{ render_submit_field(form.submit, tabindex=300) }}
-    <br>
+
 </form>
 
 {% endblock %}
