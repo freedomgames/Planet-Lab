@@ -26,24 +26,17 @@ planetApp.controller('NewMissionCtrl', [
         this.addNewQuest = function () {
             this.quests.push("");
         };
-        this.setId = function(id) {
-            this.quests.push(id);
-        }
+        this.iterateQuests = function () {
+            for (var i = 0; i < this.quests.length; i++) {
+                this.missionLink = new (ManyToManyResourceFactory('quests', this.quests[i], 'missions', this.mission.id));
+                this.missionLink.$put(); 
+            }
+        };
         this.saveQuests = function () {
             if (! this.mission.id) {
-                // We need an id to upload quest assets to S3
-                var that = this;
-                this.mission.$save().then(function(that) {
-                    for (var i; i < that.quests.length; i++) {
-                        this.missionLink = new (ManyToManyResourceFactory('quests', that.quests[i], 'missions', this.mission.id));
-                        this.missionLink.$save(); 
-                    }
-                });
+                this.mission.$save().then(this.iterateQuests.bind(this));
             } else {
-                for (var i; i < this.quests.length; i++) {
-                    this.missionLink = new (ManyToManyResourceFactory('quests', this.quests[i], 'missions', this.mission.id));
-                    this.missionLink.$save(); 
-                }
+                this.iterateQuests();
             }
         };
         this.onFileSelect = function($files) {

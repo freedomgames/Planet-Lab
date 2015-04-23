@@ -60,8 +60,8 @@ planetApp.factory('ManyToManyResourceFactory', [
                 {
                     parentName: parentName,
                     childName: childName,
-                    parentId: '@' + parentLink,
-                    childId: '@' + childLink
+                    parentId: parentLink,
+                    childId: childLink
                 },
                 {
                     put: {method: 'PUT'},
