@@ -19,7 +19,7 @@
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
             <label>Email</label>
-           <input type="email" class="form-control" placeholder="Enter Email" 
+           <input type="email" class="form-control" placeholder="Enter Email" ng-model="users.user.email"
            > 
         </div>
       </div>
@@ -28,8 +28,8 @@
   <div class="row">
         <div class="col-sm-12" >       
           <label> What is your vision for PlanetLAB?</label> <br>
-          <textarea class="form-control" id="plTextArea" ng-trim="false" maxlength="300" placeholder="Inspire Us @  PlanetLAB" rows="5"></textarea>
-          <span align="right"> {{300-(users.description).length}} left </span>
+          <textarea class="form-control" ng-model="users.user.description" id="plTextArea" ng-trim="false" maxlength="300" placeholder="Inspire Us @  PlanetLAB" rows="5"></textarea>
+          <span align="right"> {{300-(users.user.description).length}} left </span>
         </div> 
   </div>
   <br/><br/>
