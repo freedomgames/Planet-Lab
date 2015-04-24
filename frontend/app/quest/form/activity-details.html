@@ -5,7 +5,7 @@
      <h3>Duration</h3>
     <div class="col-sm-5" >
         <label>Hours Required</label> 
-          <select ng-model="questNew.quest.hours_required">
+          <select ng-model="questForm.quest.hours_required">
             <option hours="1">Choose</option>
             <option hours="1">1</option>
             <option hours="2">2</option>
@@ -18,7 +18,7 @@
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
         <label>Minutes Required</label> 
-          <select ng-model="questNew.quest.minutes_required">
+          <select ng-model="questForm.quest.minutes_required">
             <option minutes="10">Choose</option>
             <option minutes="10">10</option>
             <option minutes="20">20</option>
@@ -51,7 +51,7 @@
     <h3>Enquiry Questions</h3>
     <div class="col-sm-10" >
           <label> Enter questions to encourage deep understanding.</label>
-    <pl-edit-list  list="questNew.quest.inquiry_questions"></pl-edit-list>
+    <pl-edit-list  list="questForm.quest.inquiry_questions"></pl-edit-list>
     </p>
         </div>
         </div>
@@ -94,7 +94,7 @@
 </div>
 </div>
 <br>
-<a ui-sref="quests.new.teachers" class="btn btn-default" role="button">Continue to Next Step</a>
+<a ui-sref="quests.form.teachers" class="btn btn-default" role="button">Continue to Next Step</a>
 </div>
 
 

@@ -20,10 +20,17 @@ planetApp.controller('QuestCtrl', [
         this.deleteQuest = function() {this.quest.$delete()};
 }]);
 
-planetApp.controller('NewQuestCtrl', [
-    '$scope', 'ResourceFactory', 'S3',
-    function($scope, ResourceFactory, S3) {
-        this.quest = new (ResourceFactory('quests'));
+planetApp.controller('QuestFormCtrl', [
+    '$scope', 'ResourceFactory', 'S3', '$stateParams', '$state',
+    function($scope, ResourceFactory, S3, $stateParams, $state) {
+        if ($state.is('quests.form')) {
+            $state.go('quests.form.basic');
+        }
+        if ($stateParams.id) {
+            this.quest = ResourceFactory('quests').get({id: $stateParams.id});
+        } else {
+            this.quest = new (ResourceFactory('quests'));
+        }
         this.save = function() {
             if (this.quest.id) {
                 this.quest.$put();

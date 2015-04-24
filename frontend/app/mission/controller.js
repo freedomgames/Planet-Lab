@@ -10,12 +10,20 @@ planetApp.controller('MissionCtrl', [
         this.mission = ResourceFactory('missions').get({id: $stateParams.id})
 }]);
 
-planetApp.controller('NewMissionCtrl', [
-    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', 'ManyToManyResourceFactory', 'curr',
-    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, ManyToManyResourceFactory, curr) {
+planetApp.controller('MissionFormCtrl', [
+    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', 'ManyToManyResourceFactory', 'curr', '$stateParams', '$state',
+    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, ManyToManyResourceFactory, curr, $stateParams, $state) {
+        if ($state.is('missions.form')) {
+            $state.go('missions.form.basic');
+        }
         this.user_quests = ManyToOneResourceFactory('quests', 'users').query({parentId:curr});
         this.quests = [""];
-        this.mission = new (ResourceFactory('missions'));
+        if ($stateParams.id) {
+            this.mission = ResourceFactory('missions').get({id: $stateParams.id});
+            console.log(this.mission)
+        } else {
+            this.mission = new (ResourceFactory('missions'));
+        }
         this.save = function() {
             if (this.mission.id) {
                 this.mission.$put();
@@ -49,4 +57,5 @@ planetApp.controller('NewMissionCtrl', [
                 missionCtrlUtil.upload($files, this.mission, S3);
             }
         };
+        this.deleteMission = function() {this.mission.$delete()};
 }]);
