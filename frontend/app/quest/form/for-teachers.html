@@ -6,7 +6,7 @@
     <div class="col-sm-5" >
       <h3>Facilitation Tips</h3>
         <label>Introduction</label> 
-         <textarea class="form-control" id="plTextArea"  ng-model="questNew.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
+         <textarea class="form-control" id="plTextArea"  ng-model="questForm.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
           <span align="right"> {{300-(questNew.quest.mentor_guide).length}} left </span>
     </div>
 
@@ -110,7 +110,7 @@
   </div>
   </div>  <!-- end of container element -->
 <br>
-<a ui-sref="quests.new.review" class="btn btn-default" role="button">Finalize Quest</a>
+<a ui-sref="quests.form.review" class="btn btn-default" role="button">Finalize Quest</a>
 </div>
 
 

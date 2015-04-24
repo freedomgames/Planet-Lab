@@ -1,0 +1,14 @@
+<h1>Add Quests</h1>
+<p>Add some quests to your mission.</p>
+
+<div class="quest-choose-wrapper">
+    <div ng-repeat="quest in missionForm.quests track by $index">
+        <span>{{$index + 1}}.)</span>
+        <select ng-model="missionForm.quests[$index]">
+            <option ng-repeat="item in missionForm.user_quests track by $index" ng-bind="item.name" value="{{item.id}}"></option>
+        </select>
+    </div>
+</div>
+
+<button ng-click="missionForm.addNewQuest()">Add Another Quest</button>
+<button ng-click="missionForm.saveQuests()">Save</button>

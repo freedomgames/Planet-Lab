@@ -13,13 +13,13 @@
   <div class="row col-centered">
     <div class="col-sm-2"> </div>
     <div class="col-sm-3">
-        <a style="margin:2%" ui-sref="quests.new.basic"
+        <a style="margin:2%" ui-sref="quests.form"
        <button type="button" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Create New Quest
 </button> </a> </div> 
 <div class="col-sm-1"> </div>
     <div class="col-sm-4">
-        <a style="margin:2%" ui-sref="missions.new.basic"
+        <a style="margin:2%" ui-sref="missions.form"
        <button type="button" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Create New Mission
 </button> </a> </div> </div> </div>
@@ -31,15 +31,15 @@
 <li   class="thumbnails" 
   ng-repeat="quest in userQuests.quests">
     <div class="thumbnail" style="width:20%; background-color:#cce0f3;">
-          <a ui-sref="quests.quest({id: {{quest.id}}})">
+          <a ui-sref="quests.quest({id: quest.id})">
         <img class="img-rounded" ng-src="{{quest.icon_url}}"  alt="...">
       <div class="caption">
         <p style="float:right;">Quest #{{quest.id}} </p>
-        <h5> <a ui-sref="quests.quest({id: {{quest.id}}})">{{ quest.name }}</a> </h5>
+        <h5> <a ui-sref="quests.quest({id: quest.id})">{{ quest.name }}</a> </h5>
         <p style="font-size:.8em">{{quest.summary}}</p>
 
         <p><a href="#" class="btn btn-primary" role="button">Link to Mission</a> </p>
-        <p><a ui-sref="quests.quest({id: {{quest.id}}})" class="btn btn-default" role="button">Edit</a>
+        <p><a ui-sref="quests.edit({id: quest.id})" class="btn btn-default" role="button">Edit</a>
         </p>
       </div> 
     </div>

@@ -9,26 +9,26 @@
   <div class="row">
     <div class="col-sm-5" >
             <label>Author's First Name</label>
-            <input class="form-control" type="text"   ng-model="questNew.users.name" placeholder="Enter Name">
+            <input class="form-control" type="text"   ng-model="questForm.users.name" placeholder="Enter Name">
     </div>
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
             <label>Organization Name</label>
-            <input class="form-control " type="text"  ng-model="questNew.quest.organization" placeholder="Enter Organization"></div>
+            <input class="form-control " type="text"  ng-model="questForm.quest.organization" placeholder="Enter Organization"></div>
   </div>
   <br>
   <div  style="background-color:#cce0f3; padding:10px; margin-right:40px;">  
   <div class="row">
     <div class="col-sm-5" >
             <label> Quest Title</label>
-            <input class="form-control" type="text" ng-model="questNew.quest.name" placeholder="Enter Quest Title">
+            <input class="form-control" type="text" ng-model="questForm.quest.name" placeholder="Enter Quest Title">
     </div>
         <div class="col-sm-1" ></div>
 
         <div class="col-sm-5" >       
           <label> Quest Summary</label> <br>
-          <textarea class="form-control" id="plTextArea" ng-model="questNew.quest.summary" ng-trim="false" maxlength="200" placeholder="Enter Summary" rows="5"></textarea>
-          <span align="right"> {{200-(questNew.quest.summary).length}} left </span>
+          <textarea class="form-control" id="plTextArea" ng-model="questForm.quest.summary" ng-trim="false" maxlength="200" placeholder="Enter Summary" rows="5"></textarea>
+          <span align="right"> {{200-(questForm.quest.summary).length}} left </span>
         </div> 
   </div>
 
@@ -36,9 +36,9 @@
 <div class="row">
     <div class="col-sm-4" >
   <label> Quest Icon
-<img ng-src="questNew.quests.icon_url">
+      <img ng-src="{{questForm.quests.icon_url}}">
 <br/>
-<input type="file" ng-file-select="questNew.onFileSelect($files)">
+<input type="file" ng-file-select="questForm.onFileSelect($files)">
 </label></div>
 </div>
 </div>
@@ -92,7 +92,7 @@
 <div class="row">
     <div class="col-sm-2" >
       <label>Min Grade</label> 
-          <select ng-model="questNew.quest.min_grade_level">
+          <select ng-model="questForm.quest.min_grade_level">
             <option grade="1">Choose</option>
             <option grade="1">1</option>
             <option grade="2">2</option>
@@ -110,7 +110,7 @@
       </div>
     <div class="col-sm-2" >
       <label>Max Grade</label> 
-           <select ng-model="questNew.quest.max_grade_level">
+           <select ng-model="questForm.quest.max_grade_level">
             <option grade="1">Choose</option>
             <option grade="1">1</option>
             <option grade="2">2</option>
@@ -171,7 +171,7 @@
 
 <br/><br/>
 
-<a ui-sref="quests.new.activity" class="btn btn-default" role="button">Continue to Next Step</a>
+<a ui-sref="quests.form.activity" class="btn btn-default" role="button">Continue to Next Step</a>
 
 </div>
 
