@@ -121,6 +121,12 @@ planetApp.config([
             url: '/missions',
             template: '<ui-view/>'
         })
+        .state('missions.mission', {
+                url: '/:id',
+                templateUrl: 'static/mission/view.html',
+                controller: 'MissionCtrl',
+                controllerAs: 'mission'
+            })
             .state('missions.new', {
                 url: '/new',
                 templateUrl: 'static/mission/new-mission.html',
