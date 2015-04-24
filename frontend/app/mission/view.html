@@ -1,0 +1,41 @@
+
+
+<div class="container">
+<h2> Edit Mission:  {{mission.mission.name}} </h2>
+  <div class="row" style="background-color:#e1edf8; padding:10px; margin-right:40px;">
+    <div class="col-sm-5" >
+        <label>Mission Title</label>
+        <p><a href="#" editable-text="mission.mission.name">{{ mission.mission.name || "empty" }}</a></p>
+        </div>
+    <div class="col-sm-1" ></div>
+    <div class="col-sm-2" >       
+          <label> Mission ID: </label> {{mission.mission.id}} <br>
+    </div>
+    <div class="col-sm-2" >       
+          <label> Creator ID: </label> {{mission.mission.creator_id}} <br>
+    </div>
+    <div class="col-sm-2" >       
+          <label> Mission Pts: </label>        
+          <p><a href="#" editable-text="mission.mission.name">{{ mission.mission.points || "empty" }}</a></p> <br>
+    </div>
+    </div>
+
+  <br> 
+ <div class="row">
+      <div class="col-sm-5" > 
+        <label>Mission Description</label>
+        <p><a href="#" editable-textarea="mission.mission.description">{{ mission.mission.description || "empty" }}</a></p>
+        </div>
+    <div class="col-sm-1" ></div>
+  
+    </div>
+    <br>
+    
+</div>  <!-- end of container element -->
+    <br>
+    <br>
+    <button id="save-button" ng-click="quest.save()">Save</button><br>
+    <br>
+</div>
+
+ 

@@ -11,7 +11,7 @@
     <div class="col-sm-5" >       
           <label> Mission Description</label> <br>
           <textarea class="form-control" id="plTextAreaMission" ng-model="missionNew.mission.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
-          <span align="right"> {{200-(missionNew.missions.description).length}} left </span>
+          <span align="right"> {{200-(missionNew.mission.description).length}} left </span>
         </div> 
 
   <br> <br>
@@ -21,6 +21,12 @@
             <label> Mission Points</label>
             <input class="form-control" type="text" ng-model="missionNew.mission.points" placeholder="Enter Points">
     </div>
+        <div class="col-sm-1" ></div>
+
+    <div class="col-sm-5" >       
+          <label> Mission CreatorID</label> <br>
+      <input class="form-control" type="text" ng-model="missionNew.mission.creatorID" placeholder="Enter creatorID">
+        </div> 
   </div>
 
 <br/><br/>
