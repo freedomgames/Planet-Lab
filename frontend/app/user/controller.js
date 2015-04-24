@@ -9,7 +9,7 @@ var userCtrlUtil = {
 };
 
 planetApp.controller('LogOutCtrl', [
-    '$scope', 'CurrentUser', function($scope, CurrentUser, S3) {
+    '$scope', 'CurrentUser', function($scope, CurrentUser) {
         this.logOut = CurrentUser.logOut;
 }]);
 

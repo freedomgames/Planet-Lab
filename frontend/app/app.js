@@ -68,7 +68,7 @@ planetApp.config([
                 })
                 .state('quests.form.review', {
                     url: '/review',
-                    templateUrl: 'static/quest/form/review.html'
+                    templateUrl: 'static/quest/form/review-quest.html'
                 })
         // User State
         .state('user', {

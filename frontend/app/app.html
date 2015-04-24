@@ -20,7 +20,7 @@
 
 
         <p style="float:right"> 
-                <a href="#" class="btn btn-default" ng-controller="LogOutCtrl" role="button" ng-click="logOut()">Log Out</a></p>
+                <a href="#" class="btn btn-default" ng-controller="LogOutCtrl as logout" role="button" ng-click="logout.logOut()">Log Out</a></p>
         <hr>
         <br>
         <div ui-view> </div>  <!--All templateURL definitions have their content added to the DOM here.  

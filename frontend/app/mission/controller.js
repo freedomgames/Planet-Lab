@@ -57,4 +57,5 @@ planetApp.controller('MissionFormCtrl', [
                 missionCtrlUtil.upload($files, this.mission, S3);
             }
         };
+        this.deleteMission = function() {this.mission.$delete()};
 }]);
