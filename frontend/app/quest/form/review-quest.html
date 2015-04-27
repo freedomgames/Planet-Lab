@@ -2,28 +2,28 @@
 <p> Please verify the following details are correct.  </p>
 
 <div class="container">
-  <label> Quest ID: </label> {{questNew.quest.id}} <br>
-  <label> Quest Title: </label> {{questNew.quest.name}} <br>
-  <label> Quest Summary: </label> {{questNew.quest.summary}} <br>
-  <label> Quest Icon: </label> {{questNew.quest.icon_url}} <br>
-  <label> Quest Max Grade Level: </label> {{questNew.quest.max_grade_level}} <br>
-  <label> Quest Min Grade Level: </label> {{questNew.quest.min_grade_level}} <br>
-  <label> Quest Enquiry Questions: </label> {{questNew.quest.inquiry_questions}} 
+  <label> Quest ID: </label> {{questForm.quest.id}} <br>
+  <label> Quest Title: </label> {{questForm.quest.name}} <br>
+  <label> Quest Summary: </label> {{questForm.quest.summary}} <br>
+  <label> Quest Icon: </label> {{questForm.quest.icon_url}} <br>
+  <label> Quest Max Grade Level: </label> {{questForm.quest.max_grade_level}} <br>
+  <label> Quest Min Grade Level: </label> {{qquestForm.quest.min_grade_level}} <br>
+  <label> Quest Enquiry Questions: </label> {{questForm.quest.inquiry_questions}} <br>
 
-  <label> Quest Problem Based Learning Description: </label> {{questNew.quest.pbl_description}} <br>
-  <label> Quest Mentor Guide: </label> {{questNew.quest.mentor_guide}} <br>
-  <label> Quest Hours Required: </label> {{questNew.quest.hours_required}} <br>
-  <label> Quest Minutes Required: </label> {{questNew.quest.minutes_required}} <br>
-  <label> Quest Video Links: </label> {{questNew.quest.video_links}} 
+  <label> Quest Problem Based Learning Description: </label> {{questForm.quest.pbl_description}} <br>
+  <label> Quest Mentor Guide: </label> {{questForm.quest.mentor_guide}} <br>
+  <label> Quest Hours Required: </label> {{questForm.quest.hours_required}} <br>
+  <label> Quest Minutes Required: </label> {{questForm.quest.minutes_required}} <br>
+  <label> Quest Video Links: </label> {{questForm.quest.video_links}} 
 
-  <label> Questions: </label> {{questNew.quest.questions}} <br>
-  <label> Missions: </label> {{questNew.quest.missions}} <br>
-  <label> Tags: </label> {{questNew.quest.tags}} 
+  <label> Questions: </label> {{questForm.quest.questions}} <br>
+  <label> Missions: </label> {{questForm.quest.missions}} <br>
+  <label> Tags: </label> {{questForm.quest.tags}} 
 
 
   </div>  <!-- end of container element -->
 
-<button id="save-button" ng-click="questNew.save()">Publish</button>
+<button id="save-button" ng-click="questForm.save()">Publish</button>
 </div>
 
 

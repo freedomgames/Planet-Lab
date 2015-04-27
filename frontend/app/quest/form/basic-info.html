@@ -4,11 +4,11 @@
 <p> Please fill out the requested information to author a new quest. </p>
 
     <div class="container">
-      <h3>{{questNew.users.name}} Here's Your Chance to Contribute</h3>
+      <h3>{{users.user.name}} Here's Your Chance to Contribute</h3>
 
   <div class="row">
     <div class="col-sm-5" >
-            <label>Author's First Name</label>
+            <label>Original Author's Name</label>
             <input class="form-control" type="text"   ng-model="questForm.users.name" placeholder="Enter Name">
     </div>
         <div class="col-sm-1" ></div>
@@ -27,8 +27,8 @@
 
         <div class="col-sm-5" >       
           <label> Quest Summary</label> <br>
-          <textarea class="form-control" id="plTextArea" ng-model="questForm.quest.summary" ng-trim="false" maxlength="200" placeholder="Enter Summary" rows="5"></textarea>
-          <span align="right"> {{200-(questForm.quest.summary).length}} left </span>
+          <textarea class="form-control" id="plTextArea" ng-model="questForm.quest.summary" ng-trim="false" maxlength="100" placeholder="Enter Summary" rows="5"></textarea>
+          <span align="right"> {{100-(questForm.quest.summary).length}} left </span>
         </div> 
   </div>
 

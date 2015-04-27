@@ -1,12 +1,21 @@
 
     <div class="container">
-      <h1> Invest in the Future! </h1>
-        <h5> Please fill out the requested information to personalize your authorship experience on PlanetLAB. </h5>
-       <div  style="background-color:#cce0f3; padding-left:10px; margin-right:40px;"> 
-      <h3>User Name: {{users.user.name}}</h3>
-      <h3>User ID: {{users.user.id}}</h3>
-      <img style="float:right" class="img-circle" ng-src="{{users.user.avatar_url}}"> 
+      <div class="row" style="background-color:#cce0f3; padding-left:10px;">
+   <h1> Invest in the Future! </h1>
+        <h5> Please fill out the requested information to personalize your authorship experience on PlanetLAB. </h5><br>
+    <div class="col-sm-5" >
+      <label> User Name: </label><h3> {{users.user.username}}</h3>
     </div>
+     <div class="col-sm-3">
+      <img class="img-circle branding-img" ng-src="{{users.user.avatar_url}}"> 
+    </div>
+    <div class="col-sm-2"> </div>
+        <div class="col-sm-2" >
+      <label> User ID: </label> <h3>{{users.user.id}}</h3>
+    </div>
+   
+  </div>
+
     <br>
 
 
@@ -14,12 +23,12 @@
     <h4> More about You </h4>
     <div class="col-sm-5" >
             <label>First Name</label>
-            <input class="form-control " type="text"  ng-model="users.user.name" placeholder="Enter First Name"></div>
+            <input class="form-control" type="text"  ng-model="users.user.name" placeholder="Enter First Name"></div>
 
         <div class="col-sm-1" ></div>
     <div class="col-sm-5" >       
             <label>Email</label>
-           <input type="email" class="form-control" placeholder="Enter Email" ng-model="users.user.email"
+           <input  class="form-control" type="Email" placeholder="Enter Email" ng-model="users.user.email"
            > 
         </div>
       </div>
@@ -45,5 +54,5 @@
   </div>
   <br>
    <br/><br/>
-<button id="save-button" ng-click="users.save()">Save</button>
+<button class="btn btn-default" id="save-button" ng-click="users.save()">Save</button>
 </div>
