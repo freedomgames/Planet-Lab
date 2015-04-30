@@ -51,8 +51,8 @@ planetApp.controller('MissionFormCtrl', [
         this.onFileSelect = function($files) {
             if (! this.mission.id) {
                 // We need an id to upload quest assets to S3
-                this.mission.$save().then(function() {
-                    missionCtrlUtil.upload($files, this.mission, S3);
+                this.mission.$save().then(function(mission) {
+                    missionCtrlUtil.upload($files, mission, S3);
                 });
             } else {
                 missionCtrlUtil.upload($files, this.mission, S3);
