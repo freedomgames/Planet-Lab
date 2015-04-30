@@ -2,7 +2,6 @@ var userCtrlUtil = {
     upload: function($files, user, S3) {
         S3.upload($files[0], 'users', user.id, 'avatar').then(
             function(avatar_url) {
-                console.log(avatar_url)
                 user.avatar_url = avatar_url;
         });
     }

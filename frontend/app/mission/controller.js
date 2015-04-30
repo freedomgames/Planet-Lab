@@ -36,8 +36,9 @@ planetApp.controller('MissionFormCtrl', [
         };
         this.iterateQuests = function () {
             for (var i = 0; i < this.quests.length; i++) {
-                this.missionLink = new (ManyToManyResourceFactory('quests', this.quests[i], 'missions', this.mission.id));
-                this.missionLink.$put(); 
+                this.missionLink = new (ManyToOneResourceFactory('quests', 'missions', this.mission.id));
+                var id = this.quests[i];
+                this.missionLink.$put({id: id}); 
             }
         };
         this.saveQuests = function () {
