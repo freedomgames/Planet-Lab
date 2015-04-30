@@ -11,12 +11,12 @@ planetApp.controller('MissionCtrl', [
 }]);
 
 planetApp.controller('MissionFormCtrl', [
-    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', 'ManyToManyResourceFactory', 'curr', '$stateParams', '$state',
-    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, ManyToManyResourceFactory, curr, $stateParams, $state) {
+    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', 'curr', '$stateParams', '$state',
+    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, curr, $stateParams, $state) {
         if ($state.is('missions.form')) {
             $state.go('missions.form.basic');
         }
-        this.user_quests = ManyToOneResourceFactory('quests', 'users').query({parentId:curr});
+        this.user_quests = ManyToOneResourceFactory('quests', 'users').query({parentId: curr});
         this.quests = [""];
         if ($stateParams.id) {
             this.mission = ResourceFactory('missions').get({id: $stateParams.id});
@@ -36,9 +36,9 @@ planetApp.controller('MissionFormCtrl', [
         };
         this.iterateQuests = function () {
             for (var i = 0; i < this.quests.length; i++) {
-                this.missionLink = new (ManyToOneResourceFactory('quests', 'missions', this.mission.id));
+                this.missionLink = new (ManyToOneResourceFactory('quests', 'missions'));
                 var id = this.quests[i];
-                this.missionLink.$put({id: id}); 
+                this.missionLink.$put({childId: id, parentId: this.mission.id}); 
             }
         };
         this.saveQuests = function () {
@@ -51,8 +51,8 @@ planetApp.controller('MissionFormCtrl', [
         this.onFileSelect = function($files) {
             if (! this.mission.id) {
                 // We need an id to upload quest assets to S3
-                this.mission.$save().then(function() {
-                    missionCtrlUtil.upload($files, this.mission, S3);
+                this.mission.$save().then(function(mission) {
+                    missionCtrlUtil.upload($files, mission, S3);
                 });
             } else {
                 missionCtrlUtil.upload($files, this.mission, S3);

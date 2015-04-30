@@ -31,37 +31,8 @@ planetApp.factory('ManyToOneResourceFactory', [
                 {
                     parentName: parentName,
                     childName: childName,
-                    parentId: '@' + parentLink,
-                    childId: '@id'
-                },
-                {
-                    put: {method: 'PUT'},
-                    query: {
-                        method: 'GET',
-                        isArray: true,
-                        transformResponse: function(data) {
-                            // The backend returns a response like:
-                            // {quests: [{name: ...}, {...}]}
-                            // due to security issues with returning top-level
-                            // JSON Arrays in a callabck.  We flatten the
-                            // object into an array here for convenience.
-                            return angular.fromJson(data)[childName];
-                        }
-                    }
-                }
-            );
-    };
-}]);
-planetApp.factory('ManyToManyResourceFactory', [
-    '$resource', function($resource) {
-        return function(childName, childLink, parentName, parentLink) {
-            return $resource(
-                '/v1/:parentName/:parentId/:childName/:childId',
-                {
-                    parentName: parentName,
-                    childName: childName,
-                    parentId: parentLink,
-                    childId: childLink
+                    parentId: '@parentId',
+                    childId: '@childId'
                 },
                 {
                     put: {method: 'PUT'},
