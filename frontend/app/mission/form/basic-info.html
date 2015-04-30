@@ -5,15 +5,15 @@
   <div class="row">
     <div class="col-sm-5" >
             <label>Mission Name</label>
-            <input class="form-control" type="text"   ng-model="missionNew.mission.name" placeholder="Enter Name"> </div>
+            <input class="form-control" type="text"   ng-model="missionForm.mission.name" placeholder="Enter Name"> </div>
     <div class="col-sm-1" ></div>
      <div class="col-sm-2" >
             <label> Mission Points</label>
-            <input class="form-control" type="text" ng-model="missionNew.mission.points" placeholder="Enter Points">
+            <input class="form-control" type="text" ng-model="missionForm.mission.points" placeholder="Enter Points">
     </div>
      <div class="col-sm-3" >       
           <label> Mission CreatorID</label> <br>
-      <input class="form-control" type="text" ng-model="missionNew.mission.creatorID" placeholder="Enter creatorID">
+      <input class="form-control" type="text" ng-model="missionForm.mission.creatorID" placeholder="Enter creatorID">
         </div> 
     </div>
 
@@ -22,14 +22,14 @@
   <div class="row">
      <div class="col-sm-5" >       
           <label> Mission Description</label> <br>
-          <textarea class="form-control" id="plTextAreaMission" ng-model="missionNew.mission.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
-          <span align="right"> {{200-(missionNew.mission.description).length}} left </span>
+          <textarea class="form-control" id="plTextAreaMission" ng-model="missionForm.mission.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
+          <span align="right"> {{200-(missionForm.mission.description).length}} left </span>
         </div>
 
   </div>
 
 <br/><br/>
-<button ui-sref="missions.new.quests">Next step</button>
+<button ui-sref="missions.form.quests">Next step</button>
 <button id="save-button" ng-click="missionForm.save()">Save Now</button>
 </div>
 

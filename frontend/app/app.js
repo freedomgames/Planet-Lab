@@ -118,7 +118,7 @@ planetApp.config([
                 url: '/settings',
                 templateUrl: 'static/user/settings.html',
                 controller: 'UsersSettingsCtrl',
-                controllerAs: 'settings'
+                controllerAs: 'userSettings'
             })
         // Missions State
         .state('missions', {
@@ -176,13 +176,13 @@ planetApp.config([
                     templateUrl: 'static/organization/new/basic-info.html',
                 })
 
-// Help State
-             .state('help', {
+        // Help State
+        .state('help', {
             url: '/help',
-           templateUrl: 'static/help/help.html',
-                controller: 'HelpCtrl',
-                controllerAs: 'helper'
-        })
+            templateUrl: 'static/help/help.html',
+            controller: 'HelpCtrl',
+            controllerAs: 'help'
+        });
         
 }]);
 
