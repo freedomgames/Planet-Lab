@@ -17,7 +17,7 @@
     </head>
 <body>  
      <section>
-        <div ng-include="'static/banner.html'"></div> 
+        <div ng-include="'static/banner.html'" ng-controller="UsersCtrl as users"></div> 
         <div ui-view> </div>       
         <div ng-include="'static/footer.html'"></div> 
             <!-- Load AngularJS & dependency modules -->
