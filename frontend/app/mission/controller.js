@@ -11,12 +11,15 @@ planetApp.controller('MissionCtrl', [
 }]);
 
 planetApp.controller('MissionFormCtrl', [
-    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', 'curr', '$stateParams', '$state',
-    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, curr, $stateParams, $state) {
+    '$scope', 'ResourceFactory', 'S3', 'ManyToOneResourceFactory', '$stateParams', '$state', 'CurrentUser',
+    function($scope, ResourceFactory, S3, ManyToOneResourceFactory, $stateParams, $state, CurrentUser) {
         if ($state.is('missions.form')) {
             $state.go('missions.form.basic');
         }
-        this.user_quests = ManyToOneResourceFactory('quests', 'users').query({parentId: curr});
+        
+        CurrentUser.getCurrentUserId().then(function(id) {
+            this.user_quests = ManyToOneResourceFactory('quests', 'users').query({parentId: id});
+        });
         this.quests = [""];
         if ($stateParams.id) {
             this.mission = ResourceFactory('missions').get({id: $stateParams.id});

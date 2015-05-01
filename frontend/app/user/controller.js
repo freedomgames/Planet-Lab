@@ -13,9 +13,11 @@ planetApp.controller('LogOutCtrl', [
 }]);
 
 planetApp.controller('UsersCtrl', [
-    '$scope', '$stateParams', 'ResourceFactory', 'S3', 'curr',
-    function($scope, $stateParams, ResourceFactory, S3, curr ) {
-        this.user = ResourceFactory('users').get({id: curr})
+    '$scope', '$stateParams', 'ResourceFactory', 'S3', 'CurrentUser',
+    function($scope, $stateParams, ResourceFactory, S3, CurrentUser) {
+        CurrentUser.getCurrentUserId().then(function(id) {
+            this.user = ResourceFactory('users').get({id: id})
+        });
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put
         this.save = function() {this.user.$put()};
@@ -25,15 +27,19 @@ planetApp.controller('UsersCtrl', [
 }]);
 
 planetApp.controller('UsersQuestsCtrl', [
-    '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory', 'quests',
-    function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory, quests) {
-        this.quests = quests || [];
+    '$scope', 'ManyToOneResourceFactory', 'CurrentUser',
+    function($scope, ManyToOneResourceFactory, CurrentUser) {
+        CurrentUser.getCurrentUserId().then(function(id) {
+            this.quests = ManyToOneResourceFactory('quests', 'users').query({parentId: id});
+        }.bind(this));
 }]);
 
 planetApp.controller('UsersMissionsCtrl', [
-    '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory', 'missions',
-    function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory, missions) {
-        this.missions = missions || [];
+    '$scope', 'CurrentUser', 'ManyToOneResourceFactory',
+    function($scope, CurrentUser, ManyToOneResourceFactory) {
+        CurrentUser.getCurrentUserId().then(function(id) {
+            this.missions = ManyToOneResourceFactory('missions', 'users').query({parentId: id});
+        }.bind(this));
 }]);
 
 planetApp.controller('UsersSettingsCtrl', [
