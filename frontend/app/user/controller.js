@@ -17,7 +17,7 @@ planetApp.controller('UsersCtrl', [
     function($scope, $stateParams, ResourceFactory, S3, CurrentUser) {
         CurrentUser.getCurrentUserId().then(function(id) {
             this.user = ResourceFactory('users').get({id: id})
-        });
+        }.bind(this));
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put
         this.save = function() {this.user.$put()};
