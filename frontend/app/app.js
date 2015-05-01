@@ -151,14 +151,6 @@ planetApp.config([
                     url: '/add-quests',
                     templateUrl: 'static/mission/form/add-quests.html',
                 })
-                .state('missions.form.badges', {
-                    url: '/badges',
-                    templateUrl: 'static/mission/form/badges.html',
-                })
-                .state('missions.form.review', {
-                    url: '/review',
-                    templateUrl: 'static/mission/form/review-mission.html',
-                })
         // Organizations State
         .state('organizations', {
             abstract: true,
