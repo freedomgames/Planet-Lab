@@ -74,23 +74,12 @@ planetApp.config([
         .state('user', {
             abstract: true,
             url: '/user',
-            template: '<ui-view/>',
-            resolve: {
-                curr: function (CurrentUser) {
-                   return CurrentUser.getCurrentUserId();
-                }
-            }
+            template: '<ui-view/>'
         })
             .state('user.dashboard', {
                 abstract: true,
                 templateUrl: 'static/user/dashboard.html',
                 resolve: {
-                    quests: function (curr, ManyToOneResourceFactory) {
-                        return ManyToOneResourceFactory('quests', 'users').query({parentId: curr}).$promise;
-                    },
-                    missions: function (curr, ManyToOneResourceFactory) {
-                        return ManyToOneResourceFactory('missions', 'users').query({parentId: curr}).$promise;
-                    }
                 }
             })
                 .state('user.dashboard.views', {
@@ -136,12 +125,7 @@ planetApp.config([
                 url: '/form/:id',
                 templateUrl: 'static/mission/mission-form.html',
                 controller: 'MissionFormCtrl',
-                controllerAs: 'missionForm',
-                resolve: {
-                    curr: function (CurrentUser) {
-                       return CurrentUser.getCurrentUserId();
-                    }
-                }
+                controllerAs: 'missionForm'
             })
                 .state('missions.form.basic', {
                     url: '/basic-info',
