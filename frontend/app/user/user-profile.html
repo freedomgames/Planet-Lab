@@ -2,55 +2,45 @@
     <div class="row" style="background-color:#cce0f3; padding-left:10px;">
         <h1> Invest in the Future! </h1>
         <h5> Please fill out the requested information to personalize your authorship experience on PlanetLAB. </h5>
-        <div class="col-sm-5" >
+        <div class="col-sm-5">
             <label> User Name: </label>
             <h3> {{user.user.username}}</h3>
         </div>
-
         <div class="col-sm-3">
-            <img class="img-circle branding-img" ng-src="{{user.user.avatar_url}}"> 
+            <img class="img-circle branding-img" ng-src="{{user.user.avatar_url}}">
         </div>
-
         <div class="col-sm-2"> </div>
-
-        <div class="col-sm-2" >
+        <div class="col-sm-2">
             <label> User ID: </label>
             <h3>{{user.user.id}}</h3>
         </div>
     </div>
-
     <div class="row">
         <h4> More about You </h4>
-        <div class="col-sm-5" >
+        <div class="col-sm-5">
             <label>First Name</label>
-            <input class="form-control" type="text"  ng-model="user.user.name" placeholder="Enter First Name">
+            <input class="form-control" type="text" ng-model="user.user.name" placeholder="Enter First Name">
         </div>
-
-        <div class="col-sm-1" ></div>
-
-        <div class="col-sm-5" >       
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5">
             <label>Email</label>
-            <input  class="form-control" type="Email" placeholder="Enter Email" ng-model="user.user.email"> 
+            <input class="form-control" type="Email" placeholder="Enter Email" ng-model="user.user.email">
         </div>
     </div>
-
     <div class="row">
-        <div class="col-sm-12" >       
-            <label> What is your vision for PlanetLAB?</label> <br>
+        <div class="col-sm-12">
+            <label> What is your vision for PlanetLAB?</label>
             <textarea class="form-control" ng-model="user.user.description" id="plTextArea" ng-trim="false" maxlength="300" placeholder="Inspire Us @  PlanetLAB" rows="5"></textarea>
             <span align="right"> {{300-(user.user.description).length}} left </span>
-        </div> 
+        </div>
     </div>
-
     <div class="row">
-        <div class="col-sm-6" >       
+        <div class="col-sm-6">
             <p>Change Your Avatar:
                 <img class="quarter-img" ng-src="{{ user.user.avatar_url }}">
-                <br/>
                 <input type="file" ng-file-select="user.onFileSelect($files)">
             </p>
-        </div> 
+        </div>
     </div>
-
     <button class="btn btn-default" id="save-button" ng-click="user.save()">Save</button>
 </div>
