@@ -39,3 +39,7 @@ node_modules
 # compiled assets
 scripts.js
 main.css
+main.css.map
+
+# sass cache
+.sass-cache/
