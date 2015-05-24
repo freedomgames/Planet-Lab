@@ -18,11 +18,11 @@
                         <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/favorite-on.png">
                     </span>
                 </div>
-                <a ui-sref="userMissions.missions.id({id: {{userMissions.missions.id}}})">
+                <a ui-sref="userMissions.missions.id({id: userMissions.missions.id})">
                     <img class="img-rounded branding-img" ng-src="https://s3-us-west-2.amazonaws.com/itreeware/FreedomGames_Logo.png" alt="mission img">
                     <div class="caption">
                         <h5>
-                            <a ui-sref="missions.mission({id: {{mission.id}} })">{{ userMissions.missions.name }}</a>
+                            <a ui-sref="userMissions.missions.id({id: mission.id })">{{ userMissions.missions.name }}</a>
                         </h5>
                         <p style="font-size:.8em;">{{userMissions.missions.description}}</p>
                     </div>
@@ -35,7 +35,7 @@
                         <span class="badge" style="background-color:white; color:black;">25</span>
                     </div>
                     <div style="background-color:#194f87;">
-                        <a ui-sref="missions.mission({id: {{mission.id}} })" class="btn btn-primary" role="button">View</a>
+                        <a ui-sref="userMissions.missions.id({id: mission.id })" class="btn btn-primary" role="button">View</a>
                         <span class="img-circle badge  quarter-img" style="background-color:#194f87;">
                             <img style="width:60%; " src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png"> 
                             <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
