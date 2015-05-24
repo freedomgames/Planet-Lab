@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declaration === */
 function CurrentUserFcty ($http, $q) {
     // Functions for caching and retrieving the current user's id.

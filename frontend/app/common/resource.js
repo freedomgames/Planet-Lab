@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declarations === */
 function ResourceFcty ($resource) {
     return function(resourceName) {

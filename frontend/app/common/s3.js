@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declaration === */
 function S3Fcty ($q, $upload, S3ResourceFcty) {
     var s3Upload = function(file, uploadData, uploadUrlPromise) {

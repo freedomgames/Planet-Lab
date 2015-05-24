@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declaration === */
 function HelpCtrl () {}
 

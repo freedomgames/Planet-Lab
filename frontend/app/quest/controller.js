@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declarations === */
 function QuestCtrl ($stateParams, ResourceFcty, S3Fcty) {
     this.quest = ResourceFcty('quests').get({id: $stateParams.id})

@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declarations === */
 function UserLogoutCtrl (CurrentUserFcty) {
     this.logOut = CurrentUserFcty.logOut;

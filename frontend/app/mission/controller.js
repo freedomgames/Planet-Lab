@@ -7,8 +7,6 @@
  * @package Planet-Lab
  */
 
-'use strict';
-
 /* === Function Declarations === */
 function MissionCtrl ($stateParams, ResourceFcty, S3Fcty ) {
     this.mission = ResourceFcty('missions').get({id: $stateParams.id})
