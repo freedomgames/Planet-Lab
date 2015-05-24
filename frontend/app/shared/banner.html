@@ -1,40 +1,50 @@
-<nav>
-    <div>
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div>
-            <div>
-                <a href="http://www.planetarylaboratory.org/">
-                    <img alt="Brand" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-pl-logo.png">
-                </a>
-            </div>
-            <ul>
-                <li class="active">
-                    <a ui-sref="user.profile">
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/banner/settings-icon.png">
-                        <span>
-                            <label>Settings</label>
-                        </span>
-                    </a>
+<!-- BEGIN MAIN HEADER -->
+<nav class="header">
+    <!-- BEGIN TOP NAV -->
+    <div class="header__top-nav">
+        <!-- BEGIN TOP NAV LEFT -->
+        <div class="header__top-nav-left">
+            <a href="#" class="header__top-nav-logo-link">
+                <img class="header__top-nav-logo" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-pl-logo.png" alt="PlanetLab" />
+                <h1 class="header__top-nav-title">Planet<span>Lab</span></h1>
+            </a>
+        </div>
+        <!-- END TOP NAV LEFT -->
+        <!-- BEGIN TOP NAV RIGHT -->
+        <div class="header__top-nav-right">
+            <ul class="header__top-nav-main-links">
+                <li class="header__top-nav-link">
+                    <a ui-sref="user.profile"><span class="pl-settings header__top-nav-link-icon"></span>Settings</a>
                 </li>
-                <li class="active">
-                    <a href="#" ng-controller="UserLogoutCtrl as logout" role="button" ng-click="logout.logOut()">
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-signout-icon.png">
-                        <span>
-                            <label>Sign Out</label>
-                        </span>
-                    </a>
+                <li class="header__top-nav-link">
+                    <a href="#" ng-controller="UserLogoutCtrl as logout" ng-click="logout.logOut()"><span class="pl-exit header__top-nav-link-icon"></span>Sign Out</a>
                 </li>
-                <li class="active">
-                    <a ui-sref="help">
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-help-icon.png">
-                        <span>
-                            <label>Help</label>
-                        </span>
-                    </a>
+                <li class="header__top-nav-link">
+                    <a ui-sref="help"><span class="header__top-nav-link-icon">?</span>Help</a>
                 </li>
             </ul>
         </div>
+        <!-- END TOP NAV RIGHT -->
     </div>
+    <!-- END TOP NAV -->
+    <!-- BEGIN MAIN NAV -->
+    <div class="header__main-nav">
+        <!-- BEGIN MAIN NAV TOP -->
+        <div class="header__main-nav-top">
+            
+        </div>
+        <!-- END MAIN NAV TOP -->
+        <!-- BEGIN MAIN NAV BOTTOM -->
+        <div class="header__main-nav-bottom">
+            
+        </div>
+        <!-- END MAIN NAV BOTTOM -->
+    </div>
+    <!-- END MAIN NAV -->
+</nav>
+<!-- END MAIN HEADER -->
+
+<nav>
     <div>
         <div>
             <div>

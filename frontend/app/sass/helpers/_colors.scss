@@ -1,0 +1,24 @@
+/**
+ * File: sass/helpers/_colors.scss
+ * Description: Defines all the colors for the application as variables
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Basic Colors === */
+$black: #333;
+$white: #eee;
+
+/* === Main Colors === */
+$main-dark-blue: #26294a;
+$main-medium-blue: #4b7cb6;
+$main-blue: #94b9e4;
+$main-light-blue: #d3e7ff;
+
+/* === Sections Colors === */
+$sections-orange: #e59b35;
+$sections-red: #c42e1b;
+$sections-purple: #683076;
+$sections-blue: #394199;
+$sections-teal: #1591ba;

@@ -9,17 +9,23 @@
 /* === Vendor === */
 /* Any vendor dependencies */
 
+/* === Helpers === */
+/* Vendor prefix functions, mixins, colors, breakpoints */
+@import 'helpers/borders';
+@import 'helpers/colors';
+
 /* === Base === */
 /* Reset/typography */
-@import 'base/reset';
 @import 'base/general';
+@import 'base/icon-font';
+@import 'base/reset';
 @import 'base/typography';
 
 /* === Components === */
 /* Buttons, dropdowns, carousels, etc. */
-
-/* === Helpers === */
-/* Vendor prefix functions, mixins, colors, breakpoints */
+@import 'components/buttons';
+@import 'components/checkboxes';
+@import 'components/inputs';
 
 /* === Layout === */
 /* Grid, header, footer, sidebar, forms, parts of pages */

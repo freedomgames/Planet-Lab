@@ -16,8 +16,7 @@ html {
 
 /* === Base Font Class === */
 %type {
-  /* Typography */
-  color: #333;
+  color: $black;
   font-family: 'Open Sans', 'Arial', sans-serif;
 }
 
@@ -35,12 +34,12 @@ h4 {
 h5,
 h6 {
   @extend %type;
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 /* === Main Type === */
 p,
 span {
   @extend %type;
-  font-size: 0.7rem;
+  font-size: .7rem;
 }

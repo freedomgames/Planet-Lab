@@ -1,0 +1,40 @@
+/**
+ * File: sass/components/_checkboxes.scss
+ * Description: Contains checkbox styles for the application
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Checkbox Styles === */
+.checkbox {
+  display: none;
+}
+.checkbox-label {
+  display: inline;
+  vertical-align: middle;
+
+  color: $black;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-size: .7rem;
+
+  &:before {
+    vertical-align: middle;
+
+    display: inline;
+    content: ' ';
+    height: .7rem;
+    margin-right: 0.25rem;
+    width: .7rem;
+
+    background: $white;
+    border: .05rem solid $main-blue;
+    border-radius: $small-border;
+    box-shadow: inset .1rem .1rem 0 rgba(0,0,0,.26);
+  }
+  &.checked:before {
+    content: '\u2713';
+
+    border-color: $main-medium-blue;
+  }
+}
