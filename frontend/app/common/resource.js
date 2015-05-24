@@ -1,6 +1,15 @@
+/**
+ * File: resource.js
+ * Description: Contains various factories for working with the database
+ * Dependencies: $resource
+ *
+ * @package Planet-Lab
+ */
+
 'use strict';
 
-planetApp.factory('ResourceFactory', ['$resource', function($resource) {
+/* === Function Declarations === */
+function ResourceFcty ($resource) {
     return function(resourceName) {
         return $resource(
             '/v1/:resourceName/:id',
@@ -22,37 +31,38 @@ planetApp.factory('ResourceFactory', ['$resource', function($resource) {
             }
         );
     };
-}]);
-planetApp.factory('ManyToOneResourceFactory', [
-    '$resource', function($resource) {
-        return function(childName, parentName, parentLink) {
-            return $resource(
-                '/v1/:parentName/:parentId/:childName/:childId',
-                {
-                    parentName: parentName,
-                    childName: childName,
-                    parentId: '@parentId',
-                    childId: '@childId'
-                },
-                {
-                    put: {method: 'PUT'},
-                    query: {
-                        method: 'GET',
-                        isArray: true,
-                        transformResponse: function(data) {
-                            // The backend returns a response like:
-                            // {quests: [{name: ...}, {...}]}
-                            // due to security issues with returning top-level
-                            // JSON Arrays in a callabck.  We flatten the
-                            // object into an array here for convenience.
-                            return angular.fromJson(data)[childName];
-                        }
+}
+
+function ManyToOneResourceFcty ($resource) {
+    return function(childName, parentName, parentLink) {
+        return $resource(
+            '/v1/:parentName/:parentId/:childName/:childId',
+            {
+                parentName: parentName,
+                childName: childName,
+                parentId: '@parentId',
+                childId: '@childId'
+            },
+            {
+                put: {method: 'PUT'},
+                query: {
+                    method: 'GET',
+                    isArray: true,
+                    transformResponse: function(data) {
+                        // The backend returns a response like:
+                        // {quests: [{name: ...}, {...}]}
+                        // due to security issues with returning top-level
+                        // JSON Arrays in a callabck.  We flatten the
+                        // object into an array here for convenience.
+                        return angular.fromJson(data)[childName];
                     }
                 }
-            );
+            }
+        );
     };
-}]);
-planetApp.factory('S3ResourceFactory', ['$resource', function($resource) {
+}
+
+function S3ResourceFcty ($resource) {
     return function(resourceName) {
         return $resource(
             '/v1/:resourceName/:id/:uploadName/:fileName',
@@ -73,4 +83,10 @@ planetApp.factory('S3ResourceFactory', ['$resource', function($resource) {
             }
         );
     };
-}]);
+}
+
+/* === Factory Declarations === */
+angular.module('planetApp')
+    .factory('ResourceFcty', ResourceFcty)
+    .factory('ManyToOneResourceFcty', ManyToOneResourceFcty)
+    .factory('S3ResourceFcty', S3ResourceFcty);

@@ -1,55 +1,60 @@
-var userCtrlUtil = {
-    upload: function($files, user, S3) {
-        S3.upload($files[0], 'users', user.id, 'avatar').then(
+/**
+ * File: user/controller.js
+ * Description: Contains various controllers for user-based functionality on the site
+ * Dependencies: CurrentUserFcty, $stateParams, ResourceFcty, S3Fcty
+ *
+ * @package Planet-Lab
+ */
+
+'use strict';
+
+/* === Function Declarations === */
+function UserLogoutCtrl (CurrentUserFcty) {
+    this.logOut = CurrentUserFcty.logOut;
+}
+
+function UserCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) {
+    CurrentUserFcty.getCurrentUserId().then(function(id) {
+        this.user = ResourceFcty('users').get({id: id})
+    }.bind(this));
+    this.save = function() {this.user.$put()};
+    this.onFileSelect = function($files) {
+        S3Fcty.upload($files[0], 'users', this.user.id, 'avatar').then(
             function(avatar_url) {
-                user.avatar_url = avatar_url;
-        });
-    }
-};
+                this.user.avatar_url = avatar_url;
+            }.bind(this));
+    };
+}
 
-planetApp.controller('LogOutCtrl', [
-    '$scope', 'CurrentUser', function($scope, CurrentUser) {
-        this.logOut = CurrentUser.logOut;
-}]);
+function UserQuestsCtrl (ManyToOneResourceFcty, CurrentUserFcty) {
+    CurrentUserFcty.getCurrentUserId().then(function(id) {
+        this.quests = ManyToOneResourceFcty('quests', 'users').query({parentId: id});
+    }.bind(this));
+}
 
-planetApp.controller('UsersCtrl', [
-    '$scope', '$stateParams', 'ResourceFactory', 'S3', 'CurrentUser',
-    function($scope, $stateParams, ResourceFactory, S3, CurrentUser) {
-        CurrentUser.getCurrentUserId().then(function(id) {
-            this.user = ResourceFactory('users').get({id: id})
-        }.bind(this));
-        // have to wrap $scope.quest.$put in a new function as the promise
-        // won't be back in time to do a $scope.save = $scope.quest.$put
-        this.save = function() {this.user.$put()};
-        this.onFileSelect = function($files) {
-            userCtrlUtil.upload($files, this.user, S3);
-        };
-}]);
+function UserMissionsCtrl (CurrentUserFcty, ManyToOneResourceFcty) {
+    CurrentUserFcty.getCurrentUserId().then(function(id) {
+        this.missions = ManyToOneResourceFcty('missions', 'users').query({parentId: id});
+    }.bind(this));
+}
 
-planetApp.controller('UsersQuestsCtrl', [
-    '$scope', 'ManyToOneResourceFactory', 'CurrentUser',
-    function($scope, ManyToOneResourceFactory, CurrentUser) {
-        CurrentUser.getCurrentUserId().then(function(id) {
-            this.quests = ManyToOneResourceFactory('quests', 'users').query({parentId: id});
-        }.bind(this));
-}]);
+function UserSettingsCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) {
+    CurrentUserFcty.getCurrentUserId().then(function(id) {
+        this.user = ResourceFcty('users').get({id: id})
+    }.bind(this));
+    this.save = function() {this.user.$put()};
+    this.onFileSelect = function($files) {
+        S3Fcty.upload($files[0], 'users', this.user.id, 'avatar').then(
+            function(avatar_url) {
+                this.user.avatar_url = avatar_url;
+            }.bind(this));
+    };
+}
 
-planetApp.controller('UsersMissionsCtrl', [
-    '$scope', 'CurrentUser', 'ManyToOneResourceFactory',
-    function($scope, CurrentUser, ManyToOneResourceFactory) {
-        CurrentUser.getCurrentUserId().then(function(id) {
-            this.missions = ManyToOneResourceFactory('missions', 'users').query({parentId: id});
-        }.bind(this));
-}]);
-
-planetApp.controller('UsersSettingsCtrl', [
-    '$scope', '$stateParams', 'ResourceFactory', 'S3', 'curr',
-    function($scope, $stateParams, ResourceFactory, S3, curr ) {
-        this.user = ResourceFactory('users').get({id: curr})
-        // have to wrap $scope.quest.$put in a new function as the promise
-        // won't be back in time to do a $scope.save = $scope.quest.$put
-        this.save = function() {this.user.$put()};
-        this.onFileSelect = function($files) {
-            userCtrlUtil.upload($files, this.user, S3);
-        };
-}]);
+/* === Controller Declarations === */
+angular.module('planetApp')
+    .controller('UserLogOutCtrl', UserLogOutCtrl)
+    .controller('UserCtrl', UserCtrl)
+    .controller('UserQuestsCtrl', UserQuestsCtrl)
+    .controller('UserMissionsCtrl', UserMissionsCtrl)
+    .controller('UserSettingsCtrl', UserSettingsCtrl);

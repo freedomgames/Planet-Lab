@@ -1,5 +1,3 @@
-<!-- this is the ONLY file that Angular loads into the browser for PlanetLAB. -->
-
 <!doctype html>
 <html ng-app="planetApp">
     <head>
@@ -13,21 +11,21 @@
  
 
         <title>PlanetLAB by Freedom Games</title>
-       
     </head>
 <body>  
      <section>
-        <div ng-include="'static/banner.html'" ng-controller="UsersCtrl as users"></div> 
+        <div ng-include="'static/shared/banner.html'" ng-controller="UsersCtrl as users"></div> 
         <div ui-view> </div>       
-        <div ng-include="'static/footer.html'"></div> 
-            <!-- Load AngularJS & dependency modules -->
+        <div ng-include="'static/shared/footer.html'"></div> 
+
+        <!-- Load AngularJS & dependency modules -->
         <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload-shim.min.js"></script>
         <script src="static/bower_components/angular/angular.min.js"></script>
         <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.min.js"></script>
         <script src="static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script src="static/bower_components/angular-resource/angular-resource.min.js"></script>
 
-             <!--Load the PlanetLAB app -->
+         <!--Load the PlanetLAB app -->
         <script src="static/app.js"></script>
         <script src="static/common/current_user.js"></script>
         <script src="static/common/resource.js"></script>
@@ -37,8 +35,6 @@
         <script src="static/user/controller.js"></script>     
         <script src="static/mission/controller.js"></script>     
         <script src="static/organization/controller.js"></script>   
-
-
     </section>
   </body>
 </html>

@@ -1,4 +1,16 @@
-planetApp.controller('HelpCtrl', [
-   '$scope', 
-    function($scope) {};
-]);
+/**
+ * File: help/controller.js
+ * Description: The controller for the 'help' section of the site
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+'use strict';
+
+/* === Function Declaration === */
+function HelpCtrl () {}
+
+/* === Controller Declaration === */
+angular.module('planetApp')
+    .controller('HelpCtrl', HelpCtrl);
