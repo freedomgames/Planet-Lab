@@ -2,6 +2,7 @@
  * File: s3.js
  * Description: Contains a factory to upload items to the specified S3 bucket
  * Dependencies: $q, $upload, S3ResourceFcty
+ * @ngInject
  *
  * @package Planet-Lab
  */

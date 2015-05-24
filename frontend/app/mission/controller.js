@@ -2,6 +2,7 @@
  * File: mission/controller.js
  * Description: Contains the controllers for various parts of the mission section of the site
  * Dependencies: $stateParams, ResourceFcty, S3Fcty, ManyToOneResourceFcty, $state, CurrentUserFcty
+ * @ngInject
  *
  * @package Planet-Lab
  */

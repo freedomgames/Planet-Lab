@@ -22,6 +22,13 @@ module.exports = function(grunt) {
                 dest: 'scripts.js'
             }
         },
+        ngAnnotate: {
+            app1: {
+                files: {
+                    'scripts.js': ['scripts.js']
+                }
+            }
+        },
         sass: {
             dist: {
                 options: {
@@ -51,8 +58,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-ng-annotate');
 
     /* === Register Tasks ===  */
-    grunt.registerTask('default', ['concat', 'sass', 'watch']);
-    grunt.registerTask('deploy', ['concat', 'sass', 'uglify']);
+    grunt.registerTask('default', ['concat', 'ngAnnotate', 'sass', 'watch']);
+    grunt.registerTask('deploy', ['concat', 'ngAnnotate', 'sass', 'uglify']);
 };

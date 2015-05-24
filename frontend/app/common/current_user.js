@@ -2,6 +2,7 @@
  * File: current_user.js
  * Description: Contains a factory to return the current user's id
  * Dependencies: $http, $q
+ * @ngInject
  *
  * @package Planet-Lab
  */

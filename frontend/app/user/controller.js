@@ -2,6 +2,7 @@
  * File: user/controller.js
  * Description: Contains various controllers for user-based functionality on the site
  * Dependencies: CurrentUserFcty, $stateParams, ResourceFcty, S3Fcty
+ * @ngInject
  *
  * @package Planet-Lab
  */

@@ -2,6 +2,7 @@
  * File: quest/controller.js
  * Description: Contains controllers for various aspects of the quest part of the site
  * Dependencies: $stateParams, ResourceFcty, S3Fcty, $state
+ * @ngInject
  *
  * @package Planet-Lab
  */

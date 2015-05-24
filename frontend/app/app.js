@@ -2,6 +2,7 @@
  * File: frontent/app/app.js
  * Description: Defines the Angular module and configures the routes
  * Dependencies: ui-router, ngResource, angularFileUpload, $stateProvider, $urlRouterProvider
+ * @ngInject
  *
  * @package Planet-Lab
  */
