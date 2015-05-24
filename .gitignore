@@ -32,3 +32,6 @@ node_modules
 # db schema images
 /schema.dot
 /schema.png
+
+# node
+.npm-debug.log
