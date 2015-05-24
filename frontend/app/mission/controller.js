@@ -14,7 +14,7 @@ function MissionCtrl ($stateParams, ResourceFcty, S3Fcty ) {
     this.mission = ResourceFcty('missions').get({id: $stateParams.id})
 }
 
-function MissionFormCtrl (ResourceFcty, S3Fcty, ManyToOneResourceFcty, $stateParams, $state, CurrentUserFcty) {
+function MissionFormCtrl ($state, $stateParams, CurrentUserFcty, ManyToOneResourceFcty, ResourceFcty, S3Fcty) {
     if ($state.is('missions.form')) {
         $state.go('missions.form.basic');
     }

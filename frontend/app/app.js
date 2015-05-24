@@ -11,7 +11,7 @@
 
 /* === Module Declaration === */
 angular
-    .module('planetApp', ['ui.router', 'ngResource', 'angularFileUpload'])
+    .module('planetApp', ['angularFileUpload', 'ngResource', 'ui.router'])
     .config(Config);
 
 /* === Configuration === */

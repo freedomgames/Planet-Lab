@@ -22,7 +22,7 @@ function QuestCtrl ($stateParams, ResourceFcty, S3Fcty) {
     this.deleteQuest = function() {this.quest.$delete()};
 }
 
-function QuestFormCtrl (ResourceFcty, S3Fcty, $stateParams, $state) {
+function QuestFormCtrl ($state, $stateParams, ResourceFcty, S3Fcty) {
     if ($state.is('quests.form')) {
         $state.go('quests.form.basic');
     }

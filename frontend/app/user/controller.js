@@ -14,7 +14,7 @@ function UserLogoutCtrl (CurrentUserFcty) {
     this.logOut = CurrentUserFcty.logOut;
 }
 
-function UserCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) {
+function UserCtrl ($stateParams, CurrentUserFcty, ResourceFcty, S3Fcty) {
     CurrentUserFcty.getCurrentUserId().then(function(id) {
         this.user = ResourceFcty('users').get({id: id})
     }.bind(this));
@@ -27,7 +27,7 @@ function UserCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) {
     };
 }
 
-function UserQuestsCtrl (ManyToOneResourceFcty, CurrentUserFcty) {
+function UserQuestsCtrl (CurrentUserFcty, ManyToOneResourceFcty) {
     CurrentUserFcty.getCurrentUserId().then(function(id) {
         this.quests = ManyToOneResourceFcty('quests', 'users').query({parentId: id});
     }.bind(this));
@@ -39,7 +39,7 @@ function UserMissionsCtrl (CurrentUserFcty, ManyToOneResourceFcty) {
     }.bind(this));
 }
 
-function UserSettingsCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) {
+function UserSettingsCtrl ($stateParams, CurrentUserFcty, ResourceFcty, S3Fcty) {
     CurrentUserFcty.getCurrentUserId().then(function(id) {
         this.user = ResourceFcty('users').get({id: id})
     }.bind(this));
