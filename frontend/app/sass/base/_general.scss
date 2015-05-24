@@ -1,0 +1,15 @@
+/**
+ * File: sass/base/_general.scss
+ * Description: General styling, meant to be applied to very high-level elements
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+script,
+style,
+meta,
+title,
+br {
+  display: none;
+}
