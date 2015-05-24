@@ -1,7 +1,7 @@
 <h1>Add Quests</h1>
 <p>Add some quests to your mission.</p>
 
-<div class="quest-choose-wrapper">
+<div>
     <div ng-repeat="quest in missionForm.quests track by $index">
         <span>{{$index + 1}}.)</span>
         <select ng-model="missionForm.quests[$index]">

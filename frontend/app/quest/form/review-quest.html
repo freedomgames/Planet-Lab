@@ -1,6 +1,6 @@
 <h1>Review Your Quest</h1>
 <p> Please verify the following details are correct. </p>
-<div class="container">
+<div>
     <label> Quest ID: </label> {{questForm.quest.id}}
     <label> Quest Title: </label> {{questForm.quest.name}}
     <label> Quest Summary: </label> {{questForm.quest.summary}}
@@ -18,4 +18,4 @@
     <label> Tags: </label> {{questForm.quest.tags}}
 </div>
 <!-- end of container element -->
-<button id="save-button" ng-click="questForm.save()">Publish</button>
+<button ng-click="questForm.save()">Publish</button>

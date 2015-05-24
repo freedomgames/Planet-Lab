@@ -1,15 +1,14 @@
 <h1> Quest Teacher Support </h1>
 <p> Add teacher detail for your quest. </p>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-5">
+<div>
+    <div>
+        <div>
             <h3>Facilitation Tips</h3>
             <label>Introduction</label>
-            <textarea class="form-control" id="plTextArea" ng-model="quest.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
-            <span align="right"> {{300-(quest.quest.mentor_guide).length}} left </span>
+            <textarea id="plTextArea" ng-model="quest.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
+            <span> {{300-(quest.quest.mentor_guide).length}} left </span>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-5">
+        <div>
             <h3>Curriculum Standards</h3>
             <label>Common Core State Standards (CCSS)</label>
             <select>
@@ -22,9 +21,9 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-5">
+    <div>
+        <div></div>
+        <div>
             <label>Next Gen Science Standards (NGSS)</label>
             <select>
                 <option ngss="1">Choose</option>
@@ -36,67 +35,67 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Tip #1</label>
-            <input class="form-control" type="text" placeholder="Enter Question">
+            <input type="text" placeholder="Enter Question">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Tip #2</label>
-            <input class="form-control" type="text" placeholder="Enter Question">
+            <input type="text" placeholder="Enter Question">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Tip #3</label>
-            <input class="form-control" type="text" placeholder="Enter Question">
+            <input type="text" placeholder="Enter Question">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Tip #4</label>
-            <input class="form-control" type="text" placeholder="Enter Question">
+            <input type="text" placeholder="Enter Question">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Tip #5</label>
-            <input class="form-control" type="text" placeholder="Enter Question">
+            <input type="text" placeholder="Enter Question">
         </div>
     </div>
     <h3>Assessment Rubrics</h3>
-    <div class="row">
-        <div class="col-sm-8">
+    <div>
+        <div>
             <label>Rubric </label>
-            <input class="form-control" type="text" placeholder="Enter Rubric">
+            <input type="text" placeholder="Enter Rubric">
         </div>
-        <div class="col-sm-1">
+        <div>
             <label> Weight </label>
-            <input class="form-control" type="text" placeholder=" % ">
+            <input type="text" placeholder=" % ">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-8">
+    <div>
+        <div>
             <label>Rubric </label>
-            <input class="form-control" type="text" placeholder="Enter Rubric">
+            <input type="text" placeholder="Enter Rubric">
         </div>
-        <div class="col-sm-1">
+        <div>
             <label> Weight </label>
-            <input class="form-control" type="text" placeholder=" % ">
+            <input type="text" placeholder=" % ">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-8">
+    <div>
+        <div>
             <label>Rubric </label>
-            <input class="form-control" type="text" placeholder="Enter Rubric">
+            <input type="text" placeholder="Enter Rubric">
         </div>
-        <div class="col-sm-1">
+        <div>
             <label> Weight </label>
-            <input class="form-control" type="text" placeholder=" % ">
+            <input type="text" placeholder=" % ">
         </div>
     </div>
 </div>
 <!-- end of container element -->
-<a ui-sref="quests.form.review" class="btn btn-default" role="button">Finalize Quest</a>
+<a ui-sref="quests.form.review" role="button">Finalize Quest</a>

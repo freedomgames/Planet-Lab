@@ -1,77 +1,75 @@
-<div class="container">
+<div>
     <h1> Edit Quest: {{quest.quest.name}}</h1>
-    <div class="row" style="background-color:#e1edf8; padding:10px; margin-right:40px;">
-        <div class="col-sm-4">
+    <div>
+        <div>
             <label> Quest Icon
-                <img class="thirty-five-img" ng-src="{{ quest.quest.icon_url }}">
+                <img ng-src="{{ quest.quest.icon_url }}">
                 <input type="file" ng-file-select="quest.onFileSelect($files)">
             </label>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-4">
+        <div>
             <label>Quest Title</label>
             <p><a href="#" editable-text="quest.quest.name">{{ quest.quest.name || "empty" }}</a></p>
         </div>
-        <div class="col-sm-2">
+        <div>
             <label> Quest ID: </label> {{quest.quest.id}}
         </div>
     </div>
-    <div class="row" style="background-color:#e1edf8; padding:10px; margin-right:40px;">
-        <div class="col-sm-5"></div>
-        <div class="col-sm-4">
+    <div>
+        <div>
             <label> Time Required: </label>
             <p>
                 <a href="#" editable-text="quest.quest.hours_required">{{ quest.hours_required || "empty" }}</a> Hours(s) and
                 <a href="#" editable-text="quest.quest.minutes_required">{{ quest.minutes_required || "empty" }}</a> Minutes
             </p>
         </div>
-        <div class="col-sm-3">
+        <div>
             <label>Great for Grades: </label>
             <p>Min: <a href="#" editable-text="quest.quest.min_grade_level">{{ quest.min_grade_level || "empty" }}</a></p>
             <p>Max: <a href="#" editable-text="quest.quest.max_grade_level">{{ quest.max_grade_level || "empty" }}</a></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label>Quest Summary</label>
             <p><a href="#" editable-textarea="quest.quest.summary">{{ quest.quest.summary || "empty" }}</a></p>
         </div>
-        <div class="col-sm-5">
+        <div>
             <label> Video Links</label>
         </div>
     </div>
-    <div class="row" style="background-color:#e1edf8; padding:10px; margin-right:40px;">
-        <div class="col-sm-5">
+    <div>
+        <div>
             <label> Facilitation Introduction</label>
             <p><a href="#" editable-textarea="quest.quest.mentor_guide">{{ quest.quest.mentor_guide || "empty" }}</a></p>
         </div>
-        <div class="col-sm-5">
+        <div>
             <label> Problem Based Learning Description</label>
             <p><a href="#" editable-textarea="quest.quest.pbl_description">{{ quest.quest.pbl_description || "empty" }}</a></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-11">
+    <div>
+        <div>
             <label> Inquiry Questions</label>
         </div>
     </div>
     <br>
-    <div class="container" style="background-color:#e1edf8; padding:10px; margin-right:40px;">
-        <div class="row">
+    <div>
+        <div>
             <h1> Additional Data for Your Quest </h1>
-            <div class="col-sm-4">
+            <div>
                 <label> Questions: </label> {{quest.quest.questions}}
             </div>
-            <div class="col-sm-4">
+            <div>
                 <label> Tags: </label> {{quest.quest.tags}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-10">
+        <div>
+            <div>
                 <label> Missions: </label> {{quest.quest.missions}}
             </div>
         </div>
     </div>
     <!-- end of container element -->
-    <button id="save-button" ng-click="quest.save()">Save</button>
+    <button ng-click="quest.save()">Save</button>
 </div>
