@@ -8,7 +8,7 @@ PlanetLab is being built as a single-page application. This means that there are
 
 ## Current Maintainers
 
-* [maiamcguinness](https://github.com/maiamcguinness)
+* [andymcguinness](https://github.com/andymcguinness)
 * [waltaskew](https://github.com/waltaskew)
 
 ## Technologies
@@ -43,7 +43,7 @@ The file structure for the frontend chunk of this repo is currently as follows:
            |      |
            |      |--- styles (css)
            |
-           |--- vendors (includes)
+           |--- sass (scss)
 
 If you have any questions about this file structure, ask a maintainer.
 Please read [this doc](app/README.md) to understand how to reference
@@ -53,11 +53,19 @@ assets with src links during development and in production.
 
 * Use four-space tabs and follow this style guide for JavaScript coding guidelines: http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml
 
-* Follow this style guide for best Angular practives, save for the file structure (see above): https://github.com/mgechev/angularjs-style-guide
+* Follow this style guide for HTML/CSS best practices: http://codeguide.co/
 
-* Your code will be minified later, so please be generous with whitespace and comments to aid readability.
+* Follow this style guide for best Angular practices: http://toddmotto.com/opinionated-angular-js-styleguide-for-teams/
+
+* We are using SASS for this project, check this resource for some SASS best practices: http://www.sitepoint.com/8-tips-help-get-best-sass/
+
+* The app is utilizing the BEM methodology. Have a read here for what this is and why we should use it: http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/
+
+* Your code will be minified later, so please be generous with whitespace and comments to aid readability. Improper whitespace and inadequate comments will result in a failed code review.
 
 * Fork https://github.com/freedomgames/Planet-Lab and send pull requests for your new features against the master branch of this repo.
+
+* Please, try to use the git-flow workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow You can check out both Andy's and Walt's repos to see it in action.
 
 * If you have time, please comment on other people's pull requests.
 
