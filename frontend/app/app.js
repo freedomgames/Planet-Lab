@@ -161,5 +161,3 @@ planetApp.config([
         });
         
 }]);
-
-

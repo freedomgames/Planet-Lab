@@ -1,26 +1,18 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'bower' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.35
-4 error Error: EPERM, Operation not permitted
-4 error     at /usr/local/lib/node_modules/npm/node_modules/uid-number/uid-number.js:44:16
-4 error     at ChildProcess.exithandler (child_process.js:656:7)
-4 error     at ChildProcess.emit (events.js:98:17)
-4 error     at maybeClose (child_process.js:766:16)
-4 error     at Socket.<anonymous> (child_process.js:979:11)
-4 error     at Socket.emit (events.js:95:17)
-4 error     at Pipe.close (net.js:466:12)
-5 error If you need help, you may report this *entire* log,
-5 error including the npm and node versions, at:
-5 error     <http://github.com/npm/npm/issues>
-6 error System Darwin 13.4.0
-7 error command "node" "/usr/local/bin/npm" "install" "-g" "bower"
-8 error cwd /Users/AST/PlanetLAB/Planet-Lab
-9 error node -v v0.10.35
-10 error npm -v 1.4.28
-11 error code [ 'EPERM',
-11 error code   'EPERM',
-11 error code   index: 0,
-11 error code   input: 'EPERM, Operation not permitted' ]
-12 error errno 1
-13 verbose exit [ 1, true ]
+4 verbose config Skipping project config: /Users/AST/.npmrc. (matches userconfig)
+5 error install Couldn't read dependencies
+6 error package.json ENOENT, open '/Users/AST/package.json'
+6 error package.json This is most likely not a problem with npm itself.
+6 error package.json npm can't find a package.json file in your current directory.
+7 error System Darwin 13.4.0
+8 error command "node" "/usr/local/bin/npm" "install"
+9 error cwd /Users/AST/PlanetLAB/Planet-Lab
+10 error node -v v0.10.35
+11 error npm -v 1.4.28
+12 error path /Users/AST/package.json
+13 error code ENOPACKAGEJSON
+14 error errno 34
+15 verbose exit [ 34, true ]
