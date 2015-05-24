@@ -53,7 +53,7 @@ function UserSettingsCtrl ($stateParams, ResourceFcty, S3Fcty, CurrentUserFcty) 
 
 /* === Controller Declarations === */
 angular.module('planetApp')
-    .controller('UserLogOutCtrl', UserLogOutCtrl)
+    .controller('UserLogoutCtrl', UserLogoutCtrl)
     .controller('UserCtrl', UserCtrl)
     .controller('UserQuestsCtrl', UserQuestsCtrl)
     .controller('UserMissionsCtrl', UserMissionsCtrl)
