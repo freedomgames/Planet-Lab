@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'planetlab';
-	src:url('fonts/planetlab.eot?-crm50f');
-	src:url('fonts/planetlab.eot?#iefix-crm50f') format('embedded-opentype'),
-		url('fonts/planetlab.woff?-crm50f') format('woff'),
-		url('fonts/planetlab.ttf?-crm50f') format('truetype'),
-		url('fonts/planetlab.svg?-crm50f#planetlab') format('svg');
+	src:url('fonts/planetlab.eot?-m9188t');
+	src:url('fonts/planetlab.eot?#iefix-m9188t') format('embedded-opentype'),
+		url('fonts/planetlab.woff?-m9188t') format('woff'),
+		url('fonts/planetlab.ttf?-m9188t') format('truetype'),
+		url('fonts/planetlab.svg?-m9188t#planetlab') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -53,9 +53,6 @@
 .pl-sky:before {
 	content: "\e608";
 }
-.pl-settings:before {
-	content: "\e609";
-}
 .pl-plant:before {
 	content: "\e60a";
 }
@@ -97,4 +94,10 @@
 }
 .pl-talk:before {
 	content: "\e617";
+}
+.pl-search:before {
+	content: "\e986";
+}
+.pl-cog:before {
+	content: "\e994";
 }

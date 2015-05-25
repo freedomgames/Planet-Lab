@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                 footer: '})();'
             },
             dist: {
-                src: ['app.js', '*/*.js', '!organizations/*.js'],
+                src: ['app.js', '*/*.js'],
                 dest: 'scripts.js'
             }
         },
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'css/main.css': 'sass/main.scss'
+                    'assets/css/main.css': 'assets/sass/main.scss'
                 }
             }
         },
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['sass/*.scss', 'sass/*/*.scss', 'app.js', '*/*.js'],
+                files: ['assets/sass/*.scss', 'assets/sass/*/*.scss', 'app.js', '*/*.js'],
                 tasks: ['sass', 'concat']
             }
         }

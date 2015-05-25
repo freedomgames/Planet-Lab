@@ -1,0 +1,97 @@
+/**
+ * File: sass/layout/_header.scss
+ * Description: Defines all the styles for the header of the application
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Header Top Nav === */
+.header__top-nav {
+  background: $main-dark-blue;
+
+  /* Left Side */
+  .header__top-nav-left {
+    width: auto;
+  }
+  .header__top-nav-logo {
+    width: auto;
+  }
+  .header__top-nav-title {
+    margin-top: .6rem;
+    width: auto;
+    color: $white;
+    font-weight: 400;
+    text-transform: uppercase;
+
+    strong,
+    span {
+      display: inline;
+      float: none;
+      width: auto;
+    }
+    strong {
+      margin-left: .25rem;
+    }
+    span {
+      margin-left: .25rem;
+      vertical-align: super;
+      color: $white;
+      font-style: italic;
+      text-transform: lowercase;
+    }
+  }
+
+  /* Right Side */
+  .header__top-nav-right {
+    float: right;
+    padding-top: .5rem;
+    padding-right: 1rem;
+    padding-bottom: .5rem;
+    width: auto;
+  }
+  .header__top-nav-link {
+    width: auto;
+
+    a {
+      color: $white;
+      font-family: 'Open Sans', 'Arial', sans-serif;
+      font-size: .8rem;
+      text-decoration: none;
+    }
+    .header__top-nav-link-icon {
+      display: inline-block;
+      float: none;
+      height: 1.6rem;
+      margin-right: .25rem;
+      padding: .3rem;
+      vertical-align: middle;
+      width: 1.6rem;
+      color: $white;
+      font-size: 1rem;
+      text-align: center;
+      border-radius: $circle;
+    }
+  }
+  .header__top-nav-link--settings {
+    margin-right: .75rem;
+
+    .header__top-nav-link-icon {
+      background: $main-medium-blue;
+    }
+  }
+  .header__top-nav-link--logout {
+    margin-right: .75rem;
+
+    .header__top-nav-link-icon {
+      font-weight: bold;
+      background: $sections-red;
+    }
+  }
+  .header__top-nav-link--help {
+    .header__top-nav-link-icon {
+      font-weight: bold;
+      background: #777;
+    }
+  }
+}
