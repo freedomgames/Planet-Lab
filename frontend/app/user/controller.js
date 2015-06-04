@@ -20,7 +20,7 @@ function UserCtrl ($stateParams, CurrentUserFcty, ResourceFcty, S3Fcty) {
     this.onFileSelect = function($files) {
         S3Fcty.upload($files[0], 'users', this.user.id, 'avatar').then(
             function(avatar_url) {
-                this.user.avatar_url = avatar_url;
+                this.user.avatar_url = avatar_url.replace(' ', '%20');
             }.bind(this));
     };
 }

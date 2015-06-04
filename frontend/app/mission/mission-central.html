@@ -1,52 +1,39 @@
-<h5>Mission Authorship:</h5>
-<h3>You've authored {{ userMissions.missions.length }} missions!</h3>
-<div>
-    <ul>
-        <li ng-repeat="quest in userMissions.missions">
-            <div>
-                <div>
-                    <span>
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/mission-identifier-icon.png">
-                    </span>
-                    <span>
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/generic.png">
-                    </span>
-                    <span>
-                        <button type="button"></button>
-                    </span>
-                    <span>
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/favorite-on.png">
-                    </span>
-                </div>
-                <a ui-sref="userMissions.missions.id({id: userMissions.missions.id})">
-                    <img ng-src="https://s3-us-west-2.amazonaws.com/itreeware/FreedomGames_Logo.png" alt="mission img">
-                    <div>
-                        <h5>
-                            <a ui-sref="userMissions.missions.id({id: mission.id })">{{ userMissions.missions.name }}</a>
-                        </h5>
-                        <p>{{userMissions.missions.description}}</p>
-                    </div>
-                    <div>
-                        <span>
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/at-home-icon.png"> 
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/reading-icon.png"> 
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/calculate-icon.png"> 
-                        <span>1</span>
-                        <span>25</span>
-                    </div>
-                    <div>
-                        <a ui-sref="userMissions.missions.id({id: mission.id })" role="button">View</a>
-                        <span>
-                            <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png"> 
-                            <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                            <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                            <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                        </span>
-                        <a href="#" role="button">Quest Links</a>
-                    </div>
-                </a>
+<ul class="quests-missions__items">
+    <li class="item-card item-card--mission" ng-repeat="mission in usermissions.missions">
+        <div class="item-card__header">
+            <span class="item-card__item-identifier">M</span>
+            <span class="item-card__science-sphere pl-volcano"></span>
+            <span class="item-card__heart pl-heart"></span>
+        </div>
+        <div class="item-card__main-image">
+            <a class="item-card__item-image-link" ui-sref="missions.mission({id: mission.id})">
+                <img ng-src="{{mission.icon_url}}" class="item-card__item-image">
+            </a>
+        </div>
+        <div class="item-card__item-info">
+            <h6 class="item-card__item-title" ng-bind="mission.name"></h6>
+            <p class="item-card__item-summary" ng-bind="mission.summary"></p>
+        </div>
+        <div class="item-card__item-specifics">
+            <div class="item-card__item-specifics-left">
+                <span class="item-card__item-location pl-house"></span>
+                <span class="item-card__item-materials pl-book"></span>
+                <span class="item-card__item-subject pl-math"></span>
             </div>
-        </li>
-    </ul>
-    <h3 ng-show="!userMissions.missions.length">No Missions!</h3>
-</div>
+            <div class="item-card__item-specifics-right">
+                <span class="item-card__item-time">10<br>d</span>
+                <span class="item-card__item-age">14+</span>
+            </div>
+        </div>
+        <div class="item-card__item-footer">
+            <a ui-sref="missions.mission({id: mission.id})" class="button item-card__item-button-link">View</a>
+            <div class="mission-card__mission-rating">
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+            </div>
+        </div>
+    </li>
+</ul>

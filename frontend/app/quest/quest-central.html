@@ -1,70 +1,39 @@
-<div>
-    <div>
-        <div>
-            <h1>Your <strong> Quest & Mission </strong> Dashboard </h1>
+<ul class="quests-missions__items">
+    <li class="item-card item-card--quests" ng-repeat="quest in userQuests.quests">
+        <div class="item-card__header">
+            <span class="item-card__item-identifier">Q</span>
+            <span class="item-card__science-sphere pl-volcano"></span>
+            <span class="item-card__heart pl-heart"></span>
         </div>
-    </div>
-    <div>
-        <div> </div>
-        <div>
-            <a ui-sref="quests.form.basic">
-                <button type="button">
-                    <span aria-hidden="true"></span> Create New Quest
-                </button>
+        <div class="item-card__main-image">
+            <a class="item-card__item-image-link" ui-sref="quests.quest({id: quest.id})">
+                <img ng-src="{{quest.icon_url}}" class="item-card__item-image">
             </a>
         </div>
-        <div>
-            <a style="margin:2%" ui-sref="missions.form.basic">
-                <button type="button">
-                    <span aria-hidden="true"></span> Create New Mission
-                </button>
-            </a>
+        <div class="item-card__item-info">
+            <h6 class="item-card__item-title" ng-bind="quest.name"></h6>
+            <p class="item-card__item-summary" ng-bind="quest.summary"></p>
         </div>
-    </div>
-</div>
-<h5>Quest Authorship:</h5>
-<h3>You've authored {{ userQuests.quests.length }} quests!</h3>
-<ul>
-    <li ng-repeat="quest in userQuests.quests">
-        <div>
-            <div>
-                <span>
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/quest-identifier-icon.png">
-                </span>
-                <span>
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/generic.png">
-                </span>
-                <span>
-                    <button type="button"></button>
-                </span>
-                <span>
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/favorite-on.png">
-                </span>
+        <div class="item-card__item-specifics">
+            <div class="item-card__item-specifics-left">
+                <span class="item-card__item-location pl-house"></span>
+                <span class="item-card__item-materials pl-book"></span>
+                <span class="item-card__item-subject pl-math"></span>
             </div>
-            <a ui-sref="quests.quest({id: quest.id})">
-                <img ng-src="{{quest.icon_url}}" alt="...">
-                <div>
-                    <h5> <a ui-sref="quests.quest({id: quest.id})">{{ quest.name }}</a> </h5>
-                    <p>{{quest.summary}}</p>
-                </div>
-                <div>
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/at-home-icon.png"> 
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/reading-icon.png"> 
-                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/calculate-icon.png"> 
-                    <span class="badge" style="background-color:white; color:black;">{{quest.hours_required }}:{{quest.minutes_required }}</span>
-                    <span class="badge" style="background-color:white; color:black;">{{quest.max_grade_level}}</span>
-                </div>
-                <div>
-                    <p>
-                        <a ui-sref="quests.quest({id: {{quest.id}}})" role="button">Edit</a>
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png"> 
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                        <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
-                    </p>
-                </div>
+            <div class="item-card__item-specifics-right">
+                <span class="item-card__item-time">10<br>d</span>
+                <span class="item-card__item-age">14+</span>
+            </div>
+        </div>
+        <div class="item-card__item-footer">
+            <a ui-sref="quests.quest({id: quest.id})" class="button item-card__item-button-link">View</a>
+            <div class="item-card__item-rating">
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
+                <span class="item-card__item-rating-star pl-star"></span>
             </div>
         </div>
     </li>
 </ul>
-<h3 ng-show="!(userQuests.quests.length)">No Quests!</h3>
