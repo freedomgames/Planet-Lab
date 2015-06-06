@@ -1,0 +1,58 @@
+<div class="item-card__header">
+    <div ng-switch on="questOrMission">
+        <div ng-switch-when="mission">
+            <span class="item-card__item-identifier">M</span>
+        </div>
+        <div ng-switch-when="quest">
+            <span class="item-card__item-identifier">Q</span>
+        </div>
+    </div>
+    <span class="item-card__science-sphere pl-volcano"></span>
+    <span class="item-card__heart pl-heart"></span>
+</div>
+<div class="item-card__main-image">
+    <div ng-switch on="questOrMission">
+        <div ng-switch-when="mission">
+            <a class="item-card__item-image-link" ui-sref="missions.mission({id: ngModel.id})">
+                <img ng-src="{{ngModel.icon_url}}" class="item-card__item-image">
+            </a>
+        </div>
+        <div ng-switch-when="quest">
+            <a class="item-card__item-image-link" ui-sref="quests.quest({id: ngModel.id})">
+                <img ng-src="{{ngModel.icon_url}}" class="item-card__item-image">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="item-card__item-info">
+    <h6 class="item-card__item-title" ng-bind="ngModel.name"></h6>
+    <p class="item-card__item-summary" ng-bind="ngModel.summary"></p>
+</div>
+<div class="item-card__item-specifics">
+    <div class="item-card__item-specifics-left">
+        <span class="item-card__item-location pl-house"></span>
+        <span class="item-card__item-materials pl-book"></span>
+        <span class="item-card__item-subject pl-math"></span>
+    </div>
+    <div class="item-card__item-specifics-right">
+        <span class="item-card__item-time">10<br>d</span>
+        <span class="item-card__item-age">14+</span>
+    </div>
+</div>
+<div class="item-card__item-footer">
+    <div ng-switch on="questOrMission">
+        <div ng-switch-when="mission">
+            <a class="button item-card__item-button-link" ui-sref="missions.mission({id: ngModel.id})">View</a>
+        </div>
+        <div ng-switch-when="quest">
+            <a class="button item-card__item-button-link" ui-sref="quests.quest({id: ngModel.id})">View</a>
+        </div>
+    </div>
+    <div class="item-card__item-rating">
+        <span class="item-card__item-rating-star pl-star"></span>
+        <span class="item-card__item-rating-star pl-star"></span>
+        <span class="item-card__item-rating-star pl-star"></span>
+        <span class="item-card__item-rating-star pl-star"></span>
+        <span class="item-card__item-rating-star pl-star"></span>
+    </div>
+</div>
