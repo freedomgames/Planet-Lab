@@ -1,0 +1,46 @@
+/**
+ * File: sass/layout/_item_card.scss
+ * Description: Styles for the item cards (quests and missions)
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Main Styles === */
+.item-card {
+  height: 15rem;
+  overflow: hidden;
+  width: 10rem;
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.5);
+  -webkit-border-radius: .5rem;
+     -moz-border-radius: .5rem;
+          border-radius: .5rem;
+  -webkit-box-shadow: 0 .1rem .2rem 0 rgba(0,0,0,.5);
+     -moz-box-shadow: 0 .1rem .2rem 0 rgba(0,0,0,.5);
+          box-shadow: 0 .1rem .2rem 0 rgba(0,0,0,.5);
+}
+
+/* === Header Styles === */
+.item-card__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: .35rem;
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.5);
+}
+.item-card__header * {
+  width: auto;
+}
+.item-card__item-identifier {
+  padding: .25rem .3rem;
+  color: $white;
+  font-weight: bold;
+  background: $sections-blue;
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+  border: .1rem solid $white;
+}
