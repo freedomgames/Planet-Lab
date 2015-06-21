@@ -1,37 +1,21 @@
-var planetApp = angular.module('planetApp', [
-        'ui.router', 'ngResource', 'angularFileUpload']);
+/**
+ * File: frontent/app/app.js
+ * Description: Defines the Angular module and configures the routes
+ * Dependencies: ui-router, ngResource, angularFileUpload, $stateProvider, $urlRouterProvider
+ * @ngInject
+ *
+ * @package Planet-Lab
+ */
 
-planetApp.config([
-    '$controllerProvider', '$provide', '$compileProvider', '$stateProvider',
-    '$urlRouterProvider', function($controllerProvider, $provide,
-    $compileProvider, $stateProvider, $urlRouterProvider) {
+'use strict';
 
-    /* CODE FOR ASYNC MODULE LOADING */
-    planetApp._controller = planetApp.controller;
-    planetApp._service = planetApp.service;
-    planetApp._factory = planetApp.factory;
-    planetApp._directive = planetApp.directive;
+/* === Module Declaration === */
+angular
+    .module('planetApp', ['angularFileUpload', 'ngResource', 'ui.router'])
+    .config(Config);
 
-    planetApp.controller = function( name, constructor ) {
-        $controllerProvider.register( name, constructor );
-        return(this);
-    };
-
-    planetApp.service = function( name, constructor ) {
-        $provide.service( name, constructor );
-        return(this);
-    };
-
-    planetApp.factory = function( name, factory ) {
-        $provide.factory( name, factory );
-        return(this);
-    };
-
-    planetApp.directive = function( name, factory ) {
-        $compileProvider.directive( name, factory );
-        return(this);
-    };
-
+/* === Configuration === */
+function Config ($stateProvider, $urlRouterProvider) {
     /* ROUTING */
     $urlRouterProvider.otherwise('/user/dashboard');
 
@@ -87,12 +71,12 @@ planetApp.config([
                     views: {
                         'quests': {
                             templateUrl: 'static/quest/quest-central.html',
-                            controller: 'UsersQuestsCtrl',
+                            controller: 'UserQuestsCtrl',
                             controllerAs: 'userQuests'
                         },
                         'missions': {
                             templateUrl: 'static/mission/mission-central.html',
-                            controller: 'UsersMissionsCtrl',
+                            controller: 'UserMissionsCtrl',
                             controllerAs: 'userMissions'
                         }
                     }
@@ -100,13 +84,13 @@ planetApp.config([
             .state('user.profile', {
                 url: '/profile',
                 templateUrl: 'static/user/user-profile.html',
-                controller: 'UsersCtrl',
-                controllerAs: 'users'
+                controller: 'UserCtrl',
+                controllerAs: 'user'
             })
             .state('user.settings', {
                 url: '/settings',
                 templateUrl: 'static/user/settings.html',
-                controller: 'UsersSettingsCtrl',
+                controller: 'UserSettingsCtrl',
                 controllerAs: 'userSettings'
             })
         // Missions State
@@ -135,23 +119,6 @@ planetApp.config([
                     url: '/add-quests',
                     templateUrl: 'static/mission/form/add-quests.html',
                 })
-        // Organizations State
-        .state('organizations', {
-            abstract: true,
-            url: '/organizations',
-            template: '<ui-view/>'
-        })
-            .state('organizations.new', {
-                url: '/new',
-                templateUrl: 'static/organization/new-organization.html',
-                controller: 'NewOrganizationCtrl',
-                controllerAs: 'orgNew'
-            })
-                .state('organizations.new.basic', {
-                    url: '/basic-info',
-                    templateUrl: 'static/organization/new/basic-info.html',
-                })
-
         // Help State
         .state('help', {
             url: '/help',
@@ -159,5 +126,4 @@ planetApp.config([
             controller: 'HelpCtrl',
             controllerAs: 'help'
         });
-        
-}]);
+}

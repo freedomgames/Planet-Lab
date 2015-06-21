@@ -1,6 +1,14 @@
-'use strict';
+/**
+ * File: current_user.js
+ * Description: Contains a factory to return the current user's id
+ * Dependencies: $http, $q
+ * @ngInject
+ *
+ * @package Planet-Lab
+ */
 
-planetApp.factory('CurrentUser', ['$http', '$q', function($http, $q) {
+/* === Function Declaration === */
+function CurrentUserFcty ($http, $q) {
     // Functions for caching and retrieving the current user's id.
     var currentUserId = null;
 
@@ -11,12 +19,12 @@ planetApp.factory('CurrentUser', ['$http', '$q', function($http, $q) {
             var result = $q.defer();
             $http.get('/current-user').
                 success(function(data) {
-                    currentUserId = data.user_id;
-                    result.resolve(currentUserId);
-                }).
+                currentUserId = data.user_id;
+                result.resolve(currentUserId);
+            }).
                 error(function(data) {
-                    result.reject(data);
-                })
+                result.reject(data);
+            })
             return result.promise;
         }
     };
@@ -29,4 +37,8 @@ planetApp.factory('CurrentUser', ['$http', '$q', function($http, $q) {
     };
 
     return {getCurrentUserId: getCurrentUserId, logOut: logOut};
-}]);
+}
+
+/* === Factory Declaration === */
+angular.module('planetApp')
+    .factory('CurrentUserFcty', CurrentUserFcty);

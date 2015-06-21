@@ -1,0 +1,45 @@
+/**
+ * File: sass/base/_typography.scss
+ * Description: Sets up the typography for the site
+ * Dependencies: Google Fonts Open Sans
+ *
+ * @package Planet-Lab
+ */
+
+/* === Importing Open Sans === */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700);
+
+/* === Base Font Size === */
+html {
+  font-size: 20px;
+}
+
+/* === Base Font Class === */
+%type {
+  color: $black;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+}
+
+/* === Headings === */
+h1,
+h2 {
+  @extend %type;
+  font-size: 1.5rem;
+}
+h3,
+h4 {
+  @extend %type;
+  font-size: 1.2rem;
+}
+h5,
+h6 {
+  @extend %type;
+  font-size: .9rem;
+}
+
+/* === Main Type === */
+p,
+span {
+  @extend %type;
+  font-size: .7rem;
+}

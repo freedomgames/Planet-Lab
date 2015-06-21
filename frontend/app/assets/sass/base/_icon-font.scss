@@ -1,0 +1,103 @@
+@font-face {
+	font-family: 'planetlab';
+	src:url('fonts/planetlab.eot?-m9188t');
+	src:url('fonts/planetlab.eot?#iefix-m9188t') format('embedded-opentype'),
+		url('fonts/planetlab.woff?-m9188t') format('woff'),
+		url('fonts/planetlab.ttf?-m9188t') format('truetype'),
+		url('fonts/planetlab.svg?-m9188t#planetlab') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="pl-"], [class*=" pl-"] {
+	font-family: 'planetlab';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.pl-star:before {
+	content: "\e618";
+}
+.pl-volcano:before {
+	content: "\e600";
+}
+.pl-play:before {
+	content: "\e601";
+}
+.pl-house:before {
+	content: "\e602";
+}
+.pl-heart:before {
+	content: "\e603";
+}
+.pl-person:before {
+	content: "\e604";
+}
+.pl-book:before {
+	content: "\e605";
+}
+.pl-hand:before {
+	content: "\e606";
+}
+.pl-people:before {
+	content: "\e607";
+}
+.pl-sky:before {
+	content: "\e608";
+}
+.pl-plant:before {
+	content: "\e60a";
+}
+.pl-explore:before {
+	content: "\e60b";
+}
+.pl-exit:before {
+	content: "\e60c";
+}
+.pl-question:before {
+	content: "\e60d";
+}
+.pl-forest:before {
+	content: "\e60e";
+}
+.pl-wave:before {
+	content: "\e60f";
+}
+.pl-math:before {
+	content: "\e610";
+}
+.pl-construction:before {
+	content: "\e611";
+}
+.pl-organizations:before {
+	content: "\e612";
+}
+.pl-quest:before {
+	content: "\e613";
+}
+.pl-assembly:before {
+	content: "\e614";
+}
+.pl-roof:before {
+	content: "\e615";
+}
+.pl-science:before {
+	content: "\e616";
+}
+.pl-talk:before {
+	content: "\e617";
+}
+.pl-search:before {
+	content: "\e986";
+}
+.pl-cog:before {
+	content: "\e994";
+}

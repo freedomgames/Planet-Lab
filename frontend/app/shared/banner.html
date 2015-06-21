@@ -1,0 +1,94 @@
+<!-- BEGIN MAIN HEADER -->
+<nav class="header">
+    <!-- BEGIN TOP NAV -->
+    <div class="top-nav">
+        <!-- BEGIN TOP NAV LEFT -->
+        <div class="top-nav__left">
+            <a href="#" class="top-nav__logo-link">
+                <img class="top-nav__logo" src="static/assets/images/header-pl-logo.png" alt="PlanetLab" />
+                <h1 class="top-nav__title">Planet<strong>Lab</strong><span class="top-nav__beta">beta</span></h1>
+            </a>
+        </div>
+        <!-- END TOP NAV LEFT -->
+        <!-- BEGIN TOP NAV RIGHT -->
+        <div class="top-nav__right">
+            <ul class="top-nav__main-links">
+                <li class="top-nav__link top-nav__link--settings">
+                    <a ui-sref="user.profile"><span class="pl-cog top-nav__link-icon"></span>Settings</a>
+                </li>
+                <li class="top-nav__link top-nav__link--logout">
+                    <a href="#" ng-controller="UserLogoutCtrl as logout" ng-click="logout.logOut()"><span class="pl-exit top-nav__link-icon"></span>Sign Out</a>
+                </li>
+                <li class="top-nav__link top-nav__link--help">
+                    <a ui-sref="help"><span class="top-nav__link-icon">?</span>Help</a>
+                </li>
+            </ul>
+        </div>
+        <!-- END TOP NAV RIGHT -->
+    </div>
+    <!-- END TOP NAV -->
+    <!-- BEGIN MAIN NAV -->
+    <div class="main-nav">
+        <!-- BEGIN MAIN NAV TOP -->
+        <div class="main-nav__top">
+            <!-- BEGIN USER SECTION -->
+            <div class="main-nav__user" ng-controller="UserCtrl as user">
+                <div class="main-nav__user-avatar">
+                    <img ng-src="{{user.user.avatar_url}}" alt="User Avatar" />
+                </div>
+                <span ng-bind="user.user.name"></span>
+            </div>
+            <!-- END USER SECTION -->
+            <!-- BEGIN NAV SECTION -->
+            <div class="main-nav__sections">
+                <ul class="main-nav__sections-list">
+                    <li class="main-nav__section main-nav__section--explore">
+                        <a ui-sref="user.dashboard" class="main-nav__section-link" ui-sref-active="active">
+                            <span class="pl-explore main-nav__section-icon"></span>
+                            <span class="main-nav__section-title">Search &amp; Explore</span>
+                        </a>
+                    </li>
+                    <li class="main-nav__section main-nav__section--missions">
+                        <a ui-sref="quests.quests" class="main-nav__section-link" ui-sref-active="active">
+                            <span class="pl-quest main-nav__section-icon"></span>
+                            <span class="main-nav__section-title">Missions &amp; Quests</span>
+                        </a>
+                    </li>
+                    <li class="main-nav__section main-nav__section--teams" data-state="inactive">
+                        <a ui-sref="teams.teams" class="main-nav__section-link" ui-sref-active="active">
+                            <span class="pl-people main-nav__section-icon"></span>
+                            <span class="main-nav__section-title">Learning Teams</span>
+                        </a>
+                    </li>
+                    <li class="main-nav__section main-nav__section--assembly" data-state="inactive">
+                        <a ui-sref="assembly.assembly" class="main-nav__section-link" ui-sref-active="active">
+                            <span class="pl-assembly main-nav__section-icon"></span>
+                            <span class="main-nav__section-title">Science Assembly</span>
+                        </a>
+                    </li>
+                    <li class="main-nav__section main-nav__section--organizations" data-state="inactive">
+                        <a ui-sref="organizations.organizations" class="main-nav__section-link" ui-sref-active="active">
+                            <span class="pl-organizations main-nav__section-icon"></span>
+                            <span class="main-nav__section-title">Organizations</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END NAV SECTION -->
+            <!-- BEGIN SEARCH SECTION -->
+            <div class="main-nav__search">
+                <input type=text" name="search" id="search" placeholder="Search" class="main-nav__search-field input" />
+                <label for="search" ng-click="" class="main-nav__search-icon pl-search"></label>
+            </div>
+            <!-- END SEARCH SECTION -->
+        </div>
+        <!-- END MAIN NAV TOP -->
+        <!-- BEGIN MAIN NAV BOTTOM -->
+        <div class="main-nav__bottom">
+            <h2 class="main-nav__page-title">Page Title</h2>
+        </div>
+        <!-- END MAIN NAV BOTTOM -->
+    </div>
+    <!-- END MAIN NAV -->
+</nav>
+<!-- END MAIN HEADER -->

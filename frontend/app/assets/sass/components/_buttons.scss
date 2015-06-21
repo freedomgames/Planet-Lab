@@ -1,0 +1,43 @@
+/**
+ * File: sass/components/_buttons.scss
+ * Description: Contains all button styles for the site
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Button Placeholder === */
+%btn {
+  padding-top: .25rem;
+  padding-right: .5rem;
+  padding-bottom: .25rem;
+  padding-left: .5rem;
+  width: auto;
+
+  color: $white;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-size: .9rem;
+  text-decoration: none;
+  text-shadow: 0 .05rem .05rem rgba(0,0,0,.5);
+
+  border: .1rem solid $white;
+  border-radius: $small-border;
+  box-shadow: 0 .1rem .2rem rgba(0,0,0,.5);
+}
+
+/* === Button Styles === */
+.button {
+  @extend %btn;
+  background-color: $main-blue;
+
+  &:hover {
+    background-color: $main-medium-blue;
+  }
+  &:active {
+    background-color: $main-dark-blue;
+  }
+  &.inactive {
+    background-color: $main-light-blue;
+    cursor: pointer;
+  }
+}

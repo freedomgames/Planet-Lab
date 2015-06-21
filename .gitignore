@@ -32,3 +32,14 @@ node_modules
 # db schema images
 /schema.dot
 /schema.png
+
+# node
+.npm-debug.log
+
+# compiled assets
+scripts.js
+main.css
+main.css.map
+
+# sass cache
+.sass-cache/

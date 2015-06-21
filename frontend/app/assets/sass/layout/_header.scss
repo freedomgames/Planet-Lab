@@ -1,0 +1,277 @@
+/**
+ * File: sass/layout/_header.scss
+ * Description: Defines all the styles for the header of the application
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Header Top Nav === */
+.top-nav {
+  background: $main-dark-blue;
+}
+/* Left Side */
+.top-nav__left {
+  width: auto;
+}
+.top-nav__logo {
+  width: auto;
+}
+.top-nav__title {
+  margin-top: .6rem;
+  width: auto;
+  color: $white;
+  font-weight: 400;
+  text-transform: uppercase;
+
+  strong,
+  span {
+    display: inline;
+    float: none;
+    width: auto;
+  }
+  strong {
+    margin-left: .25rem;
+  }
+  span {
+    margin-left: .25rem;
+    vertical-align: super;
+    color: $white;
+    font-style: italic;
+    text-transform: lowercase;
+  }
+}
+/* Right Side */
+.top-nav__right {
+  float: right;
+  padding-top: .5rem;
+  padding-right: 1rem;
+  padding-bottom: .5rem;
+  width: auto;
+}
+.top-nav__link {
+  width: auto;
+
+  a {
+    color: $white;
+    font-family: 'Open Sans', 'Arial', sans-serif;
+    font-size: .8rem;
+    text-decoration: none;
+  }
+  .top-nav__link-icon {
+    display: inline-block;
+    float: none;
+    height: 1.6rem;
+    margin-right: .25rem;
+    padding: .3rem;
+    vertical-align: middle;
+    width: 1.6rem;
+    color: $white;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: $circle;
+  }
+}
+.top-nav__link--settings {
+  margin-right: .75rem;
+
+  .top-nav__link-icon {
+    background: $main-medium-blue;
+  }
+}
+.top-nav__link--logout {
+  margin-right: .75rem;
+
+  .top-nav__link-icon {
+    font-weight: bold;
+    background: $sections-red;
+  }
+}
+.top-nav__link--help {
+  .top-nav__link-icon {
+    font-weight: bold;
+    background: #777;
+  }
+}
+
+
+/* === Header Main Nav === */
+/* Top Section */
+.main-nav__top {
+  padding: .5rem 1.5rem;
+  background-color: $main-blue;
+  border-bottom: .25rem solid $main-medium-blue;
+}
+/* User Section */
+.main-nav__user {
+  position: absolute;
+  z-index: 2;
+  width: auto;
+  text-align: center;
+
+  .main-nav__user-avatar {
+    float: none;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  img {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 100%;
+  }
+  span {
+    float: none;
+    margin-top: .5rem;
+    width: auto;
+    color: $main-medium-blue;
+    font-family: 'Open Sans', 'Arial', sans-serif;
+    font-size: 1rem;
+  }
+}
+/* Sections Section */
+.main-nav__sections {
+  padding-left: 6rem;
+  width: auto;
+  text-align: center;
+}
+.main-nav__sections-list {
+  width: auto;
+  text-align: center;
+}
+.main-nav__section {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  overflow: hidden;
+  width: auto;
+  background: $white;
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+
+  @at-root #{&}--explore {
+    .main-nav__section-link {
+      background-color: $sections-teal;
+    }
+    .main-nav__section-title {
+      color: $sections-teal;
+    }
+  }
+  @at-root #{&}--missions {
+    .main-nav__section-link {
+      background-color: $sections-blue;
+    }
+    .main-nav__section-title {
+      color: $sections-blue;
+    }
+  }
+  @at-root #{&}--teams {
+    .main-nav__section-link {
+      background-color: $sections-purple;
+    }
+    .main-nav__section-title {
+      color: $sections-purple;
+    }
+  }
+  @at-root #{&}--assembly {
+    .main-nav__section-link {
+      background-color: $sections-red;
+    }
+    .main-nav__section-title {
+      color: $sections-red;
+    }
+  }
+  @at-root #{&}--organizations {
+    .main-nav__section-link {
+      background-color: $sections-orange;
+    }
+    .main-nav__section-title {
+      padding-top: 1.25rem;
+      color: $sections-orange;
+    }
+  }
+}
+.main-nav__section-link {
+  overflow: hidden;
+  width: auto;
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+
+  &.active {
+    -webkit-box-shadow: inset 0 -.2rem .15rem 0 rgba(0,0,0,.5),
+                        inset 0 .2rem .15rem 0 rgba(255,255,255,.5);
+       -moz-box-shadow: inset 0 -.2rem .15rem 0 rgba(0,0,0,.5),
+                        inset 0 .2rem .15rem 0 rgba(255,255,255,.5);
+            box-shadow: inset 0 -.2rem .15rem 0 rgba(0,0,0,.5),
+                        inset 0 .2rem .15rem 0 rgba(255,255,255,.5);
+  }
+  [data-state="inactive"] & {
+    opacity: .35;
+  }
+}
+.main-nav__section-link:hover {
+  .main-nav__section-icon {
+    opacity: .35;
+  }
+  .main-nav__section-title {
+    opacity: 1;
+  }
+}
+.main-nav__section-icon {
+  z-index: 2;
+  color: $white;
+  font-size: 3.5rem;
+}
+.main-nav__section-title {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  height: 100%;
+  padding-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background: $white;
+  background: rgba(255,255,255,.5);
+  opacity: 0;
+}
+/* Search Section */
+.main-nav__search {
+  float: right;
+  padding-top: 1rem;
+  width: auto;
+}
+.main-nav__search-icon {
+  position: absolute;
+  top: 1.2rem;
+  right: .2rem;
+  overflow: hidden;
+  padding-top: .25rem;
+  padding-right: .25rem;
+  padding-bottom: .25rem;
+  padding-left: .25rem;
+  width: auto;
+  color: $white;
+  font-size: .75rem;
+  background: $main-blue;
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+}
+
+
+/* === Header Bottom Nav === */
+.main-nav__bottom {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  padding-left: 8.5rem;
+  background: $main-light-blue;
+}
+.main-nav__page-title {
+  color: $main-dark-blue;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-weight: normal;
+}

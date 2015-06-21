@@ -1,0 +1,38 @@
+/**
+ * File: sass/components/_input.scss
+ * Description: Contains styles for input fields
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Input Placeholder === */
+%inputs {
+  padding-top: .25rem;
+  padding-right: .5rem;
+  padding-bottom: .25rem;
+  padding-left: .25rem;
+
+  color: $black;
+  font-family: 'Open Sans', 'Arial', sans-serif;
+  font-size: .7rem;
+
+  background-color: $white;
+  border: .05rem solid;
+  border-radius: $small-border;
+  box-shadow: inset 0 .1rem .1rem 0 rgba(0,0,0,.26);
+}
+
+/* === Input Styles === */
+.input {
+  @extend %inputs;
+  border-color: $main-light-blue;
+
+  &:focus {
+    border-color: $main-blue;
+  }
+  &.error,
+  &:focus.error {
+    border-color: $sections-red;
+  }
+}

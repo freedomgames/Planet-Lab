@@ -1,0 +1,30 @@
+/**
+ * File: sass/base/_reset.scss
+ * Description: Basic reset for the layout
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+* {
+  position: relative;
+
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  float: left;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  list-style: none;
+}

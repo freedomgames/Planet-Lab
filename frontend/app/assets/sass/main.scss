@@ -1,0 +1,37 @@
+/**
+ * File: sass/main.scss
+ * Description: Sourcemap for the SCSS of the project
+ * Dependencies: None
+ *
+ * @package Planet-Lab
+ */
+
+/* === Vendor === */
+/* Any vendor dependencies */
+
+/* === Helpers === */
+/* Vendor prefix functions, mixins, colors, breakpoints */
+@import 'helpers/borders';
+@import 'helpers/colors';
+
+/* === Base === */
+/* Reset/typography */
+@import 'base/general';
+@import 'base/icon-font';
+@import 'base/reset';
+@import 'base/typography';
+
+/* === Components === */
+/* Buttons, dropdowns, carousels, etc. */
+@import 'components/buttons';
+@import 'components/checkboxes';
+@import 'components/inputs';
+
+/* === Layout === */
+/* Grid, header, footer, sidebar, forms, parts of pages */
+@import 'layout/header';
+@import 'layout/item_card';
+@import 'layout/page';
+
+/* === Pages === */
+/* Specific styles for individual pages */

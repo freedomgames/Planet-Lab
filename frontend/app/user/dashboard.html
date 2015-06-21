@@ -1,3 +1,9 @@
-<div ui-view="quests"></div>
-<div ui-view="missions"></div>
+<div class="quests-missions page">
+    <div class="quests-missions__header">
+        <a class="button quest-missions__mission-btn" ui-sref="missions.form.basic">Create a Mission</a>
+        <a class="button quest-missions__quest-btn" ui-sref="quests.form.basic">Create a Quest</a>
+    </div>
+    <div ui-view="quests"></div>
+    <div ui-view="missions"></div>
+</div>
 
