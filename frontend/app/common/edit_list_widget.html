@@ -1,8 +1,10 @@
 <div ng-repeat="item in list track by $index">
-  <input id="{{listName}}-{{$index}}-input" type="text"
+          <input style="width:60%" id="{{listName}}-{{$index}}-input" type="text"
          ng-value="item" ng-blur="updateArrayItem($event, $index)">
   <button id="{{listName}}-{{$index}}-delete-btn"
           ng-click="deleteArrayItem($index)">Delete</button>
 </div>
 <button id="{{listName}}-add-another-btn"
         ng-click="newArrayItem()">Add Another</button>
+
+

@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row" style="background-color:#cce0f3; padding-left:10px;">
+        <h1>New<strong> Organization </strong> Setup </h1>
+        <h5> Thank you for taking time to register your organization with PlanetLAB. </h5>
+        <br>
+        <div class="col-sm-2">
+            <label> Organization ID: </label>
+            <h3> {{organizationNew.organizations.id}}</h3>
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <label> Creator ID: </label>
+            <h3> {{organizationNew.organizations.creator_id}}</h3>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-sm-5">
+        <label>Organization Name</label>
+        <input class="form-control" type="text" placeholder="Enter Name" ng-model="{{organizationNew.organizations.name}}">
+    </div>
+    </div>
+<br>
+<br>
+<div class="row">
+    <div class="col-sm-12">
+        <label> Organization Description</label>
+        <br>
+        <textarea class="form-control" id="plTextArea" ng-model="organizationNew.organizations.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
+        <span align="right"> {{200-(organizationNew.organizations.description).length}} left </span>
+    </div>
+</div>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-sm-6">
+        <p>Upload Your Logo:
+            <img class="quarter-img" ng-src="{{ organizationNew.organizations.icon_url }}">
+            <br/>
+            <input type="file" ng-file-select="organizationNew.onFileSelect($files)">
+        </p>
+    </div>
+</div>
+<br>
+<br/>
+<br/>
+<button class="btn btn-default" id="save-button" ng-click="organizationNew.organizations.save()">Save</button>
+</div>

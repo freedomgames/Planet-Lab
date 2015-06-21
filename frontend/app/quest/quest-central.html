@@ -1,0 +1,80 @@
+
+<!-- Preserve thumbnail structure -->
+
+
+<div class="container-fluid" >
+    <div class="row col-centered">
+
+        <div class="col-sm-3"> </div>
+        <div class="col-sm-8">
+            <h1>Your <strong> Quest & Mission </strong> Dashboard </h1> 
+        </div>
+    </div>
+    <div class="row col-centered">
+        <div class="col-sm-3"> </div>
+        <div class="col-sm-3">
+            <a style="margin:2%" ui-sref="quests.form.basic"
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon " aria-hidden="true"></span> Create New Quest
+        </button> </a> </div> 
+        <div class="col-sm-1"> </div>
+        <div class="col-sm-3">
+            <a style="margin:2%" ui-sref="missions.form.basic"
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon " aria-hidden="true"></span> Create New Mission
+</button> </a> </div> </div> </div>
+
+
+<h5 style="color:gray" >Quest Authorship:</h5>  <h3>You've authored {{ userQuests.quests.length }} quests!</h3>
+
+<ul>
+    <li   class="thumbnails" 
+    ng-repeat="quest in userQuests.quests">
+
+    <div class="thumbnail" style="float:left; background-color:#cce0f3; width:16%;">
+        <div style="background-color:#6183A6;"> 
+            <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/quest-identifier-icon.png"> </span>
+            <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/generic.png"> </span>
+            <span > <button type="button" class="btn " style="background-color:#6183A6;"></button></span> 
+            <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/favorite-on.png"> </span> 
+        </div>
+        <a ui-sref="quests.quest({id: {{quest.id}}})">
+            <img class="img-rounded" style="height:100px;" ng-src="{{quest.icon_url}}"  alt="...">
+            <div class="caption">
+                <!--    <p style="float:right;">Quest #{{quest.id}} </p> -->
+                <h5> <a ui-sref="quests.quest({id: {{quest.id}}})">{{ quest.name }}</a> </h5>
+                <p style="font-size:.8em;">{{quest.summary}}</p>
+            </div>
+            <div  style="background-color:#b7c9da; clear:both; width:100%; float:left;"> 
+                <span class="img-circle badge  quarter-img" style="background-color:#b7c9da;">
+                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/at-home-icon.png"> 
+                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/reading-icon.png"> 
+                    <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/calculate-icon.png"> 
+                    <span class="badge" style="background-color:white; color:black;">{{quest.hours_required }}:{{quest.minutes_required }}</span> 
+                    <span class="badge" style="background-color:white; color:black;">{{quest.max_grade_level}}</span> 
+                </div>
+                <div style="background-color:#194f87;"> 
+                    <p><a ui-sref="quests.quest({id: {{quest.id}}})" class="btn btn-primary" role="button">Edit</a> 
+                    <span class="img-circle badge  quarter-img" style="background-color:#194f87;">
+                        <img style="width:60%; " src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png"> 
+                        <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                        <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                        <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                    </span>   </p>
+                </div>
+               
+            </div> 
+        </div>
+    </div>
+</div>
+</li>
+  </ul>
+</div>
+</div>
+</div>
+<br>
+<h3 ng-show="!(userQuests.quests.length)">No Quests!</h3> 
+

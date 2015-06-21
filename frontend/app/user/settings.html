@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row" style="background-color:#cce0f3; padding-left:10px;">
+        <h1> USER SETTINGS :is this the same as user.profile?   </h1>
+        <h5> what data goes here?</h5><br>
+
+        <div class="col-sm-5" >
+            <label> User Name: </label>
+            <h3> {{userSettings.user.username}}</h3>
+        </div>
+
+        <div class="col-sm-3">
+            <img class="img-circle branding-img" ng-src="{{userSettings.user.avatar_url}}"> 
+        </div>
+
+        <div class="col-sm-2"> </div>
+        <div class="col-sm-2" >
+            <label> User ID: </label>
+            <h3>{{userSettings.user.id}}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4> More about You </h4>
+        <div class="col-sm-5" >
+            <label>First Name</label>
+            <input class="form-control" type="text"  ng-model="userSettings.user.name" placeholder="Enter First Name">
+        </div>
+
+        <div class="col-sm-1" ></div>
+
+        <div class="col-sm-5" >       
+            <label>Email</label>
+            <input  class="form-control" type="Email" placeholder="Enter Email" ng-model="userSettings.user.email"> 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" >       
+            <label> What is your vision for PlanetLAB?</label> <br>
+            <textarea class="form-control" ng-model="userSettings.user.description" id="plTextArea" ng-trim="false" maxlength="300" placeholder="Inspire Us @  PlanetLAB" rows="5"></textarea>
+            <span align="right"> {{300-(userSettings.user.description).length}} left </span>
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6" >       
+            <p>Change Your Avatar:
+                <img class="quarter-img" ng-src="{{ userSettings.user.avatar_url }}">
+                <br/>
+                <input type="file" ng-file-select="userSettings.onFileSelect($files)">
+            </p>
+        </div> 
+    </div>
+
+    <button class="btn btn-default" id="save-button" ng-click="userSettings.save()">Save</button>
+</div>

@@ -1,0 +1,117 @@
+<h1> Quest Teacher Support </h1>
+<p> Add teacher detail for your quest. </p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-5" >
+      <h3>Facilitation Tips</h3>
+        <label>Introduction</label> 
+         <textarea class="form-control" id="plTextArea"  ng-model="quest.quest.mentor_guide" ng-trim="false" maxlength="300" placeholder="Enter notes on how to introduce this quest." rows="5"></textarea>
+          <span align="right"> {{300-(quest.quest.mentor_guide).length}} left </span>
+    </div>
+
+      <div class="col-sm-1" ></div>
+    <div class="col-sm-5" >  
+      <h3>Curriculum Standards</h3>     
+        <label>Common Core State Standards (CCSS)</label> 
+          <select >
+            <option ccss="1">Choose</option>
+            <option ccss="1">standard 1</option>
+            <option ccss="2">standard 2</option>
+            <option ccss="3">standard 3</option>
+            <option ccss="4">standard 4</option>
+            <option ccss="5">standard 5</option>
+          </select>
+  </div>
+</div>
+  <br>
+  
+  <div class="row" >
+     <div class="col-sm-6" ></div>
+     <div class="col-sm-5" >     
+        <label>Next Gen Science Standards (NGSS)</label> 
+          <select >
+            <option ngss="1">Choose</option>
+            <option ngss="1">standard 1</option>
+            <option ngss="2">standard 2</option>
+            <option ngss="3">standard 3</option>
+            <option ngss="4">standard 4</option>
+            <option ngss="5">standard 5</option>
+          </select>
+  </div>
+    
+  </div>
+
+<br>
+<div class="row">
+    <div class="col-sm-5" >
+          <label> Tip #1</label>
+          <input class="form-control" type="text"  placeholder="Enter Question">
+          </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-5" >
+          <label> Tip #2</label>
+          <input class="form-control" type="text"  placeholder="Enter Question">
+          </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-5" >
+          <label> Tip #3</label>
+          <input class="form-control" type="text"  placeholder="Enter Question">
+          </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-5" >
+          <label> Tip #4</label>
+          <input class="form-control" type="text"  placeholder="Enter Question">
+          </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-5" >
+          <label> Tip #5</label>
+          <input class="form-control" type="text"  placeholder="Enter Question">
+          </div>
+    </div>
+
+    <br>
+    <br>
+<h3>Assessment Rubrics</h3>
+  <div class="row" >
+    <div class="col-sm-8" >
+      <label>Rubric </label>
+        <input class="form-control" type="text"  placeholder="Enter Rubric"> 
+          </div> 
+    <div class="col-sm-1" >
+      <label> Weight </label>
+        <input class="form-control" type="text"  placeholder=" % "> 
+          </div> 
+</div>
+  <div class="row" >
+    <div class="col-sm-8" >
+      <label>Rubric </label>
+        <input class="form-control" type="text"  placeholder="Enter Rubric"> 
+          </div> 
+    <div class="col-sm-1" >
+      <label> Weight </label>
+        <input class="form-control" type="text"  placeholder=" % "> 
+          </div> 
+</div>
+  <div class="row" >
+    <div class="col-sm-8" >
+      <label>Rubric </label>
+        <input class="form-control" type="text"  placeholder="Enter Rubric"> 
+          </div> 
+    <div class="col-sm-1" >
+      <label> Weight </label>
+        <input class="form-control" type="text"  placeholder=" % "> 
+          </div> 
+  </div>
+  </div>  <!-- end of container element -->
+<br>
+<a ui-sref="quests.form.review" class="btn btn-default" role="button">Finalize Quest</a>
+</div>
+
+
+

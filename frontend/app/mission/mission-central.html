@@ -1,0 +1,57 @@
+
+
+<h5 style="color:gray;  clear: both;" >Mission Authorship:</h5>  
+<h3>You've authored {{ userMissions.missions.length }} missions!</h3>  
+<div class="container-fluid">
+<ul>
+<li   class="thumbnails" 
+  ng-repeat="quest in userMissions.missions">
+
+    <div class="thumbnail" style="float:left; background-color:#cce0f3; width:16%;">
+      <div style="background-color:#6183A6;"> 
+          <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/mission-identifier-icon.png"> </span>
+          <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/generic.png"> </span>
+                <span > <button type="button" class="btn " style="background-color:#6183A6;"></button></span> 
+          <span class="badge img-circle quarter-img" style="background-color:#6183A6;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/search/favorite-on.png"> </span> 
+      </div>
+    <a ui-sref="userMissions.missions.id({id: {{userMissions.missions.id}}})">
+        <img class="img-rounded branding-img" ng-src="https://s3-us-west-2.amazonaws.com/itreeware/FreedomGames_Logo.png"  alt="mission img">
+    <div class="caption">
+    <!--    <p style="float:right;">Quest #{{quest.id}} </p> -->
+           <h5> <a ui-sref="missions.mission({id: {{mission.id}} })">{{ userMissions.missions.name }}</a> </h5>
+        <p style="font-size:.8em;">{{userMissions.missions.description}}</p>
+</div>
+       <div  style="background-color:#b7c9da; clear:both; width:100%; float:left;"> 
+          <span class="img-circle badge  quarter-img" style="background-color:#b7c9da;">
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/at-home-icon.png"> 
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/reading-icon.png"> 
+                <img src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/calculate-icon.png"> 
+                <span class="badge" style="background-color:white; color:black;"> 1 </span> 
+                <span class="badge" style="background-color:white; color:black;">25</span> 
+      </div>
+    <div style="background-color:#194f87;"> 
+        <p><a ui-sref="missions.mission({id: {{mission.id}} })" class="btn btn-primary" role="button">View</a> 
+        <span class="img-circle badge  quarter-img" style="background-color:#194f87;">
+                <img style="width:60%; " src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png"> 
+                <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                <img style="width:60%;" src="https://s3-us-west-2.amazonaws.com/itreeware/search/rating-on.png">  
+                </span>  
+                                <p><a href="#" class="btn btn-primary" role="button">Quest Links</a> 
+              </div>            
+       </p>
+    </div> 
+  </div>
+    </div>
+  </div>
+</li>
+  </ul>
+
+
+<h3 ng-show="!userMissions.missions.length">No Missions!</h3>
+</div>
+
+

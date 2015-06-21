@@ -8,45 +8,44 @@ var questCtrlUtil = {
 };
 
 planetApp.controller('QuestCtrl', [
-    '$scope', '$stateParams', 'ResourceFactory', 'S3',
-    function($scope, $stateParams, ResourceFactory, S3) {
-        $scope.quest = ResourceFactory('quests').get({id: $stateParams.id})
+    '$scope', '$stateParams', 'ResourceFactory', 'S3', 
+    function($scope, $stateParams, ResourceFactory, S3 ) {
+        this.quest = ResourceFactory('quests').get({id: $stateParams.id})
         // have to wrap $scope.quest.$put in a new function as the promise
         // won't be back in time to do a $scope.save = $scope.quest.$put
-        $scope.save = function() {$scope.quest.$put()};
-        $scope.onFileSelect = function($files) {
-            questCtrlUtil.upload($files, $scope.quest, S3);
+        this.save = function() {this.quest.$put()};
+        this.onFileSelect = function($files) {
+            questCtrlUtil.upload($files, this.quest, S3);
         };
+        this.deleteQuest = function() {this.quest.$delete()};
 }]);
 
-planetApp.controller('NewQuestCtrl', [
-    '$scope', 'ResourceFactory', 'S3',
-    function($scope, ResourceFactory, S3) {
-        $scope.quest = new (ResourceFactory('quests'));
-        $scope.save = function() {
-            if ($scope.quest.id) {
-                $scope.quest.$put();
+planetApp.controller('QuestFormCtrl', [
+    '$scope', 'ResourceFactory', 'S3', '$stateParams', '$state',
+    function($scope, ResourceFactory, S3, $stateParams, $state) {
+        if ($state.is('quests.form')) {
+            $state.go('quests.form.basic');
+        }
+        if ($stateParams.id) {
+            this.quest = ResourceFactory('quests').get({id: $stateParams.id});
+        } else {
+            this.quest = new (ResourceFactory('quests'));
+        }
+        this.save = function() {
+            if (this.quest.id) {
+                this.quest.$put();
             } else {
-                $scope.quest.$save();
+                this.quest.$save();
             }
         };
-        $scope.onFileSelect = function($files) {
-            if (! $scope.quest.id) {
+        this.onFileSelect = function($files) {
+            if (!this.quest.id) {
                 // We need an id to upload quest assets to S3
-                $scope.quest.$save().then(function() {
-                    questCtrlUtil.upload($files, $scope.quest, S3);
+                this.quest.$save().then(function(quest) {
+                    questCtrlUtil.upload($files, quest, S3);
                 });
             } else {
-                questCtrlUtil.upload($files, $scope.quest, S3);
+                questCtrlUtil.upload($files, this.quest, S3);
             }
         };
-}]);
-
-planetApp.controller('UsersQuestsCtrl', [
-    '$scope', '$stateParams', 'CurrentUser', 'ManyToOneResourceFactory',
-    function($scope, $stateParams, CurrentUser, ManyToOneResourceFactory) {
-        CurrentUser.getCurrentUserId().then(function(userId) {
-            $scope.quests = ManyToOneResourceFactory('quests', 'users').query(
-                {parentId: userId});
-        });
 }]);

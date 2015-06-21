@@ -1,0 +1,106 @@
+<nav class="navbar navbar-default img-rounded" style="background-color:#26294A;">
+<div class="container" >
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-inner" style="line-height:35px;" >
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://www.planetarylaboratory.org/">
+                <img alt="Brand" style="z-index:-1;" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-pl-logo.png">
+            </a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right" style="color:#FFF;">
+                <li class="active" <a ui-sref="user.profile">
+                    <img class="quarter-img" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/settings-icon.png">
+                    <span style="float:right;">
+                   <label style="margin-right:20px;">Settings</label></span></li>
+                </a>
+                <li class="active" <a href="#" class="btn btn-default" ng-controller="LogOutCtrl as logout" role="button" ng-click="logout.logOut()">
+                    <img class="quarter-img" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-signout-icon.png">
+                    <span style="float:right; ">
+                    <label style="margin-right:20px;">Sign Out</label></span></li>
+                </a>
+                <li class="active" <a ui-sref="help">
+                    <img class="quarter-img" src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-help-icon.png">
+                    <span style="float:right;">
+                   <label style="margin-right:20px;">Help</label></span></li>
+            </ul>
+    </div></div>
+ 
+        <div class="container-fluid img-rounded" style="background-color:#cce0f3; width:99%; margin:1%; border-style:groove; border-color:#6183A6; ">
+            <div class="navbar-inner" style="background-color:#cce0f3; ">
+                <div class="col-md-3" style="background-color: #cce0f3; margin:5px;"> <a ui-sref="user.profile">
+                        <span style="float:right; "><img class="branding-img img-circle" ng-src="{{users.user.avatar_url}}"><label >Latoria</label></span></a></div> 
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"  onClick="alert('SEARCH SUBMITTED')">Submit</button>
+                </form>
+
+                <form class="navbar-form navbar-default" style="background-color: #cce0f3;">
+                    <div class="col-sm-1" style="padding-top:20px;">
+                        <div id="planetlab-reactive-explore" 
+                            ng-init="imgsrc_explore='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-explore-icon-idle.png'" 
+                            ng-mouseover="imgsrc_explore='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-explore-icon-hover.png'" 
+                            ng-mouseleave="imgsrc_explore='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-explore-icon-idle.png'"
+                            ng-click="imgsrc_explore='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-explore-icon-current.png'">
+                            <img ng-src="{{imgsrc_explore}}" />
+                            <div>Explorer</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1" style="padding-top:20px;">
+                        <div id="planetlab-reactive-missions" 
+                            ng-init="imgsrc_missions='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-missions-icon-idle.png'" 
+                            ng-mouseover="imgsrc_missions='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-missions-icon-hover.png'" 
+                            ng-mouseleave="imgsrc_missions='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-missions-icon-idle.png'"
+                            ng-click="imgsrc_missions='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-missions-icon-current.png'">
+                            <a ui-sref="user.dashboard.views"><img ng-src="{{imgsrc_missions}}" /> </a>
+                            <div>Builder</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1" style="padding-top:20px;">
+                        <div id="planetlab-reactive-teams" 
+                            ng-init="imgsrc_teams='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-teams-icon-idle.png'" 
+                            ng-mouseover="imgsrc_teams='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-teams-icon-hover.png'" 
+                            ng-mouseleave="imgsrc_teams='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-teams-icon-idle.png'"
+                            ng-click="imgsrc_teams='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-teams-icon-current.png'">
+                            <img ng-src="{{imgsrc_teams}}" />
+                            <div>Teams</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1" style="padding-top:20px;">
+                        <div id="planetlab-reactive-assembly" 
+                            ng-init="imgsrc_assembly='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-assemblies-icon-idle.png'" 
+                            ng-mouseover="imgsrc_assembly='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-assemblies-icon-hover.png'" 
+                            ng-mouseleave="imgsrc_assembly='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-assemblies-icon-idle.png'"
+                            ng-click="imgsrc_assembly='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-assemblies-icon-current.png'">
+                            <img ng-src="{{imgsrc_assembly}}" />
+                            <div>Assembly</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1" style="padding-top:20px;">
+                        <div id="planetlab-reactive-orgs" 
+                            ng-init="imgsrc_orgs='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-orgs-icon-idle.png'" 
+                            ng-mouseover="imgsrc_orgs='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-orgs-icon-hover.png'" 
+                            ng-mouseleave="imgsrc_orgs='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-orgs-icon-idle.png'"
+                            ng-click="imgsrc_orgs='https://s3-us-west-2.amazonaws.com/itreeware/banner/header-orgs-icon-current.png'">
+                            <a ui-sref="organizations.new.basic"> <img ng-src="{{imgsrc_orgs}}" /> </a>
+                            <div>Organizations</div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+  
+</div>
+</div>
+    </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>

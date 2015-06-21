@@ -1,13 +1,63 @@
+<!-- This is used only by the flask user management function.  This is Flask-Jinja Template controlled  -->
+<!-- The PlanetLAB app is controlled by VIEW app.html & MODEL app.js -->
+
 <!doctype html>
 <html>
+
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="PlanetLAB_Landing_Page">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="shortcut icon" href="http://static.wixstatic.com/ficons/c7673c_8e985095d4237d5e976870a290c8d7b7_fi.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" type="type/css">
+        <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload-shim.min.js"></script>
+        <script src="static/bower_components/angular/angular.min.js"></script>
+        <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.min.js"></script>
+        <script src="static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="static/bower_components/angular-resource/angular-resource.min.js"></script>
+
+             <!--Load the PlanetLAB app -->
+        <script src="static/app.js"></script>
+        <script src="static/common/current_user.js"></script>
+        <script src="static/common/resource.js"></script>
+        <script src="static/common/s3.js"></script>
+        <script src="static/common/widgets.js"></script>
+        <script src="static/quest/controller.js"></script>
+        <script src="static/user/controller.js"></script>     
+        <script src="static/mission/controller.js"></script>     
+        <script src="static/organization/controller.js"></script>     
         <title>PlanetLab</title>
-    </head>
-    <body>
-      <h1>Welcome Friends!</h1>
-      <a href="/app"><h3>See the app!</h3></a>
+</head>
+      <body class="planetlab-signup-img" >  
+
+<nav class="navbar navbar-default" style="background-color:#26294A;border-style:none; width:40%;">
+  <div class="container-fluid" >
+   <div class="row">
+   <div class="col-sm-11">
+      <div class="navbar-inner" style="line-height:35px;" >
+        <div class="navbar-header">
+           <a class="navbar-brand" href="http://www.planetarylaboratory.org/">
+        <img alt="PlanetLAB Branding"  style="margin-left:25px;  " src="https://s3-us-west-2.amazonaws.com/itreeware/banner/header-pl-logo.png"></a>
+        <br> <br>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="row">
+
+   <div class="container-fluid" style="background-color:#cce0f3; width:99%; margin:1%; border-style: solid; border-color:#6183A6;"> 
+      <div class="navbar-inner" style="background-color:#cce0f3; ">
+      <div class="col-sm-4" style="background-color: #cce0f3"> <a class="landing-link" href="/app"><img class="branding-img" src="https://s3-us-west-2.amazonaws.com/itreeware/FreedomGames_Logo.png"> </a></div>
+          
+      <div class="col-sm-8" ; > <a class="landing-link" href="/app"><h3 style="color:#292E37;"><strong>Go PlanetLab</strong></h3></a></div>
+    </div>
+
+</div>
+
+    </div><!-- /.container -->
+</nav>
+
+</div>
     </body>
 </html>

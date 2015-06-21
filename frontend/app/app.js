@@ -1,5 +1,5 @@
 var planetApp = angular.module('planetApp', [
-        'ui.router', 'ngResource', 'xeditable', 'angularFileUpload']);
+        'ui.router', 'ngResource', 'angularFileUpload']);
 
 planetApp.config([
     '$controllerProvider', '$provide', '$compileProvider', '$stateProvider',
@@ -33,22 +33,131 @@ planetApp.config([
     };
 
     /* ROUTING */
-    $urlRouterProvider.otherwise('/user/quests');
+    $urlRouterProvider.otherwise('/user/dashboard');
 
     $stateProvider
-        .state('newQuest', {
-            url: '/quests/new',
-            templateUrl: 'static/quest/view.html',
-            controller: 'NewQuestCtrl'
+        // Quests State
+        .state('quests', {
+            abstract: true,
+            url: '/quests',
+            template: '<ui-view/>'
         })
-        .state('quest', {
-            url: '/quests/:id',
-            templateUrl: 'static/quest/view.html',
-            controller: 'QuestCtrl'
+            .state('quests.quest', {
+                url: '/:id',
+                templateUrl: 'static/quest/view.html',
+                controller: 'QuestCtrl',
+                controllerAs: 'quest'
+            })
+            .state('quests.form', {
+                url: '/form/:id',
+                templateUrl: 'static/quest/quest-form.html',
+                controller: 'QuestFormCtrl',
+                controllerAs: 'questForm'
+            })
+                .state('quests.form.basic', {
+                    url: '/basic-info',
+                    templateUrl: 'static/quest/form/basic-info.html'
+                })
+                .state('quests.form.activity', {
+                    url: '/activity',
+                    templateUrl: 'static/quest/form/activity-details.html'
+                })
+                .state('quests.form.teachers', {
+                    url: '/teacher',
+                    templateUrl: 'static/quest/form/for-teachers.html'
+                })
+                .state('quests.form.review', {
+                    url: '/review',
+                    templateUrl: 'static/quest/form/review-quest.html'
+                })
+        // User State
+        .state('user', {
+            abstract: true,
+            url: '/user',
+            template: '<ui-view/>'
         })
-        .state('userQuests', {
-            url: '/user/quests',
-            templateUrl: 'static/quest/list_view.html',
-            controller: 'UsersQuestsCtrl'
+            .state('user.dashboard', {
+                abstract: true,
+                templateUrl: 'static/user/dashboard.html',
+                resolve: {
+                }
+            })
+                .state('user.dashboard.views', {
+                    url: '/dashboard',
+                    views: {
+                        'quests': {
+                            templateUrl: 'static/quest/quest-central.html',
+                            controller: 'UsersQuestsCtrl',
+                            controllerAs: 'userQuests'
+                        },
+                        'missions': {
+                            templateUrl: 'static/mission/mission-central.html',
+                            controller: 'UsersMissionsCtrl',
+                            controllerAs: 'userMissions'
+                        }
+                    }
+                })
+            .state('user.profile', {
+                url: '/profile',
+                templateUrl: 'static/user/user-profile.html',
+                controller: 'UsersCtrl',
+                controllerAs: 'users'
+            })
+            .state('user.settings', {
+                url: '/settings',
+                templateUrl: 'static/user/settings.html',
+                controller: 'UsersSettingsCtrl',
+                controllerAs: 'userSettings'
+            })
+        // Missions State
+        .state('missions', {
+            abstract: true,
+            url: '/missions',
+            template: '<ui-view/>'
+        })
+        .state('missions.mission', {
+                url: '/:id',
+                templateUrl: 'static/mission/view.html',
+                controller: 'MissionCtrl',
+                controllerAs: 'mission'
+            })
+            .state('missions.form', {
+                url: '/form/:id',
+                templateUrl: 'static/mission/mission-form.html',
+                controller: 'MissionFormCtrl',
+                controllerAs: 'missionForm'
+            })
+                .state('missions.form.basic', {
+                    url: '/basic-info',
+                    templateUrl: 'static/mission/form/basic-info.html',
+                })
+                .state('missions.form.quests', {
+                    url: '/add-quests',
+                    templateUrl: 'static/mission/form/add-quests.html',
+                })
+        // Organizations State
+        .state('organizations', {
+            abstract: true,
+            url: '/organizations',
+            template: '<ui-view/>'
+        })
+            .state('organizations.new', {
+                url: '/new',
+                templateUrl: 'static/organization/new-organization.html',
+                controller: 'NewOrganizationCtrl',
+                controllerAs: 'orgNew'
+            })
+                .state('organizations.new.basic', {
+                    url: '/basic-info',
+                    templateUrl: 'static/organization/new/basic-info.html',
+                })
+
+        // Help State
+        .state('help', {
+            url: '/help',
+            templateUrl: 'static/help/help.html',
+            controller: 'HelpCtrl',
+            controllerAs: 'help'
         });
+        
 }]);

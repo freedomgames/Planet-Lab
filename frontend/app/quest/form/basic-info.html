@@ -1,0 +1,178 @@
+
+
+<h1> Create a New Quest </h1>
+<p> Please fill out the requested information to author a new quest. </p>
+
+    <div class="container">
+      <h3>{{users.user.name}} Here's Your Chance to Contribute</h3>
+
+  <div class="row">
+    <div class="col-sm-5" >
+            <label>Original Author's Name</label>
+            <input class="form-control" type="text"   ng-model="questForm.users.name" placeholder="Enter Name">
+    </div>
+        <div class="col-sm-1" ></div>
+    <div class="col-sm-5" >       
+            <label>Organization Name</label>
+            <input class="form-control " type="text"  ng-model="questForm.quest.organization" placeholder="Enter Organization"></div>
+  </div>
+  <br>
+  <div  style="background-color:#cce0f3; padding:10px; margin-right:40px;">  
+  <div class="row">
+    <div class="col-sm-5" >
+            <label> Quest Title</label>
+            <input class="form-control" type="text" ng-model="questForm.quest.name" placeholder="Enter Quest Title">
+    </div>
+        <div class="col-sm-1" ></div>
+
+        <div class="col-sm-5" >       
+          <label> Quest Summary</label> <br>
+          <textarea class="form-control" id="plTextArea" ng-model="questForm.quest.summary" ng-trim="false" maxlength="100" placeholder="Enter Summary" rows="5"></textarea>
+          <span align="right"> {{100-(questForm.quest.summary).length}} left </span>
+        </div> 
+  </div>
+
+<br>
+<div class="row">
+    <div class="col-sm-4" >
+  <label> Quest Icon
+      <img ng-src="{{questForm.quests.icon_url}}">
+<br/>
+<input type="file" ng-file-select="questForm.onFileSelect($files)">
+</label></div>
+</div>
+</div>
+     <div class="row">
+    <div class="col-sm-11" >
+      <br>
+            <label> Keywords</label>
+            <input class="form-control" type="text" ng-model="quest_tags.name" placeholder="Enter Quest Keywords">
+    </div> 
+  </div>
+  <br>
+   
+   <div style="width:90%; padding:10px;">
+  <div class="row">
+    <label> Quest Identifiers </label>
+    <div style="background-color:#cce0f3; padding:20px; margin-right:40px;">
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="1" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/lab-report-icon.png" title="lab report"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="2" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/group-icon.png" title="group work"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="3"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/discuss-icon.png" title="discussion"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="4"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/reading-icon.png" title="research"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="5"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/video-icon.png" title="video"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="6"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/at-home-icon.png" title="at home"></div>
+     
+    <div class="row">
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="7"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/model-icon.png" title="model"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="8"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/individual-work-icon.png" title="individual work"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="9"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/hands-on-icon.png" title="hands on"></div>
+    <div class="col-sm-2" >
+      <input type="radio" QI="QI" value="10"  ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/calculate-icon.png" title="calculations"></div>
+    <div class="col-sm-2" >
+    <input type="radio" QI="QI" value="11" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/assessment-icon.png" title="assessment"></div>
+    <div class="col-sm-2" >
+    <input type="radio" QI="QI" value="12" ><img class="img-circle" src="https://s3-us-west-2.amazonaws.com/itreeware/questBuilder/outdoor-icon.png" title="outdoor"></div>
+  </div>
+</div>
+</div>
+</div>
+<br>
+<hr>
+<label>Additional Attributes</label> 
+
+<div class="row">
+    <div class="col-sm-2" >
+      <label>Min Grade</label> 
+          <select ng-model="questForm.quest.min_grade_level">
+            <option grade="1">Choose</option>
+            <option grade="1">1</option>
+            <option grade="2">2</option>
+            <option grade="3">3</option>
+            <option grade="4">4</option>
+            <option grade="5">5</option>
+            <option grade="6">6</option>
+            <option grade="7">7</option>
+            <option grade="8">8</option>
+            <option grade="9">9</option>
+            <option grade="10">10</option>
+            <option grade="11">11</option>
+            <option grade="12">12</option>
+          </select>
+      </div>
+    <div class="col-sm-2" >
+      <label>Max Grade</label> 
+           <select ng-model="questForm.quest.max_grade_level">
+            <option grade="1">Choose</option>
+            <option grade="1">1</option>
+            <option grade="2">2</option>
+            <option grade="3">3</option>
+            <option grade="4">4</option>
+            <option grade="5">5</option>
+            <option grade="6">6</option>
+            <option grade="7">7</option>
+            <option grade="8">8</option>
+            <option grade="9">9</option>
+            <option grade="10">10</option>
+            <option grade="11">11</option>
+            <option grade="12">12</option>
+          </select>
+      </div>
+    <div class="col-sm-2" >
+     <label>Science Sphere</label> 
+            <select >
+            <option sphere="Atmosphere">Choose</option>
+            <option sphere="Atmosphere">Atmosphere</option>
+            <option sphere="Magnetophere">Magnetophere</option>
+            <option sphere="Geosphere">Geosphere</option>
+            <option sphere="Hydrosphere">Hydrosphere</option>
+            <option sphere="Biosphere">Biosphere</option>
+            <option sphere="Genosphere">Genosphere</option>
+            <option sphere="Sociophere">Sociophere</option>
+            <option sphere="Medicosphere">Medicosphere</option>
+            <option sphere="Technosphere">Technosphere</option>
+          </select>
+
+      </div>
+    <div class="col-sm-2" >
+    <label>Season of the Year</label> 
+            <select>
+            <option seasons="fall">Choose</option>
+            <option seasons="fall">Fall</option>
+            <option seasons="summer">Summer</option>
+            <option seasons="spring">Spring</option>
+            <option seasons="winter">Winter</option>
+            <option seasons="all-year">All Year</option>
+          </select>
+      </div>
+    <div class="col-sm-2" >
+      <label>Region of USA</label> 
+            <select>
+            <option region="fall">Choose</option>
+            <option region="northeast">Northeast</option>
+            <option region="southeast">Southeast</option>
+            <option region="midwest">Midwest</option>
+            <option region="west">West</option>
+            <option region="southwest">Southwest</option>
+            <option region="nationwide">Nationwide</option>
+          </select>
+    </div>
+
+</div>
+
+
+<br/><br/>
+
+<a ui-sref="quests.form.activity" class="btn btn-default" role="button">Continue to Next Step</a>
+
+</div>
+
+

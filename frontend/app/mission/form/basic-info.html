@@ -1,0 +1,32 @@
+<h1> Create a New Mission </h1>
+<p> Please fill out the requested information to author a new mission. Keep in mind that in PlanetLAB- Missions combine many quests to form a complete learning experience.</p>
+
+    <div class="container">
+  <div class="row">
+    <div class="col-sm-5" >
+            <label>Mission Name</label>
+            <input class="form-control" type="text"   ng-model="missionForm.mission.name" placeholder="Enter Name"> </div>
+    <div class="col-sm-1" ></div>
+     <div class="col-sm-2" >
+            <label> Mission Points</label>
+            <input class="form-control" type="text" ng-model="missionForm.mission.points" placeholder="Enter Points">
+    </div>
+
+  <br> <br>
+  
+  <div class="row">
+     <div class="col-sm-5" >       
+          <label> Mission Description</label> <br>
+          <textarea class="form-control" id="plTextAreaMission" ng-model="missionForm.mission.description" ng-trim="false" maxlength="200" placeholder="Enter Description" rows="5"></textarea>
+          <span align="right"> {{200-(missionForm.mission.description).length}} left </span>
+        </div>
+
+  </div>
+
+<br/><br/>
+<button ui-sref="missions.form.quests">Next step </button>
+<button id="save-button" ng-click="missionForm.save()">Save Now</button>
+</div>
+
+
+

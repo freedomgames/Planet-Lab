@@ -1,32 +1,46 @@
+<!-- this is the ONLY file that Angular loads into the browser for PlanetLAB. -->
+
 <!doctype html>
 <html ng-app="planetApp">
     <head>
         <base href="/app">
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="The_PlanetLAB_App">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--support file upload in non-html5 browsers-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/1.4.0/angular-file-upload-shim.min.js"></script>
-        <!--angular and its dependent packages-->
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/1.4.0/angular-file-upload.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-resource.min.js"></script>
-        <script src="//d19d7ovrypufff.cloudfront.net/js/xeditable.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://d19d7ovrypufff.cloudfront.net/css/xeditable.css">
+        <link rel="shortcut icon" href="http://static.wixstatic.com/ficons/c7673c_8e985095d4237d5e976870a290c8d7b7_fi.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" type="type/css">
+ 
+
+        <title>PlanetLAB by Freedom Games</title>
+       
+    </head>
+<body>  
+     <section>
+        <div ng-include="'static/banner.html'" ng-controller="UsersCtrl as users"></div> 
+        <div ui-view> </div>       
+        <div ng-include="'static/footer.html'"></div> 
+            <!-- Load AngularJS & dependency modules -->
+        <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload-shim.min.js"></script>
+        <script src="static/bower_components/angular/angular.min.js"></script>
+        <script src="static/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.min.js"></script>
+        <script src="static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="static/bower_components/angular-resource/angular-resource.min.js"></script>
+
+             <!--Load the PlanetLAB app -->
         <script src="static/app.js"></script>
         <script src="static/common/current_user.js"></script>
         <script src="static/common/resource.js"></script>
         <script src="static/common/s3.js"></script>
         <script src="static/common/widgets.js"></script>
         <script src="static/quest/controller.js"></script>
-        <script src="static/user/controller.js"></script>
-        <title>PlanetLab</title>
-    </head>
-    <body>
-        <div ui-view></div>
-        <p ng-controller="LogOutCtrl">
-          <a href="#" ng-click="logOut()">Log Out</a>
-        </p>
-    </body>
+        <script src="static/user/controller.js"></script>     
+        <script src="static/mission/controller.js"></script>     
+        <script src="static/organization/controller.js"></script>   
+
+
+    </section>
+  </body>
 </html>
+
+

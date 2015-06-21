@@ -31,8 +31,8 @@ planetApp.factory('ManyToOneResourceFactory', [
                 {
                     parentName: parentName,
                     childName: childName,
-                    parentId: '@' + parentLink,
-                    childId: '@id'
+                    parentId: '@parentId',
+                    childId: '@childId'
                 },
                 {
                     put: {method: 'PUT'},

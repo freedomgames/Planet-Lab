@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <link rel="shortcut icon" href="https://s3-us-west-2.amazonaws.com/itreeware/FreedomGames_Logo.png" type="image/x-icon">
+    <link rel="icon" href="http://static.wixstatic.com/ficons/c7673c_8e985095d4237d5e976870a290c8d7b7_fi.ico" type="image/x-icon">
+    <title>PlanetLab</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://s3-us-west-2.amazonaws.com/itreeware/planetLabStyle.css" rel="stylesheet"> 
+  </head>
+  <body class="planetlab-signup-img" >  
+
+   
+    
+    {% block body %}
+
+    <div class="img-rounded sign-in-container >
+
+        <div class="row">
+   
+                 <div class="col-sm-8 col-centered ">
+                     <img  src="https://s3-us-west-2.amazonaws.com/itreeware/PL-Logo-Dark.png" alt="PlanetLAB |Freedom Games"   > 
+                {% block flash_messages %}
+                    {%- with messages = get_flashed_messages(with_categories=true) -%}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% if category=='error' %}
+                                    {% set category='danger' %}
+                                {% endif %}
+                                <div class="alert alert-{{category}}">{{ message|safe }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {%- endwith %}
+                {% endblock %}
+
+                {% block content %}
+                {% endblock %}
+                <br>
+                <div style="height:40px;color:#d3d3d3; "> FreedomGames.org. All Rights Reserved. (c) 2013 </div>
+               <br>
+                </div>
+               
+                
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
