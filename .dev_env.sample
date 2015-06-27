@@ -1,0 +1,9 @@
+PYTHONPATH=backend/src
+DATABASE_URL=postgresql:///parklab
+CLOUDFRONT_URL=http://xxxxxxxxxxxxx.cloudfront.net
+SECRET_KEY=snakes
+DEBUG=1
+USER_ENABLE_EMAIL=''
+S3_BUCKET=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
