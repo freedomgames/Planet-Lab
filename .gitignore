@@ -38,6 +38,7 @@ node_modules
 
 # compiled assets
 scripts.js
+scripts.min.js
 main.css
 main.css.map
 
