@@ -44,3 +44,6 @@ main.css.map
 
 # sass cache
 .sass-cache/
+
+# dev_env
+.dev_env
