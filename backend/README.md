@@ -126,7 +126,7 @@ It should be something like r5cqxy3728842.cloudfront.net
 #####NEVER COMMIT YOUR KEYS INTO THE REPO
 ######issue this command to prevent you from accidentally doing so: git update-index --assume-unchanged .dev\_env
 
-* foreman run create\_db -e .dev\_env
+* foreman run --env .dev\_env create\_db
 * foreman start dev\_server -e .dev\_env
 
 The REST service is now available at [http://localhost:5000](http://localhost:5000)
