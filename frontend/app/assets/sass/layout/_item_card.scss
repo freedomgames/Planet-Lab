@@ -8,7 +8,6 @@
 
 /* === Main Styles === */
 .item-card {
-  height: 15rem;
   overflow: hidden;
   width: 10rem;
   background: rgb(0,0,0);
@@ -62,7 +61,7 @@
 
 /* === Main Image Styles === */
 .item-card__main-image {
-  height: 50%;
+  height: 7.5rem;
   background: $main-light-blue;
 
   div,
@@ -100,4 +99,69 @@
   padding-bottom: .25rem;
   padding-left: .25rem;
   background: $main-blue;
+}
+.item-card__item-specifics-left {
+  padding-right: .25rem;
+  padding-left: .25rem;
+  width: 60%;
+  text-align: center;
+  border-right: .05rem solid $white;
+}
+.item-card__item-specifics-right {
+  padding-right: .25rem;
+  padding-left: .25rem;
+  width: 40%;
+}
+.item-card__item-location,
+.item-card__item-materials,
+.item-card__item-subject {
+  display: inline-block;
+  padding-top: .25rem;
+  padding-right: .25rem;
+  padding-bottom: .25rem;
+  padding-left: .25rem;
+  width: auto;
+  color: $main-medium-blue;
+  font-size: 1rem;
+  background: $white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.item-card__item-location,
+.item-card__item-materials { margin-right: .25rem; }
+.item-card__item-time,
+.item-card__item-age {
+  padding-top: .4rem;
+  padding-right: .15rem;
+  padding-bottom: .4rem;
+  padding-left: .15rem;
+  width: auto;
+  color: $main-medium-blue;
+  font-weight: bold;
+  text-align: center;
+  word-break: break-all;
+  background: $white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.item-card__item-time { margin-right: .25rem; }
+
+/* === Item Footer Area === */
+.item-card__item-footer {
+  padding-top: .25rem;
+  padding-right: .5rem;
+  padding-bottom: .25rem;
+  padding-left: .5rem;
+  background: $main-medium-blue;
+
+  div { width: auto; }
+}
+.item-card__item-rating {
+  float: right;
+  padding-top: .375rem;
+  width: auto;
+}
+.item-card__item-rating-star {
+  color: $white;
+  width: auto;
 }

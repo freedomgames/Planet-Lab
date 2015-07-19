@@ -38,8 +38,12 @@ node_modules
 
 # compiled assets
 scripts.js
+scripts.min.js
 main.css
 main.css.map
 
 # sass cache
 .sass-cache/
+
+# dev_env
+.dev_env

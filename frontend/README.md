@@ -19,9 +19,13 @@ If you are unfamiliar with any of these projects, I highly recommend a good Goog
 
 ## Getting Started
 
-To get started working with the frontend, please review the User Stories document we will provide, and select a task. (Ideally, we will be updating this frequently.) This will offer a very specific description of what technologies you will need to integrate, what you will need to build, and what (if any) database calls will be required.
+To get the frontend up and running, please `cd` into the `/frontend` directory. You must then run:
 
-Once you have selected a task, please make sure you have forked the repo. Pull down this fork to your local machine. Follow the instructions in the [backend/README file](../backend/README.md) to get the webserver and local db up and running. Make a user on the login screen, then login && view the app!
+* `npm install`
+* `bower install`
+* `grunt`
+
+This will install bower, download and install all the required dependencies for the app, and will run the script that concatenates and creates the application.
 
 ## File Structure
 
@@ -50,6 +54,10 @@ Please read [this doc](app/README.md) to understand how to reference
 assets with src links during development and in production.
 
 ## Contributing
+
+To get started working with the frontend, please review the User Stories document we will provide, and select a task. (Ideally, we will be updating this frequently.) This will offer a very specific description of what technologies you will need to integrate, what you will need to build, and what (if any) database calls will be required.
+
+Once you have selected a task, please make sure you have forked the repo. Pull down this fork to your local machine. Follow the instructions in the [backend/README file](../backend/README.md) to get the webserver and local db up and running. Make a user on the login screen, then login && view the app!
 
 * Use four-space tabs and follow this style guide for JavaScript coding guidelines: http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml
 
